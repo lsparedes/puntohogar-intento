@@ -1,0 +1,479 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Propiedad;
+use Illuminate\Support\Facades\Auth;
+use Mail;
+use Str;
+use DB;
+use Storage;
+
+class PropiedadesController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+      $regiones = DB::table('regiones')->select('*')->where('id','=',11)->get();
+      $comunas = DB::table('comunas')->select('*')->where('region_id','=',11)->get();
+      $tipopropiedades = DB::table('tipo_propiedades')->select('*')->get();
+      $tipoamoblados = DB::table('tipo_amoblados')->select('*')->get();
+      $tipopisos = DB::table('tipo_pisos')->select('*')->get();
+      $tipofinanciamientos = DB::table('tipo_financiamientos')->select('*')->get();
+      if(Auth::check()){
+
+          $mispropiedades = DB::table('propiedades')->select('*')->where('usuario_id',Auth::user()->id)->get();
+      }else{
+          $mispropiedades = null;
+      }
+      $apiUrl = 'https://mindicador.cl/api';
+        if ( ini_get('allow_url_fopen') ) {
+            $json = file_get_contents($apiUrl);
+        } else {
+            //De otra forma utilizamos cURL
+            $curl = curl_init($apiUrl);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            $json = curl_exec($curl);
+            curl_close($curl);
+        }
+        $dailyIndicators = json_decode($json);
+        $UF = $dailyIndicators->uf->valor;
+        return view('propiedades.index',compact('UF','regiones','comunas','tipopropiedades','tipoamoblados','tipopisos','tipofinanciamientos','mispropiedades'));
+      // Recupera las propiedades que han sido aceptadas por un administrador
+      //$propiedades = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"aceptada")->get();
+      // Si hay un usuario activo, retorna sus publicaciones
+      //$user = Auth::user();
+      //if(Auth::check()){
+
+          //$mispropiedades = DB::table('propiedades')->select('*')->where('usuario_id',Auth::user()->id)->get();
+      //}else{
+          //$mispropiedades = null;
+      //}
+      // Recupera las solicitudes que aun se ecuentran en espera (Solo se muestran en la vista si el usuario es un administrador)
+      //$propiedadesespera = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"espera")->get();
+      //return view('propiedades.index',compact('propiedades','user','mispropiedades','propiedadesespera'));
+      //return view('propiedades.index');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+      //Para crear el formulario de publica gratis se recuperan los datos para los select
+      $regiones = DB::table('regiones')->select('*')->where('id','=',11)->get();
+      $comunas = DB::table('comunas')->select('*')->where('region_id','=',11)->get();
+      $tipopropiedades = DB::table('tipopropiedades')->select('*')->get();
+      $tipoamoblados = DB::table('tipoamoblados')->select('*')->get();
+      $tipopisos = DB::table('tipopisos')->select('*')->get();
+      $tipofinanciamientos = DB::table('tipofinanciamientos')->select('*')->get();
+      $apiUrl = 'https://mindicador.cl/api';
+        if ( ini_get('allow_url_fopen') ) {
+            $json = file_get_contents($apiUrl);
+        } else {
+            //De otra forma utilizamos cURL
+            $curl = curl_init($apiUrl);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            $json = curl_exec($curl);
+            curl_close($curl);
+        }
+        $dailyIndicators = json_decode($json);
+        $UF = $dailyIndicators->uf->valor;
+        return view('propiedades.create',compact('UF','regiones','comunas','tipopropiedades','tipoamoblados','tipopisos','tipofinanciamientos'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+      //Aqui inserta la propiedad a la base de datos
+      DB::table('propiedades')->insert([
+              'titulo_propiedad' => $request->titulo_propiedad,
+              'descripcion_propiedad' => $request->descripcion_propiedad,
+              'valor_uf' => $request->valor_uf,
+              'valor_pesos' => $request->valor_pesos,
+              'nro_habitaciones' => $request->nro_habitaciones,
+              'nro_banos' => $request->nro_banos,
+              'estado' => $request->estado,
+              'sup_construida' => $request->sup_construida,
+              'sup_terreno' => $request->sup_terreno,
+              'estado_publicacion' => $request->estado_publicacion,
+              'tipopropiedades_id' => $request->tipopropiedad,
+              'tipoamoblados_id' => $request->amoblado,
+              'tipopisos_id' => $request->tipopiso,
+              'comunas_id' => $request->comunas,
+              'usuario_id' => $request->usuario_id,
+              'tipo_comercio' => $request->tipo_comercio,
+              'nro_estacionamientos' => $request->nro_estacionamientos,
+              'direccion' => $request->direccion,]
+          );
+        $propiedades = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"aceptada")->get();
+        $id_propiedad = DB::table('propiedades')->where('usuario_id',$request->usuario_id)->orderBy('id', 'desc')->first()->id;
+
+        // Desde aqui se guarda cada una de las imagenes en el storage y en la base de datos
+        $image = $request->fotos;
+        $extensiones = array("data:image/jpeg;base64","data:image/jpg;base64", "data:image/png;base64");
+        $directory = '/public/viviendas/'.$id_propiedad;
+        Storage::makeDirectory($directory);
+
+        //for ($i=0; $i < count($request->fotos); $i++) {
+          for ($i=0; $i < 1; $i++) {
+            $image[$i] = str_replace($extensiones,'',$image[$i]);
+            $image[$i] = str_replace(' ', '+', $image[$i]);
+            $imageName = $i.'.'.'png';
+            Storage::put($directory.'/'.$imageName, base64_decode($image[$i]));
+            DB::table('imagenes')->insert(
+                ['propiedades_id' => $id_propiedad, 'img' => $imageName]
+            );
+        }
+        //Esto permite insertar a la DB cada uno de los financiamientos que acepta quien publica la vivienda
+        if ($request->contado == "1"){
+            DB::table('financiamientos')->insert(
+
+                ['propiedades_id' => $id_propiedad,'tipofinanciamientos_id' => 1]
+            );
+        }
+        if ($request->subsidio == "1"){
+            DB::table('financiamientos')->insert(
+                ['propiedades_id' => $id_propiedad,'tipofinanciamientos_id' => 2]
+            );
+        }
+
+        if ($request->leasing == "1"){
+            DB::table('financiamientos')->insert(
+                ['propiedades_id' => $id_propiedad,'tipofinanciamientos_id' => 3]
+            );
+        }
+        if ($request->credito == "1"){
+            DB::table('financiamientos')->insert(
+                ['propiedades_id' => $id_propiedad,'tipofinanciamientos_id' => 4]
+            );
+        }
+        //Retorna las publicaciones que el usuario ha realizado
+        $user = Auth::user();
+        if(Auth::check()){
+
+            $mispropiedades = DB::table('propiedades')->select('*')->where('usuario_id',Auth::user()->id)->get();
+        }else{
+            $mispropiedades = null;
+        }
+        // Retorna las solicitudes que aun se ecuentran en espera (Solo se muestran en la vista si el usuario es un administrador)
+         $propiedadesespera = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"espera")->get();
+        //  Envia el email notificando que su publicacion esta en espera
+        //$email_user = DB::table('users')->select('email')->where('id', $request->usuario_id)->get();
+
+        //  Mail::send('emails.waitState', [$email_user], function ($message) use ($email_user){
+        //     $message->to($email_user[0]->email)->subject('Notificación');
+        //
+        // });
+
+        $regiones = DB::table('regiones')->select('*')->where('id','=',11)->get();
+        $comunas = DB::table('comunas')->select('*')->where('region_id','=',11)->get();
+        $tipopropiedades = DB::table('tipo_propiedades')->select('*')->get();
+        $tipoamoblados = DB::table('tipo_amoblados')->select('*')->get();
+        $tipopisos = DB::table('tipo_pisos')->select('*')->get();
+        $tipofinanciamientos = DB::table('tipo_financiamientos')->select('*')->get();
+        $apiUrl = 'https://mindicador.cl/api';
+          if ( ini_get('allow_url_fopen') ) {
+              $json = file_get_contents($apiUrl);
+          } else {
+              //De otra forma utilizamos cURL
+              $curl = curl_init($apiUrl);
+              curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+              $json = curl_exec($curl);
+              curl_close($curl);
+          }
+          $dailyIndicators = json_decode($json);
+          $UF = $dailyIndicators->uf->valor;
+        return view('propiedades.index',compact('propiedades','user','mispropiedades','propiedadesespera','tipopropiedades','tipoamoblados','tipopisos','tipofinanciamientos','regiones','comunas','UF'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+      // Recupera las fotos que corresponden a dicha vivienda
+      $directory = 'public/viviendas/'.$id.'/';
+      $fotos = Storage::files($directory);
+      for ($i=0; $i < count($fotos); $i++) {
+          $fotos[$i] = str_replace('public','storage',$fotos[$i]);
+      }
+      // Recupera los datos de la propiedad
+      $propiedad = DB::table('propiedades')->where('id', '=', $id)->first();
+      // dd($propiedad);
+      $tipoamoblados = DB::table('tipo_amoblados')->select('*')->get();
+      $inmueble = DB::table('tipo_propiedades')->find($propiedad->tipopropiedades_id);
+      $amoblado = DB::table('tipo_amoblados')->find($propiedad->tipoamoblados_id);
+      $piso = DB::table('tipo_pisos')->find($propiedad->tipopisos_id);
+      // Permite recuperar si la publicacion acepta  o no un tipo de financiamiento
+      $contadoaux = DB::table('financiamientos')->where([
+          ['propiedades_id', '=', $id],
+          ['tipofinanciamientos_id','=',1],
+      ])->get();
+      if($contadoaux->count() == 0)$contado=0;
+      else $contado=1;
+      $subsidioaux = DB::table('financiamientos')->where([
+          ['propiedades_id', '=', $id],
+          ['tipofinanciamientos_id','=',2],
+      ])->get();
+      if($subsidioaux->count() == 0)$subsidio=0;
+      else $subsidio=1;
+      $leasingaux = DB::table('financiamientos')->where([
+          ['propiedades_id', '=', $id],
+          ['tipofinanciamientos_id','=',3],
+      ])->get();
+      if($leasingaux->count() == 0)$leasing=0;
+      else $leasing=1;
+      $creditoaux = DB::table('financiamientos')->where([
+          ['propiedades_id', '=', $id],
+          ['tipofinanciamientos_id','=',4],
+      ])->get();
+      if($creditoaux->count() == 0)$credito=0;
+      else $credito=1;
+      return view('propiedades.show',compact('piso','propiedad','fotos','inmueble','amoblado','contado','subsidio','tipoamoblados','leasing','credito'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+      // Actualiza los datos de la tabla propiedades
+        DB::table('propiedades')->where('id',$id)->update(['valor_pesos' => $request->valor_pesos,'valor_uf' => $request->valor_uf,'tipoamoblados_id' => $request->tipoamoblados_id]);
+        // desde aqui se actualizan los financiamientos, eliminando los anteriores y agregando los actuales
+        DB::table('financiamientos')->where('propiedades_id',$id)->delete();
+        if ($request->contado == "1"){
+            DB::table('financiamientos')->insert(
+                ['propiedades_id' => $id,'tipofinanciamientos_id' => 1]
+            );
+        }
+        if ($request->subsidio == "1"){
+            DB::table('financiamientos')->insert(
+                ['propiedades_id' => $id,'tipofinanciamientos_id' => 2]
+            );
+        }
+        if ($request->leasing == "1"){
+            DB::table('financiamientos')->insert(
+                ['propiedades_id' => $id,'tipofinanciamientos_id' => 3]
+            );
+        }
+        if ($request->credito == "1"){
+            DB::table('financiamientos')->insert(
+                ['propiedades_id' => $id,'tipofinanciamientos_id' => 4]
+            );
+        }
+
+        return back()->withInput();
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
+
+    public function callFormEdit($id){
+      // Recuperamos los datos de la propiedad y necesarios para el formulario
+      $imagen = Storage::get('/public/viviendas/1/0.png');
+      $imagen = str_replace('+', ' ', $imagen);
+      $imagen = base64_encode($imagen);
+      $imagen = "data:image/png;base64".$imagen;
+
+      $propiedad = DB::table('propiedades')->where('id', '=', $id)->get()->first();
+      $regiones = DB::table('regiones')->select('*')->where('id','=',11)->get();
+      $comunas = DB::table('comunas')->select('*')->where('region_id','=',11)->get();
+      $tipopropiedades = DB::table('tipopropiedades')->select('*')->get();
+      $tipoamoblados = DB::table('tipoamoblados')->select('*')->get();
+      $tipopisos = DB::table('tipopisos')->select('*')->get();
+      $tipofinanciamientos = DB::table('tipofinanciamientos')->select('*')->get();
+      // Recuperamos los financiamientos aceptados anteriores
+      $contadoaux = DB::table('financiamientos')->where([
+          ['propiedades_id', '=', $id],
+          ['tipofinanciamientos_id','=',1],
+      ])->get();
+      if($contadoaux->count() == 0)$contado=0;
+      else $contado=1;
+      $subsidioaux = DB::table('financiamientos')->where([
+          ['propiedades_id', '=', $id],
+          ['tipofinanciamientos_id','=',2],
+      ])->get();
+      if($subsidioaux->count() == 0)$subsidio=0;
+      else $subsidio=1;
+      $leasingaux = DB::table('financiamientos')->where([
+          ['propiedades_id', '=', $id],
+          ['tipofinanciamientos_id','=',3],
+      ])->get();
+      if($leasingaux->count() == 0)$leasing=0;
+      else $leasing=1;
+      $creditoaux = DB::table('financiamientos')->where([
+          ['propiedades_id', '=', $id],
+          ['tipofinanciamientos_id','=',4],
+      ])->get();
+      if($creditoaux->count() == 0)$credito=0;
+      else $credito=1;
+      //Para recuperar el valor de la UF en la variable $UF
+      $apiUrl = 'https://mindicador.cl/api';
+      if ( ini_get('allow_url_fopen') ) {
+          $json = file_get_contents($apiUrl);
+      } else {
+          //De otra forma utilizamos cURL
+          $curl = curl_init($apiUrl);
+          curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+          $json = curl_exec($curl);
+          curl_close($curl);
+      }
+      $dailyIndicators = json_decode($json);
+      $UF = intval($dailyIndicators->uf->valor);
+      return view('propiedades.form',compact('UF','imagen','contado','leasing','credito','subsidio','propiedad','regiones','comunas','tipopropiedades','tipoamoblados','tipopisos','tipofinanciamientos'));
+  }
+
+  // Esta funcion es llamada al subir el form de edicion cuando una publicacion fue rechazada
+  // Se encarga de actualiar los datos de la publicacion
+  public function editAll(Request $request, $id){
+
+      DB::table('propiedades')->where('id',$id)->update(
+              ['titulo_propiedad' => $request->titulo_propiedad,
+              'descripcion_propiedad' => $request->descripcion_propiedad,
+              'valor_uf' => $request->valor_uf,
+              'valor_pesos' => $request->valor_pesos,
+              'nro_habitaciones' => $request->nro_habitaciones,
+              'nro_banos' => $request->nro_banos,
+              'estado' => $request->estado,
+              'sup_construida' => $request->sup_construida,
+              'sup_terreno' => $request->sup_terreno,
+              'estado_publicacion' => $request->estado_publicacion,
+              'tipopropiedades_id' => $request->tipopropiedades_id,
+              'tipoamoblados_id' => $request->tipoamoblados_id,
+              'tipopisos_id' => $request->tipopisos_id,
+              'comunas_id' => $request->comunas_id,
+              'usuario_id' => $request->usuario_id,
+              'tipo_comercio' => $request->tipo_comercio,
+              'nro_estacionamientos' => $request->nro_estacionamientos,
+              'direccion' => $request->direccion,]
+          );
+      // Resetea los tipos de financiamientos aeptados eliminandolos y agregandolos de nuevo
+      DB::table('financiamientos')->where('propiedades_id',$id)->delete();
+      if ($request->contado == "1"){
+          DB::table('financiamientos')->insert(
+              ['propiedades_id' => $id,'tipofinanciamientos_id' => 1]
+          );
+      }
+      if ($request->subsidio == "1"){
+          DB::table('financiamientos')->insert(
+              ['propiedades_id' => $id,'tipofinanciamientos_id' => 2]
+          );
+      }
+      if ($request->leasing == "1"){
+          DB::table('financiamientos')->insert(
+              ['propiedades_id' => $id,'tipofinanciamientos_id' => 3]
+          );
+      }
+      if ($request->credito == "1"){
+          DB::table('financiamientos')->insert(
+              ['propiedades_id' => $id,'tipofinanciamientos_id' => 4]
+          );
+      }
+      // Como hubo una modificacion, la propiedad pasa a estado de espera
+      //  hasta que un administrador la acepte o rechae nuevamente
+      DB::table('propiedades')
+      ->where('id', $id)
+      ->update(['estado_publicacion' => 'espera']);
+      // Envia el correo al usuario de que su publicacion se encuentra en espera
+      $email_user = DB::table('users')->select('email')->where('id', $request->usuario_id)->get();
+      Mail::send('emails.waitState', [$email_user], function ($message) use ($email_user) {
+          $message->to($email_user[0]->email)->subject('Notificación');
+      });
+      // Datos para retornar a la vista del catalogo
+      $propiedades = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"aceptada")->get();
+      $user = Auth::user();
+      $propiedadesespera = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"espera")->get();
+      // Aqui no hay verificacion del usuario, debido a que para  llegar esto ya el usuario debe haber estado logeado anteriormente
+      $mispropiedades = DB::table('propiedades')->select('*')->where('usuario_id',Auth::user()->id)->get();
+      return view('propiedades.index',compact('propiedades','user','mispropiedades','propiedadesespera'));
+  }
+
+  // Funcion encargada de aprobar una solicitud
+  public function updateState($id){
+      DB::table('propiedades')
+      ->where('id', $id)
+      ->update(['estado_publicacion' => 'aceptada']);
+      $propiedades = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"aceptada")->get();
+      // Aqui se le envia el correo de que su publicacion ha sido aceptada
+      $user_id = DB::table('propiedades')->select('usuario_id')->where('id',$id)->get()[0]->usuario_id;
+      $user_email = DB::table('users')->select('email')->where('id',$user_id)->get();
+      // $user = DB::table('users')->select('')
+      Mail::send('emails.updateState', [$user_email], function ($message) use($user_email){
+          $message->to($user_email['0']->email)->subject('Notificación');
+      });
+      // Si hay un usuario activo, retorna sus publicaciones
+      if(Auth::check()){
+          $mispropiedades = DB::table('propiedades')->select('*')->where('usuario_id',Auth::user()->id)->get();
+      }else{
+          $mispropiedades = null;
+      }
+      // Retorna las solicitudes que aun se ecuentran en espera (Solo se muestran en la vista si el usuario es un administrador)
+      $propiedadesespera = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"espera")->get();
+      $user = Auth::user(); //Informacion del admin para enviarla a la vista
+      return view('propiedad.index',compact('propiedades','user','mispropiedades','propiedadesespera'));
+  }
+
+  // Funcion encargada de rechazar una solicitud
+  public function downState(Request $request,$id){
+      DB::table('propiedades')
+      ->where('id', $id)
+      ->update(['estado_publicacion' => 'rechazada']);
+      $propiedades = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"aceptada")->get();
+       // Aqui se le envia el correo de que su publicacion ha sido rechazada
+      $user = Auth::user();
+      $user_id = DB::table('propiedades')->select('usuario_id')->where('id',$id)->get()[0]->usuario_id;
+      $user_email = DB::table('users')->select('email')->where('id',$user_id)->get();
+      Mail::send('emails.downState', ['detalle' => $request->query("detalle")], function ($message) use($user_email) {
+          $message->to($user_email['0']->email)->subject('Notificación');
+      });
+      // Si hay un usuario activo, retorna sus publicaciones
+      if(Auth::check()){
+
+          $mispropiedades = DB::table('propiedades')->select('*')->where('usuario_id',Auth::user()->id)->get();
+      }else{
+          $mispropiedades = null;
+      }
+      // Retorna las solicitudes que aun se ecuentran en espera (Solo se muestran en la vista si el usuario es un administrador)
+      $propiedadesespera = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"espera")->get();
+      return view('propiedades.index',compact('propiedades','user','mispropiedades','propiedadesespera'));
+  }
+}
