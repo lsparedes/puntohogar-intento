@@ -98,7 +98,8 @@ class PropiedadesController extends Controller
     public function store(Request $request)
     {
       //Aqui inserta la propiedad a la base de datos
-      DB::table('propiedades')->insert([
+      DB::table('propiedadestemporal')->insert([
+              'codigo' => $request->codigo,
               'titulo_propiedad' => $request->titulo_propiedad,
               'descripcion_propiedad' => $request->descripcion_propiedad,
               'valor_uf' => $request->valor_uf,
@@ -113,63 +114,44 @@ class PropiedadesController extends Controller
               'tipoamoblados_id' => $request->amoblado,
               'tipopisos_id' => $request->tipopiso,
               'comunas_id' => $request->comunas,
-              'usuario_id' => $request->usuario_id,
+              //'usuario_id' => $request->usuario_id,
               'tipo_comercio' => $request->tipo_comercio,
               'nro_estacionamientos' => $request->nro_estacionamientos,
               'direccion' => $request->direccion,]
           );
-        $propiedades = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"aceptada")->get();
-        $id_propiedad = DB::table('propiedades')->where('usuario_id',$request->usuario_id)->orderBy('id', 'desc')->first()->id;
+        //$propiedades = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"aceptada")->get();
+
 
         // Desde aqui se guarda cada una de las imagenes en el storage y en la base de datos
-        $image = $request->fotos;
-        $extensiones = array("data:image/jpeg;base64","data:image/jpg;base64", "data:image/png;base64");
-        $directory = '/public/viviendas/'.$id_propiedad;
-        Storage::makeDirectory($directory);
+        //$image = $request->fotos;
+        //$extensiones = array("data:image/jpeg;base64","data:image/jpg;base64", "data:image/png;base64");
+        //$directory = '/public/viviendas/'.$id_propiedad;
+        //Storage::makeDirectory($directory);
 
         //for ($i=0; $i < count($request->fotos); $i++) {
-          for ($i=0; $i < 1; $i++) {
-            $image[$i] = str_replace($extensiones,'',$image[$i]);
-            $image[$i] = str_replace(' ', '+', $image[$i]);
-            $imageName = $i.'.'.'png';
-            Storage::put($directory.'/'.$imageName, base64_decode($image[$i]));
-            DB::table('imagenes')->insert(
-                ['propiedades_id' => $id_propiedad, 'img' => $imageName]
-            );
-        }
+        //   for ($i=0; $i < 1; $i++) {
+        //     $image[$i] = str_replace($extensiones,'',$image[$i]);
+        //     $image[$i] = str_replace(' ', '+', $image[$i]);
+        //     $imageName = $i.'.'.'png';
+        //     Storage::put($directory.'/'.$imageName, base64_decode($image[$i]));
+        //     DB::table('imagenes')->insert(
+        //         ['propiedades_id' => $id_propiedad, 'img' => $imageName]
+        //     );
+        // }
         //Esto permite insertar a la DB cada uno de los financiamientos que acepta quien publica la vivienda
-        if ($request->contado == "1"){
-            DB::table('financiamientos')->insert(
 
-                ['propiedades_id' => $id_propiedad,'tipofinanciamientos_id' => 1]
-            );
-        }
-        if ($request->subsidio == "1"){
-            DB::table('financiamientos')->insert(
-                ['propiedades_id' => $id_propiedad,'tipofinanciamientos_id' => 2]
-            );
-        }
 
-        if ($request->leasing == "1"){
-            DB::table('financiamientos')->insert(
-                ['propiedades_id' => $id_propiedad,'tipofinanciamientos_id' => 3]
-            );
-        }
-        if ($request->credito == "1"){
-            DB::table('financiamientos')->insert(
-                ['propiedades_id' => $id_propiedad,'tipofinanciamientos_id' => 4]
-            );
-        }
+        return response()->json(['success'=> true, 'message' => 'La propiedad se agregó correctamente.']);
         //Retorna las publicaciones que el usuario ha realizado
-        $user = Auth::user();
-        if(Auth::check()){
-
-            $mispropiedades = DB::table('propiedades')->select('*')->where('usuario_id',Auth::user()->id)->get();
-        }else{
-            $mispropiedades = null;
-        }
+        // $user = Auth::user();
+        // if(Auth::check()){
+        //
+        //     $mispropiedades = DB::table('propiedades')->select('*')->where('usuario_id',Auth::user()->id)->get();
+        // }else{
+        //     $mispropiedades = null;
+        // }
         // Retorna las solicitudes que aun se ecuentran en espera (Solo se muestran en la vista si el usuario es un administrador)
-         $propiedadesespera = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"espera")->get();
+         //$propiedadesespera = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"espera")->get();
         //  Envia el email notificando que su publicacion esta en espera
         //$email_user = DB::table('users')->select('email')->where('id', $request->usuario_id)->get();
 
@@ -178,25 +160,25 @@ class PropiedadesController extends Controller
         //
         // });
 
-        $regiones = DB::table('regiones')->select('*')->where('id','=',11)->get();
-        $comunas = DB::table('comunas')->select('*')->where('region_id','=',11)->get();
-        $tipopropiedades = DB::table('tipo_propiedades')->select('*')->get();
-        $tipoamoblados = DB::table('tipo_amoblados')->select('*')->get();
-        $tipopisos = DB::table('tipo_pisos')->select('*')->get();
-        $tipofinanciamientos = DB::table('tipo_financiamientos')->select('*')->get();
-        $apiUrl = 'https://mindicador.cl/api';
-          if ( ini_get('allow_url_fopen') ) {
-              $json = file_get_contents($apiUrl);
-          } else {
-              //De otra forma utilizamos cURL
-              $curl = curl_init($apiUrl);
-              curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-              $json = curl_exec($curl);
-              curl_close($curl);
-          }
-          $dailyIndicators = json_decode($json);
-          $UF = $dailyIndicators->uf->valor;
-        return view('propiedades.index',compact('propiedades','user','mispropiedades','propiedadesespera','tipopropiedades','tipoamoblados','tipopisos','tipofinanciamientos','regiones','comunas','UF'));
+        // $regiones = DB::table('regiones')->select('*')->where('id','=',11)->get();
+        // $comunas = DB::table('comunas')->select('*')->where('region_id','=',11)->get();
+        // $tipopropiedades = DB::table('tipo_propiedades')->select('*')->get();
+        // $tipoamoblados = DB::table('tipo_amoblados')->select('*')->get();
+        // $tipopisos = DB::table('tipo_pisos')->select('*')->get();
+        // $tipofinanciamientos = DB::table('tipo_financiamientos')->select('*')->get();
+        // $apiUrl = 'https://mindicador.cl/api';
+        //   if ( ini_get('allow_url_fopen') ) {
+        //       $json = file_get_contents($apiUrl);
+        //   } else {
+        //       //De otra forma utilizamos cURL
+        //       $curl = curl_init($apiUrl);
+        //       curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        //       $json = curl_exec($curl);
+        //       curl_close($curl);
+        //   }
+        //   $dailyIndicators = json_decode($json);
+        //   $UF = $dailyIndicators->uf->valor;
+        // return view('propiedades.index',compact('propiedades','user','mispropiedades','propiedadesespera','tipopropiedades','tipoamoblados','tipopisos','tipofinanciamientos','regiones','comunas','UF'));
     }
 
     /**
@@ -208,11 +190,11 @@ class PropiedadesController extends Controller
     public function show($id)
     {
       // Recupera las fotos que corresponden a dicha vivienda
-      $directory = 'public/viviendas/'.$id.'/';
-      $fotos = Storage::files($directory);
-      for ($i=0; $i < count($fotos); $i++) {
-          $fotos[$i] = str_replace('public','storage',$fotos[$i]);
-      }
+      // $directory = 'public/viviendas/'.$id.'/';
+      // $fotos = Storage::files($directory);
+      // for ($i=0; $i < count($fotos); $i++) {
+      //     $fotos[$i] = str_replace('public','storage',$fotos[$i]);
+      // }
       // Recupera los datos de la propiedad
       $propiedad = DB::table('propiedades')->where('id', '=', $id)->first();
       // dd($propiedad);
@@ -220,34 +202,47 @@ class PropiedadesController extends Controller
       $inmueble = DB::table('tipo_propiedades')->find($propiedad->tipopropiedades_id);
       $amoblado = DB::table('tipo_amoblados')->find($propiedad->tipoamoblados_id);
       $piso = DB::table('tipo_pisos')->find($propiedad->tipopisos_id);
-      // Permite recuperar si la publicacion acepta  o no un tipo de financiamiento
-      $contadoaux = DB::table('financiamientos')->where([
-          ['propiedades_id', '=', $id],
-          ['tipofinanciamientos_id','=',1],
-      ])->get();
-      if($contadoaux->count() == 0)$contado=0;
-      else $contado=1;
-      $subsidioaux = DB::table('financiamientos')->where([
-          ['propiedades_id', '=', $id],
-          ['tipofinanciamientos_id','=',2],
-      ])->get();
-      if($subsidioaux->count() == 0)$subsidio=0;
-      else $subsidio=1;
-      $leasingaux = DB::table('financiamientos')->where([
-          ['propiedades_id', '=', $id],
-          ['tipofinanciamientos_id','=',3],
-      ])->get();
-      if($leasingaux->count() == 0)$leasing=0;
-      else $leasing=1;
-      $creditoaux = DB::table('financiamientos')->where([
-          ['propiedades_id', '=', $id],
-          ['tipofinanciamientos_id','=',4],
-      ])->get();
-      if($creditoaux->count() == 0)$credito=0;
-      else $credito=1;
-      return view('propiedades.show',compact('piso','propiedad','fotos','inmueble','amoblado','contado','subsidio','tipoamoblados','leasing','credito'));
+
+      return view('propiedades.show',compact('piso','propiedad','inmueble','amoblado','tipoamoblados'));
     }
 
+    // public function show($id)
+    // {
+    //   // Recupera las fotos que corresponden a dicha vivienda
+    //   // $directory = 'public/viviendas/'.$id.'/';
+    //   // $fotos = Storage::files($directory);
+    //   // for ($i=0; $i < count($fotos); $i++) {
+    //   //     $fotos[$i] = str_replace('public','storage',$fotos[$i]);
+    //   // }
+    //   // Recupera los datos de la propiedad
+    //   $propiedad = DB::table('propiedades')->where('id', '=', $id)->first();
+    //   // dd($propiedad);
+    //   $tipoamoblados = DB::table('tipo_amoblados')->select('*')->get();
+    //   $inmueble = DB::table('tipo_propiedades')->find($propiedad->tipopropiedades_id);
+    //   $amoblado = DB::table('tipo_amoblados')->find($propiedad->tipoamoblados_id);
+    //   $piso = DB::table('tipo_pisos')->find($propiedad->tipopisos_id);
+    //
+    //   return view('propiedades.show',compact('piso','propiedad','inmueble','amoblado','tipoamoblados'));
+    // }
+
+    public function vermas($codigo)
+    {
+      // Recupera las fotos que corresponden a dicha vivienda
+      // $directory = 'public/viviendas/'.$id.'/';
+      // $fotos = Storage::files($directory);
+      // for ($i=0; $i < count($fotos); $i++) {
+      //     $fotos[$i] = str_replace('public','storage',$fotos[$i]);
+      // }
+      // Recupera los datos de la propiedad
+      $propiedad = DB::table('propiedades')->where('codigo', '=', $codigo)->first();
+      // dd($propiedad);
+      $tipoamoblados = DB::table('tipo_amoblados')->select('*')->get();
+      $inmueble = DB::table('tipo_propiedades')->find($propiedad->tipopropiedades_id);
+      $amoblado = DB::table('tipo_amoblados')->find($propiedad->tipoamoblados_id);
+      $piso = DB::table('tipo_pisos')->find($propiedad->tipopisos_id);
+
+      return view('propiedades.show',compact('piso','propiedad','inmueble','amoblado','tipoamoblados'));
+    }
     /**
      * Show the form for editing the specified resource.
      *

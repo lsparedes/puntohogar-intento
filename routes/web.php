@@ -21,5 +21,5 @@ Route::post('/putlogin' , 'Auth\LoginController@loginModal' )->name('login.modal
 Route::post('/putregister' , 'Auth\RegisterController@create' )->name('register.modal');
 
 Route::get('/home', 'HomeController@index')->name('home');
-
+Route::get('propiedades/{id}', ['as'=> 'propiedadeshow', 'uses' => 'PropiedadesController@vermas']);
 Route::resource('/propiedades','PropiedadesController');
