@@ -512,6 +512,43 @@
 <script src="{{asset('assets/js/dropzone.script.js')}}"></script>
 
 <script type="text/javascript">
+var contado=0;
+var subsidio=0;
+var credito=0;
+var leasing=0;
+
+$('#subsidio').click(function() {
+    alert("Estado checkbox subsidio = " + $('#subsidio').prop('checked'));
+    if($('#subsidio').prop('checked')){
+      var subsidio=1;
+      console.log("valor subsidio: "+subsidio);
+    }
+
+});
+$('#contado').click(function() {
+    alert("Estado checkbox contado = " + $('#contado').prop('checked'));
+    if($('#contado').prop('checked')){
+      var contado=1;
+      console.log("valor contado: "+contado);
+    }
+
+});
+$('#credito').click(function() {
+    alert("Estado checkbox credito = " + $('#credito').prop('checked'));
+    if($('#credito').prop('checked')){
+      var credito=1;
+      console.log("valor credito: "+credito);
+    }
+
+});
+$('#leasing').click(function() {
+    alert("Estado checkbox leasing = " + $('#leasing').prop('checked'));
+    if($('#leasing').prop('checked')){
+      var leasing=1;
+      console.log("valor leasing: "+leasing);
+    }
+
+});
 
 function showModal(){
       $('#exampleModal2').modal("hide");
@@ -522,14 +559,34 @@ function showModal(){
 
 
 function login(){
+
+  var q=0;
+  var r=0;
+  var s=0;
+  var t=0;
+
+  if($('#contado').prop('checked')){
+    var q=1;
+  }
+  if($('#subsidio').prop('checked')){
+    var r=1;
+  }
+  if($('#credito').prop('checked')){
+    var s=1;
+  }
+  if($('#leasing').prop('checked')){
+    var t=1;
+  }
+
+
   $.ajax({
                         url: "{{ route('login.modal') }}",
                         type: 'POST',
                         data: {
-                                'contado'               : $('#contado').val(),
-                                'subsidio'              : $('#subsidio').val(),
-                                'credito'               : $('#credito').val(),
-                          '     leasing'               : $('#leasing').val(),
+                                'contado'               : q,
+                                'subsidio'              : r,
+                                'credito'               : s,
+                                'leasing'               : t,
                                 'codigo' : document.getElementById('pasandocodigo').value,
                                 'email': document.getElementById('email_modal').value,
                                 'password': document.getElementById('password_modal').value,
@@ -566,14 +623,34 @@ function login(){
 }
 
 function register(){
+
+  var q=0;
+  var r=0;
+  var s=0;
+  var t=0;
+
+  if($('#contado').prop('checked')){
+    var q=1;
+  }
+  if($('#subsidio').prop('checked')){
+    var r=1;
+  }
+  if($('#credito').prop('checked')){
+    var s=1;
+  }
+  if($('#leasing').prop('checked')){
+    var t=1;
+  }
+
+
   $.ajax({
                         url: "{{ route('register.modal') }}",
                         type: 'POST',
                         data: {
-                                'contado'               : $('#contado').val(),
-                                'subsidio'              : $('#subsidio').val(),
-                                'credito'               : $('#credito').val(),
-                                'leasing'               : $('#leasing').val(),
+                          'contado'               : q,
+                          'subsidio'              : r,
+                          'credito'               : s,
+                          'leasing'               : t,
                                 'codigo' : document.getElementById('pasandocodigo2').value,
                                 'name': document.getElementById('name_modal2').value,
                                 'segundo_nombre': document.getElementById('segundo_nombre_modal2').value,
@@ -631,6 +708,11 @@ console.log(num);
 
    $('#btn-save').click(function() {
 
+     var q=0;
+     var r=0;
+     var s=0;
+     var t=0;
+
           var a=$('#tipopropiedad').val();
 
           var b=$('#estado').val();
@@ -648,10 +730,20 @@ console.log(num);
           var n= $('#titulo_propiedad').val();
           var o= $('#descripcion_propiedad').val();
           var p= $('#pic').val();
-          var q= $('#contado').val();
-          var r= $('#subsidio').val();
-          var s= $('#credito').val();
-          var t= $('#leasing').val();
+
+          if($('#contado').prop('checked')){
+            var q=1;
+          }
+          if($('#subsidio').prop('checked')){
+            var r=1;
+          }
+          if($('#credito').prop('checked')){
+            var s=1;
+          }
+          if($('#leasing').prop('checked')){
+            var t=1;
+          }
+
           var u= $('#valor_pesos').val();
           var v= $('#valor_uf').val();
           var w= $('#usuario').val();
@@ -672,7 +764,7 @@ console.log(num);
           console.log("amoblado :"+m);
           console.log("titulo_propiedad :"+n);
           console.log("descripcion_propiedad :"+o);
-          //console.log("pic :"+p);
+          console.log("pic :"+p);
           console.log("contado :"+q);
           console.log("subsidio :"+r);
           console.log("credito :"+s);
@@ -704,6 +796,10 @@ console.log(num);
                    'amoblado'              : $('#amoblado').val(),
                    'titulo_propiedad'      : $('#titulo_propiedad').val(),
                    'descripcion_propiedad' : $('#descripcion_propiedad').val(),
+                   'contado'              : q,
+                   'subsidio'              : r,
+                   'credito'              : s,
+                   'leasing'              : t,
                    //'fotos'                 : $('#pic').val(),
                    'valor_pesos'           : $('#valor_pesos').val(),
                    'valor_uf'              : $('#valor_uf').val(),
@@ -722,13 +818,15 @@ console.log(num);
                    if(data.success == true){
 
                      //console.log(data);
-                     console.log(data.codigo);
+                     //console.log(data.codigo);
                      //$('#successDiv').removeClass('d-none');
                      //$('#successMsg').html('');
 
-                     
+
                      if(data.modal==true){
                        $('#exampleModal2').modal("show");
+                     }else{
+                       window.location = data.url;
                      }
 
 

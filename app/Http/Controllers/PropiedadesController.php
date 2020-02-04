@@ -122,8 +122,31 @@ class PropiedadesController extends Controller
                   'direccion' => $request->direccion,]
               );
 
+              $propiedad = DB::table('propiedades')->where('codigo',$request->codigo)->first();
 
-            return response()->json(['success'=> true, 'message' => 'La propiedad se agregó correctamente a la tabla propiedades.','modal'=>false]);
+              if ($request->contado==1){
+                  DB::table('financiamientos')->insert(
+
+                     ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 1]
+                  );
+              }
+              if ($request->subsidio==1){
+                 DB::table('financiamientos')->insert(
+                     ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 2]
+                 );
+              }
+
+               if ($request->leasing==1){
+                 DB::table('financiamientos')->insert(
+                     ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 3]
+                 );
+              }
+              if ($request->credito==1){
+                 DB::table('financiamientos')->insert(
+                     ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 4]
+                 );
+              }
+            return response()->json(['success'=> true, 'message' => 'La propiedad se agregó correctamente a la tabla propiedades.','modal'=>false,'url'=>route('propiedadeshow',$request->codigo)]);
         }else{
 
           DB::table('propiedadestemporal')->insert([
