@@ -77,30 +77,30 @@ class LoginController extends Controller
                     'nro_estacionamientos' => $consulta->nro_estacionamientos,
                     ]
                 );
-                $propiedad = DB::table('propiedades')->where('codigo',$request->codigo)->first();
-
-                if ($request->has('contado')){
-                    DB::table('financiamientos')->insert(
-
-                       ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 1]
-                    );
-                }
-                if ($request->has('subsidio')){
-                   DB::table('financiamientos')->insert(
-                       ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 2]
-                   );
-               }
-
-                 if ($request->has('leasing')){
-                   DB::table('financiamientos')->insert(
-                       ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 3]
-                   );
-               }
-                 if ($request->has('credito')){
-                   DB::table('financiamientos')->insert(
-                       ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 4]
-                   );
-               }
+               //  $propiedad = DB::table('propiedades')->where('codigo',$request->codigo)->first();
+               //
+               //  if ($request->has('contado')){
+               //      DB::table('financiamientos')->insert(
+               //
+               //         ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 1]
+               //      );
+               //  }
+               //  if ($request->has('subsidio')){
+               //     DB::table('financiamientos')->insert(
+               //         ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 2]
+               //     );
+               // }
+               //
+               //   if ($request->has('leasing')){
+               //     DB::table('financiamientos')->insert(
+               //         ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 3]
+               //     );
+               // }
+               //   if ($request->has('credito')){
+               //     DB::table('financiamientos')->insert(
+               //         ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 4]
+               //     );
+               // }
             return response()->json(['success'=>true,'url'=>route('propiedadeshow',$request->codigo)]);
           }
             return response()->json(['success'=>false,'message'=>'no se encuentra al usuario']);

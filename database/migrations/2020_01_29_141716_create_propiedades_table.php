@@ -15,6 +15,7 @@ class CreatePropiedadesTable extends Migration
     {
         Schema::create('propiedades', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('codigo');
             $table->string('titulo_propiedad');
             $table->string('tipo_comercio');
             $table->string('direccion');

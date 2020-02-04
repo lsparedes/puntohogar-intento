@@ -98,27 +98,59 @@ class PropiedadesController extends Controller
     public function store(Request $request)
     {
       //Aqui inserta la propiedad a la base de datos
-      DB::table('propiedadestemporal')->insert([
-              'codigo' => $request->codigo,
-              'titulo_propiedad' => $request->titulo_propiedad,
-              'descripcion_propiedad' => $request->descripcion_propiedad,
-              'valor_uf' => $request->valor_uf,
-              'valor_pesos' => $request->valor_pesos,
-              'nro_habitaciones' => $request->nro_habitaciones,
-              'nro_banos' => $request->nro_banos,
-              'estado' => $request->estado,
-              'sup_construida' => $request->sup_construida,
-              'sup_terreno' => $request->sup_terreno,
-              'estado_publicacion' => $request->estado_publicacion,
-              'tipopropiedades_id' => $request->tipopropiedad,
-              'tipoamoblados_id' => $request->amoblado,
-              'tipopisos_id' => $request->tipopiso,
-              'comunas_id' => $request->comunas,
-              //'usuario_id' => $request->usuario_id,
-              'tipo_comercio' => $request->tipo_comercio,
-              'nro_estacionamientos' => $request->nro_estacionamientos,
-              'direccion' => $request->direccion,]
-          );
+        if(Auth::check()){
+          //Aqui inserta la propiedad a la base de datos
+          DB::table('propiedades')->insert([
+                  'codigo' => $request->codigo,
+                  'titulo_propiedad' => $request->titulo_propiedad,
+                  'descripcion_propiedad' => $request->descripcion_propiedad,
+                  'valor_uf' => $request->valor_uf,
+                  'valor_pesos' => $request->valor_pesos,
+                  'nro_habitaciones' => $request->nro_habitaciones,
+                  'nro_banos' => $request->nro_banos,
+                  'estado' => $request->estado,
+                  'sup_construida' => $request->sup_construida,
+                  'sup_terreno' => $request->sup_terreno,
+                  'estado_publicacion' => $request->estado_publicacion,
+                  'tipopropiedades_id' => $request->tipopropiedad,
+                  'tipoamoblados_id' => $request->amoblado,
+                  'tipopisos_id' => $request->tipopiso,
+                  'comunas_id' => $request->comunas,
+                  'usuario_id' => Auth::user()->id,
+                  'tipo_comercio' => $request->tipo_comercio,
+                  'nro_estacionamientos' => $request->nro_estacionamientos,
+                  'direccion' => $request->direccion,]
+              );
+
+
+            return response()->json(['success'=> true, 'message' => 'La propiedad se agregó correctamente a la tabla propiedades.','modal'=>false]);
+        }else{
+
+          DB::table('propiedadestemporal')->insert([
+                  'codigo' => $request->codigo,
+                  'titulo_propiedad' => $request->titulo_propiedad,
+                  'descripcion_propiedad' => $request->descripcion_propiedad,
+                  'valor_uf' => $request->valor_uf,
+                  'valor_pesos' => $request->valor_pesos,
+                  'nro_habitaciones' => $request->nro_habitaciones,
+                  'nro_banos' => $request->nro_banos,
+                  'estado' => $request->estado,
+                  'sup_construida' => $request->sup_construida,
+                  'sup_terreno' => $request->sup_terreno,
+                  'estado_publicacion' => $request->estado_publicacion,
+                  'tipopropiedades_id' => $request->tipopropiedad,
+                  'tipoamoblados_id' => $request->amoblado,
+                  'tipopisos_id' => $request->tipopiso,
+                  'comunas_id' => $request->comunas,
+                  //'usuario_id' => $request->usuario_id,
+                  'tipo_comercio' => $request->tipo_comercio,
+                  'nro_estacionamientos' => $request->nro_estacionamientos,
+                  'direccion' => $request->direccion,]
+              );
+                return response()->json(['success'=> true, 'message' => 'La propiedad se agregó correctamente.','modal'=>true]);
+
+        }
+
         //$propiedades = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"aceptada")->get();
 
 
@@ -141,7 +173,7 @@ class PropiedadesController extends Controller
         //Esto permite insertar a la DB cada uno de los financiamientos que acepta quien publica la vivienda
 
 
-        return response()->json(['success'=> true, 'message' => 'La propiedad se agregó correctamente.']);
+
         //Retorna las publicaciones que el usuario ha realizado
         // $user = Auth::user();
         // if(Auth::check()){
@@ -180,6 +212,7 @@ class PropiedadesController extends Controller
         //   $UF = $dailyIndicators->uf->valor;
         // return view('propiedades.index',compact('propiedades','user','mispropiedades','propiedadesespera','tipopropiedades','tipoamoblados','tipopisos','tipofinanciamientos','regiones','comunas','UF'));
     }
+
 
     /**
      * Display the specified resource.

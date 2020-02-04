@@ -251,7 +251,10 @@
                           <div class="custom-separator"></div>
 
                      <input type="text" name="estado_publicacion" style="display:none" id="estado_publicacion" class="form-control" value="espera">
-    <input type="button" id="btn-save" value="Guardar Publicación" class="btn btn-success btn-block">
+
+                     <input type="button" id="btn-save" value="Guardar Publicación" class="btn btn-success btn-block">
+
+
                    </div>
 
 
@@ -624,6 +627,8 @@ console.log(num);
 
  $(document).ready(function() {
 
+
+
    $('#btn-save').click(function() {
 
           var a=$('#tipopropiedad').val();
@@ -720,7 +725,13 @@ console.log(num);
                      console.log(data.codigo);
                      //$('#successDiv').removeClass('d-none');
                      //$('#successMsg').html('');
-                     $('#exampleModal2').modal("show");
+
+                     
+                     if(data.modal==true){
+                       $('#exampleModal2').modal("show");
+                     }
+
+
 
                      //$('#successDiv').append(data.message);
                        // setTimeout(function(){
