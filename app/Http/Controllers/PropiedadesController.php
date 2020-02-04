@@ -25,9 +25,11 @@ class PropiedadesController extends Controller
       $tipoamoblados = DB::table('tipo_amoblados')->select('*')->get();
       $tipopisos = DB::table('tipo_pisos')->select('*')->get();
       $tipofinanciamientos = DB::table('tipo_financiamientos')->select('*')->get();
+
       if(Auth::check()){
 
           $mispropiedades = DB::table('propiedades')->select('*')->where('usuario_id',Auth::user()->id)->get();
+
       }else{
           $mispropiedades = null;
       }
@@ -43,7 +45,8 @@ class PropiedadesController extends Controller
         }
         $dailyIndicators = json_decode($json);
         $UF = $dailyIndicators->uf->valor;
-        return view('propiedades.index',compact('UF','regiones','comunas','tipopropiedades','tipoamoblados','tipopisos','tipofinanciamientos','mispropiedades'));
+        $propiedadesespera = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"espera")->get();
+        return view('propiedades.index',compact('UF','regiones','comunas','tipopropiedades','tipoamoblados','tipopisos','tipofinanciamientos','mispropiedades','propiedadesespera'));
       // Recupera las propiedades que han sido aceptadas por un administrador
       //$propiedades = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"aceptada")->get();
       // Si hay un usuario activo, retorna sus publicaciones
@@ -59,6 +62,8 @@ class PropiedadesController extends Controller
       //return view('propiedades.index',compact('propiedades','user','mispropiedades','propiedadesespera'));
       //return view('propiedades.index');
     }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -360,18 +365,18 @@ class PropiedadesController extends Controller
 
     public function callFormEdit($id){
       // Recuperamos los datos de la propiedad y necesarios para el formulario
-      $imagen = Storage::get('/public/viviendas/1/0.png');
-      $imagen = str_replace('+', ' ', $imagen);
-      $imagen = base64_encode($imagen);
-      $imagen = "data:image/png;base64".$imagen;
+      // $imagen = Storage::get('/public/viviendas/1/0.png');
+      // $imagen = str_replace('+', ' ', $imagen);
+      // $imagen = base64_encode($imagen);
+      // $imagen = "data:image/png;base64".$imagen;
 
       $propiedad = DB::table('propiedades')->where('id', '=', $id)->get()->first();
       $regiones = DB::table('regiones')->select('*')->where('id','=',11)->get();
       $comunas = DB::table('comunas')->select('*')->where('region_id','=',11)->get();
-      $tipopropiedades = DB::table('tipopropiedades')->select('*')->get();
-      $tipoamoblados = DB::table('tipoamoblados')->select('*')->get();
-      $tipopisos = DB::table('tipopisos')->select('*')->get();
-      $tipofinanciamientos = DB::table('tipofinanciamientos')->select('*')->get();
+      $tipopropiedades = DB::table('tipo_propiedades')->select('*')->get();
+      $tipoamoblados = DB::table('tipo_amoblados')->select('*')->get();
+      $tipopisos = DB::table('tipo_pisos')->select('*')->get();
+      $tipofinanciamientos = DB::table('tipo_financiamientos')->select('*')->get();
       // Recuperamos los financiamientos aceptados anteriores
       $contadoaux = DB::table('financiamientos')->where([
           ['propiedades_id', '=', $id],
@@ -408,9 +413,15 @@ class PropiedadesController extends Controller
           $json = curl_exec($curl);
           curl_close($curl);
       }
+
+      if(Auth::check()){
+          $mispropiedades = DB::table('propiedades')->select('*')->where('usuario_id',Auth::user()->id)->get();
+      }else{
+          $mispropiedades = null;
+      }
       $dailyIndicators = json_decode($json);
       $UF = intval($dailyIndicators->uf->valor);
-      return view('propiedades.form',compact('UF','imagen','contado','leasing','credito','subsidio','propiedad','regiones','comunas','tipopropiedades','tipoamoblados','tipopisos','tipofinanciamientos'));
+      return view('propiedades.form',compact('mispropiedades','UF','contado','leasing','credito','subsidio','propiedad','regiones','comunas','tipopropiedades','tipoamoblados','tipopisos','tipofinanciamientos'));
   }
 
   // Esta funcion es llamada al subir el form de edicion cuando una publicacion fue rechazada
@@ -466,16 +477,22 @@ class PropiedadesController extends Controller
       ->update(['estado_publicacion' => 'espera']);
       // Envia el correo al usuario de que su publicacion se encuentra en espera
       $email_user = DB::table('users')->select('email')->where('id', $request->usuario_id)->get();
-      Mail::send('emails.waitState', [$email_user], function ($message) use ($email_user) {
-          $message->to($email_user[0]->email)->subject('Notificación');
-      });
+      // Mail::send('emails.waitState', [$email_user], function ($message) use ($email_user) {
+      //     $message->to($email_user[0]->email)->subject('Notificación');
+      // });
       // Datos para retornar a la vista del catalogo
       $propiedades = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"aceptada")->get();
       $user = Auth::user();
       $propiedadesespera = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"espera")->get();
       // Aqui no hay verificacion del usuario, debido a que para  llegar esto ya el usuario debe haber estado logeado anteriormente
       $mispropiedades = DB::table('propiedades')->select('*')->where('usuario_id',Auth::user()->id)->get();
-      return view('propiedades.index',compact('propiedades','user','mispropiedades','propiedadesespera'));
+      $propiedad = DB::table('propiedades')->where('id', '=', $id)->first();
+      // dd($propiedad);
+      $tipoamoblados = DB::table('tipo_amoblados')->select('*')->get();
+      $inmueble = DB::table('tipo_propiedades')->find($propiedad->tipopropiedades_id);
+      $amoblado = DB::table('tipo_amoblados')->find($propiedad->tipoamoblados_id);
+      $piso = DB::table('tipo_pisos')->find($propiedad->tipopisos_id);
+      return view('propiedades.show',compact('propiedades','user','mispropiedades','propiedadesespera','piso','propiedad','inmueble','amoblado','tipoamoblados'));
   }
 
   // Funcion encargada de aprobar una solicitud
@@ -484,13 +501,31 @@ class PropiedadesController extends Controller
       ->where('id', $id)
       ->update(['estado_publicacion' => 'aceptada']);
       $propiedades = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"aceptada")->get();
+      $regiones = DB::table('regiones')->select('*')->where('id','=',11)->get();
+      $comunas = DB::table('comunas')->select('*')->where('region_id','=',11)->get();
+      $tipopropiedades = DB::table('tipo_propiedades')->select('*')->get();
+      $tipoamoblados = DB::table('tipo_amoblados')->select('*')->get();
+      $tipopisos = DB::table('tipo_pisos')->select('*')->get();
+      $tipofinanciamientos = DB::table('tipo_financiamientos')->select('*')->get();
+      $apiUrl = 'https://mindicador.cl/api';
+        if ( ini_get('allow_url_fopen') ) {
+            $json = file_get_contents($apiUrl);
+        } else {
+            //De otra forma utilizamos cURL
+            $curl = curl_init($apiUrl);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            $json = curl_exec($curl);
+            curl_close($curl);
+        }
+        $dailyIndicators = json_decode($json);
+        $UF = $dailyIndicators->uf->valor;
       // Aqui se le envia el correo de que su publicacion ha sido aceptada
       $user_id = DB::table('propiedades')->select('usuario_id')->where('id',$id)->get()[0]->usuario_id;
       $user_email = DB::table('users')->select('email')->where('id',$user_id)->get();
       // $user = DB::table('users')->select('')
-      Mail::send('emails.updateState', [$user_email], function ($message) use($user_email){
-          $message->to($user_email['0']->email)->subject('Notificación');
-      });
+      // Mail::send('emails.updateState', [$user_email], function ($message) use($user_email){
+      //     $message->to($user_email['0']->email)->subject('Notificación');
+      // });
       // Si hay un usuario activo, retorna sus publicaciones
       if(Auth::check()){
           $mispropiedades = DB::table('propiedades')->select('*')->where('usuario_id',Auth::user()->id)->get();
@@ -500,7 +535,7 @@ class PropiedadesController extends Controller
       // Retorna las solicitudes que aun se ecuentran en espera (Solo se muestran en la vista si el usuario es un administrador)
       $propiedadesespera = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"espera")->get();
       $user = Auth::user(); //Informacion del admin para enviarla a la vista
-      return view('propiedad.index',compact('propiedades','user','mispropiedades','propiedadesespera'));
+      return view('propiedades.index',compact('UF','propiedades','user','mispropiedades','propiedadesespera','tipopropiedades','comunas','regiones','tipoamoblados','tipopisos','tipofinanciamientos'));
   }
 
   // Funcion encargada de rechazar una solicitud
@@ -513,9 +548,9 @@ class PropiedadesController extends Controller
       $user = Auth::user();
       $user_id = DB::table('propiedades')->select('usuario_id')->where('id',$id)->get()[0]->usuario_id;
       $user_email = DB::table('users')->select('email')->where('id',$user_id)->get();
-      Mail::send('emails.downState', ['detalle' => $request->query("detalle")], function ($message) use($user_email) {
-          $message->to($user_email['0']->email)->subject('Notificación');
-      });
+      // Mail::send('emails.downState', ['detalle' => $request->query("detalle")], function ($message) use($user_email) {
+      //     $message->to($user_email['0']->email)->subject('Notificación');
+      // });
       // Si hay un usuario activo, retorna sus publicaciones
       if(Auth::check()){
 
@@ -523,8 +558,26 @@ class PropiedadesController extends Controller
       }else{
           $mispropiedades = null;
       }
+      $regiones = DB::table('regiones')->select('*')->where('id','=',11)->get();
+      $comunas = DB::table('comunas')->select('*')->where('region_id','=',11)->get();
+      $tipopropiedades = DB::table('tipo_propiedades')->select('*')->get();
+      $tipoamoblados = DB::table('tipo_amoblados')->select('*')->get();
+      $tipopisos = DB::table('tipo_pisos')->select('*')->get();
+      $tipofinanciamientos = DB::table('tipo_financiamientos')->select('*')->get();
+      $apiUrl = 'https://mindicador.cl/api';
+        if ( ini_get('allow_url_fopen') ) {
+            $json = file_get_contents($apiUrl);
+        } else {
+            //De otra forma utilizamos cURL
+            $curl = curl_init($apiUrl);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            $json = curl_exec($curl);
+            curl_close($curl);
+        }
+        $dailyIndicators = json_decode($json);
+        $UF = $dailyIndicators->uf->valor;
       // Retorna las solicitudes que aun se ecuentran en espera (Solo se muestran en la vista si el usuario es un administrador)
       $propiedadesespera = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"espera")->get();
-      return view('propiedades.index',compact('propiedades','user','mispropiedades','propiedadesespera'));
+      return view('propiedades.index',compact('propiedades','user','mispropiedades','propiedadesespera','tipopropiedades','comunas','regiones','tipoamoblados','tipopisos','tipofinanciamientos','UF'));
   }
 }

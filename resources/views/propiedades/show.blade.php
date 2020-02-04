@@ -13,30 +13,31 @@
                <li><a href="{{route('propiedades.index')}}">Mi portal Inmobiliario</a></li>
                <li>Mis publicaciones</li>
            </ul>
+           @if(Auth::check())
+               <!-- Si el usuario logeado es un admin, y la propiedad esta en espera, puede aceptarla o rechazarla -->
+               @if(Auth::user()->roles_id == 1 and $propiedad->estado_publicacion == "espera")
+                   <a href="{{route('update',$propiedad->id)}}"  class="btn btn-success btn-icon " style="color:white;border-style:none;margin-left:10px">
+                       <span class="nav-link-inner--text">Aceptar</span>
+                   </a>
+                   <a href="" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-danger btn-icon " style="color:white;border-style:none;margin-left:10px">
+                       <span class="nav-link-inner--text">Rechazar</span>
+                   </a>
+
+               @endif
+               @if(Auth::user()->id == $propiedad->usuario_id)
+                   <!-- Si fue rechazada su publicacion, se habilita botod de editar todo -->
+                   @if($propiedad->estado_publicacion == "rechazada")
+                   <a href="{{route('editpropiedad', $propiedad->id)}}" type="button" class="btn btn-success btn-icon " style="color:white;border-style:none;margin-left:10px">
+                       <span class="nav-link-inner--text">Editar</span>
+                   </a>
+
+                   @endif
+               @endif
+               @endif
        </div>
 
 <div class="separator-breadcrumb border-top"></div>
-@if(Session::has('success'))
-    <div class="alert alert-card alert-success" role="alert">
-    {{Session::get('success')}}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-          </button>
-    </div>
-@endif
 
-      <!-- Alert Error -->
-@if($errors->all())
-   <div class="alert alert-card alert-danger" role="alert">
-   @foreach ($errors->all() as $error)
-{{ $error }}
-@endforeach
-<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-<span aria-hidden="true">&times;</span>
-</button>
-</div>
-
-@endif
 
 <section class="ul-product-detail">
     <div class="row">
@@ -71,6 +72,7 @@
                         <div class="col-lg-6">
                             <div class="ul-product-detail__brand-name mb-4">
                                 <h5 class="heading">{{$propiedad->titulo_propiedad}}</h5>
+                                <p>{{$propiedad->estado_publicacion}}</p>
                                 <!-- <span class="text-mute">Modern model 2019</span> -->
                             </div>
 
@@ -312,7 +314,17 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <form method="" action="{{ route('down',$propiedad->id) }}">
+                <div class="modal-body">
+                    <p>Usted va a rechazar este publicación, por favor, ingrese las razones detalladamente para comunicarlas al propietario de la vivienda.</p>
+                    <textarea name = "detalle" rows="4" style="width:100% !important" required></textarea>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" value="Enviar" class="btn btn-primary">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">cancelar</button>
 
+                </div>
+            </form>
         </div>
     </div>
 </div>

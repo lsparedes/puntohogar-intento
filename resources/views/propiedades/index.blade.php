@@ -47,11 +47,20 @@
 
                  </li>
                     @if(Auth::check())
-                 <li class="nav-item">
-                     <a class=" nav-link " id="profile-basic-tab" data-toggle="tab" href="#profileBasic" role="tab" aria-controls="profileBasic" aria-selected="false"> Mis Publicaciones</a>
 
-                 </li>
-   @endif
+                 @if(Auth::user()->roles_id == 1)
+               <li class="nav-item">
+                   <a class="nav-link" id="contact-icon-pill" data-toggle="pill" href="#contactPIll" role="tab" aria-controls="contactPIll" aria-selected="false"><i class="nav-icon i-Home1 mr-1"></i> Solicitudes</a>
+               </li>
+               @else
+               <li class="nav-item">
+                   <a class=" nav-link " id="profile-basic-tab" data-toggle="tab" href="#profileBasic" role="tab" aria-controls="profileBasic" aria-selected="false"> Mis Publicaciones</a>
+
+               </li>
+               @endif
+                 @endif
+
+
              </ul>
              <div class="tab-content ul-tab__content" id="nav-tabContent">
                  <div class="tab-pane fade show active" id="homeBasic" role="tabpanel" aria-labelledby="home-basic-tab">
@@ -321,6 +330,70 @@
                          Usted aun no tiene ninguna propiedad publicada
                        </div>
                      @endif
+                 </div>
+                 <div class="tab-pane fade" id="contactPIll" role="tabpanel" aria-labelledby="nav-contact-tab">
+                   <section class = "product-cart">
+                     <div class="row list-grid">
+                       <!-- Muestra las solicitudes de publicaciones -->
+                       @foreach($propiedadesespera as $propiedad)
+                         <div class="list-item col-md-4">
+                           <div class="card o-hidden mb-4 d-flex flex-column">
+                             <div class="list-thumb d-flex">
+                             <img alt="" src="{{ asset('storage/viviendas').'/'.$propiedad->id.'/0.png' }}" />
+                             </div>
+                             <div class="flex-grow-1 d-block">
+                               <div class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center">
+                                 <a class="w-40 w-sm-100" href="{{ route('propiedadeshow',$propiedad->codigo) }}">
+                                   <div class="item-title">
+                                     <h4>{{$propiedad->titulo_propiedad}} </h4>
+                                   </div>
+                                 </a>
+                                 <div class="row">
+                                   <div class="col-4">
+                                     <p class="m-0 text-muted text-small w-15 w-sm-100">Baños: {{$propiedad->nro_banos}}</p>
+                                   </div>
+                                   <div class="col-4">
+                                     <p class="m-0 text-muted text-small w-15 w-sm-100">Habitaciones: {{$propiedad->nro_habitaciones}}</p>
+                                   </div>
+                                   <div class="col-4">
+                                     <p class="m-0 text-muted text-small w-15 w-sm-100">Estacionamientos: {{$propiedad->nro_estacionamientos}}</p>
+                                   </div>
+                                 </div>
+                                 <div class="row">
+                                   {{$propiedad->direccion}}
+                                 </div>
+                                 <p class="m-0 text-muted text-small w-20 w-sm-100 d-none d-lg-block item-badges">
+                                   <span class="badge badge-primary">UF: {{$propiedad->valor_uf}}</span>
+                                 </p>
+                               </div>
+                             </div>
+                           </div>
+
+                         </div>
+                       @endforeach
+                       <!-- <div class="col-md-12 mt-3  ">
+                               <nav aria-label="Page navigation example">
+                                   <ul class="pagination">
+                                       <li class="page-item">
+                                           <a class="page-link" href="#">Previous</a>
+                                       </li>
+                                       <li class="page-item">
+                                           <a class="page-link" href="#">1</a>
+                                       </li>
+                                       <li class="page-item">
+                                           <a class="page-link" href="#">2</a>
+                                       </li>
+                                       <li class="page-item">
+                                           <a class="page-link" href="#">3</a>
+                                       </li>
+                                       <li class="page-item">
+                                           <a class="page-link" href="#">Next</a>
+                                       </li>
+                                   </ul>
+                               </nav>
+                           </div> -->
+                     </div>
+                   </section>
                  </div>
 
     </div>

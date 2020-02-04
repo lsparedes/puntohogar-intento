@@ -22,29 +22,21 @@
                 <!-- User avatar dropdown -->
                 <div class="dropdown">
                     <div  class="user col align-self-end">
-                        <img src="{{asset('assets/images/faces/1.jpg')}}" id="userDropdown" alt="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <span>{{ auth()->user()->name }}</span>
+                      <br>
+                      <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
 
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                            <div class="dropdown-header">
-                                <i class="i-Lock-User mr-1"></i> {{ auth()->user()->name }}
-                            </div>
-                            <!-- <a class="dropdown-item">Account settings</a>
-                            <a class="dropdown-item">Billing history</a> -->
+                              Cerrar Sesión
+                          </a>
+                          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                              @csrf
+                          </form>
 
-                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-
-                                    Cerrar Sesión
-                                </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                    @csrf
-                                </form>
-                        </div>
                     </div>
                 </div>
                 @else
 
-          
+
 
                 @endif
 
