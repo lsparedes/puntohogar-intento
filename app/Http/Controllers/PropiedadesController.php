@@ -17,6 +17,11 @@ class PropiedadesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
+
+
+
     public function index()
     {
       $regiones = DB::table('regiones')->select('*')->where('id','=',11)->get();

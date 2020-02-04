@@ -1041,7 +1041,7 @@
       <div class="modal-dialog" role="document">
           <div class="modal-content">
               <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel"> <b>¡Bienvenido de nuevo!</b> </h5>
+                  <h5 class="modal-title" id="exampleModalLabel"> <b>¡Bienvenido de nuevo! </b> </h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                   </button>
@@ -1075,7 +1075,7 @@
 
                     <div class="form-group row mb-0">
                         <div class="col-md-8 offset-md-4 ">
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-sm" style="background:#F2790F;color:white">
                                 {{ __('Iniciar sesión') }}
                             </button>
 

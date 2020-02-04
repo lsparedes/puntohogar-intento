@@ -22,7 +22,7 @@
                 <!-- User avatar dropdown -->
                 <div class="dropdown">
                     <div  class="user col align-self-end">
-                      <span>{{ auth()->user()->name }}</span>
+                      <span> <b>{{ auth()->user()->name }}</b> </span>
                       <br>
                       <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
 
@@ -35,6 +35,18 @@
                     </div>
                 </div>
                 @else
+                <div class="dropdown">
+                    <div  class="user col align-self-end">
+                      <span> <b>Bienvenido</b> </span>
+                      <br>
+                      <a >
+
+                              Visitante
+                          </a>
+
+
+                    </div>
+                </div>
 
 
 

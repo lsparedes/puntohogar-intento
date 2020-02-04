@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     return view('landing');
-});
+})->name('wea');
 
 Auth::routes();
 
@@ -22,6 +22,7 @@ Route::post('/putregister' , 'Auth\RegisterController@create' )->name('register.
 
 
 Route::get('/home', 'HomeController@index')->name('home');
+
 Route::get('propiedades/{id}', ['as'=> 'propiedadeshow', 'uses' => 'PropiedadesController@vermas']);
 Route::resource('/propiedades','PropiedadesController');
 
