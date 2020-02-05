@@ -16,10 +16,8 @@ class CreateImagenesTable extends Migration
         Schema::create('imagenes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('img');
-            $table->unsignedBigInteger('propiedades_id');
-            $table->foreign('propiedades_id')->references('id')->on('propiedades')
-                                    ->onDelete('cascade')
-                                    ->onUpdate('cascade');
+            $table->string('codigo');
+
             $table->timestamps();
         });
     }

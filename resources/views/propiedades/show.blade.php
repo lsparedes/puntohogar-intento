@@ -51,20 +51,28 @@
                                 <div class="card-body">
                                     <!-- Carousel que muestra las fotografias de la publicacion -->
                                     <h4 class="card-title mb-3" style = "text-align:center"> Fotografias</h4>
-                                    <div class="carousel_wrap">
-                                        <div id="carouselExampleInterval" class="carousel slide" data-ride="carousel">
-                                            <div class="carousel-inner">
+                                    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
 
-                                            <a class="carousel-control-prev" href="#carouselExampleInterval" role="button" data-slide="prev">
-                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                <span class="sr-only">Previous</span>
-                                            </a>
-                                            <a class="carousel-control-next" href="#carouselExampleInterval" role="button" data-slide="next">
-                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                <span class="sr-only">Next</span>
-                                            </a>
-                                        </div>
-                                    </div>
+
+    @foreach($fotos as $key => $foto)
+       <div class="carousel-item {{$key == 0 ? 'active' : '' }}">
+           <img src="{{ asset('images/'.$foto->img)}}" class="d-block w-100"  alt="...">
+       </div>
+       @endforeach
+
+
+  </div>
+  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+iv>
                                 </div>
                             </div>
                         </div>

@@ -105,6 +105,137 @@ class PropiedadesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+     function upload(Request $request)
+    {
+      //Aqui inserta la propiedad a la base de datos
+        if(Auth::check()){
+
+          //Aqui inserta la propiedad a la base de datos
+          DB::table('propiedades')->insert([
+                  'codigo' => $request->codigo,
+                  'titulo_propiedad' => $request->titulo_propiedad,
+                  'descripcion_propiedad' => $request->descripcion_propiedad,
+                  'valor_uf' => $request->valor_uf,
+                  'valor_pesos' => $request->valor_pesos,
+                  'nro_habitaciones' => $request->nro_habitaciones,
+                  'nro_banos' => $request->nro_banos,
+                  'estado' => $request->estado,
+                  'sup_construida' => $request->sup_construida,
+                  'sup_terreno' => $request->sup_terreno,
+                  'estado_publicacion' => $request->estado_publicacion,
+                  'tipopropiedades_id' => $request->tipopropiedad,
+                  'tipoamoblados_id' => $request->amoblado,
+                  'tipopisos_id' => $request->tipopisos,
+                  'comunas_id' => $request->comunas,
+                  'usuario_id' => Auth::user()->id,
+                  'tipo_comercio' => $request->tipo_comercio,
+                  'nro_estacionamientos' => $request->nro_estacionamientos,
+                  'direccion' => $request->direccion,]
+              );
+              $propiedad = DB::table('propiedades')->where('codigo',$request->codigo)->first();
+
+              if ($request->contado==1){
+                  DB::table('financiamientos')->insert(
+
+                     ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 1]
+                  );
+              }
+              if ($request->subsidio==1){
+                 DB::table('financiamientos')->insert(
+                     ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 2]
+                 );
+              }
+
+               if ($request->leasing==1){
+                 DB::table('financiamientos')->insert(
+                     ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 3]
+                 );
+              }
+              if ($request->credito==1){
+                 DB::table('financiamientos')->insert(
+                     ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 4]
+                 );
+              }
+              $image_code = '';
+     $images = $request->file('file');
+     foreach($images as $image)
+     {
+      $new_name = rand() . '.' . $image->getClientOriginalExtension();
+      $image->move(public_path('images'), $new_name);
+      $image_code .= '<div class="col-md-3" style="margin-bottom:24px;"><img src="/images/'.$new_name.'" class="img-thumbnail" /></div>';
+      DB::table('imagenes')->insert(
+          ['codigo' => $request->codigo, 'img' => $new_name]
+      );
+     }
+
+
+        return response()->json(['success'=> true, 'message' => 'La propiedad se agregó correctamente a la tabla propiedades.','modal'=>false,'image'=>$image_code,'url'=>route('propiedadeshow',$request->codigo)]);
+        }else{
+
+          DB::table('propiedadestemporal')->insert([
+                  'codigo' => $request->codigo,
+                  'titulo_propiedad' => $request->titulo_propiedad,
+                  'descripcion_propiedad' => $request->descripcion_propiedad,
+                  'valor_uf' => $request->valor_uf,
+                  'valor_pesos' => $request->valor_pesos,
+                  'nro_habitaciones' => $request->nro_habitaciones,
+                  'nro_banos' => $request->nro_banos,
+                  'estado' => $request->estado,
+                  'sup_construida' => $request->sup_construida,
+                  'sup_terreno' => $request->sup_terreno,
+                  'estado_publicacion' => $request->estado_publicacion,
+                  'tipopropiedades_id' => $request->tipopropiedad,
+                  'tipoamoblados_id' => $request->amoblado,
+                  'tipopisos_id' => $request->tipopisos,
+                  'comunas_id' => $request->comunas,
+                  //'usuario_id' => $request->usuario_id,
+                  'tipo_comercio' => $request->tipo_comercio,
+                  'nro_estacionamientos' => $request->nro_estacionamientos,
+                  'direccion' => $request->direccion,]
+              );
+              $propiedad = DB::table('propiedades')->where('codigo',$request->codigo)->first();
+
+              if ($request->contado==1){
+                  DB::table('financiamientos')->insert(
+
+                     ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 1]
+                  );
+              }
+              if ($request->subsidio==1){
+                 DB::table('financiamientos')->insert(
+                     ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 2]
+                 );
+              }
+
+               if ($request->leasing==1){
+                 DB::table('financiamientos')->insert(
+                     ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 3]
+                 );
+              }
+              if ($request->credito==1){
+                 DB::table('financiamientos')->insert(
+                     ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 4]
+                 );
+              }
+              $image_code = '';
+     $images = $request->file('file');
+     foreach($images as $image)
+     {
+      $new_name = rand() . '.' . $image->getClientOriginalExtension();
+      $image->move(public_path('images'), $new_name);
+      $image_code .= '<div class="col-md-3" style="margin-bottom:24px;"><img src="/images/'.$new_name.'" class="img-thumbnail" /></div>';
+      DB::table('imagenes')->insert(
+          ['codigo' => $request->codigo, 'img' => $new_name]
+      );
+     }
+
+
+
+
+                return response()->json(['success'=> true, 'message' => 'La propiedad se agregó correctamente.','modal'=>true,'image'=>$image_code]);
+
+        }
+    }
     public function store(Request $request)
     {
       //Aqui inserta la propiedad a la base de datos
@@ -301,13 +432,14 @@ class PropiedadesController extends Controller
       // }
       // Recupera los datos de la propiedad
       $propiedad = DB::table('propiedades')->where('codigo', '=', $codigo)->first();
+        $fotos = DB::table('imagenes')->where('codigo', '=', $codigo)->get();
       // dd($propiedad);
       $tipoamoblados = DB::table('tipo_amoblados')->select('*')->get();
       $inmueble = DB::table('tipo_propiedades')->find($propiedad->tipopropiedades_id);
       $amoblado = DB::table('tipo_amoblados')->find($propiedad->tipoamoblados_id);
       $piso = DB::table('tipo_pisos')->find($propiedad->tipopisos_id);
 
-      return view('propiedades.show',compact('piso','propiedad','inmueble','amoblado','tipoamoblados'));
+      return view('propiedades.show',compact('piso','propiedad','inmueble','amoblado','tipoamoblados','fotos'));
     }
     /**
      * Show the form for editing the specified resource.
