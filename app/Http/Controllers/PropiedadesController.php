@@ -53,7 +53,8 @@ class PropiedadesController extends Controller
         $dailyIndicators = json_decode($json);
         $UF = $dailyIndicators->uf->valor;
         $propiedadesespera = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"espera")->get();
-        return view('propiedades.index',compact('UF','regiones','comunas','tipopropiedades','tipoamoblados','tipopisos','tipofinanciamientos','mispropiedades','propiedadesespera','fotos'));
+        $fotos2 = DB::table('imagenes')->join('propiedades','propiedades.codigo','=','imagenes.codigo')->where('propiedades.estado_publicacion','=',"espera")->get();
+        return view('propiedades.index',compact('UF','regiones','comunas','tipopropiedades','tipoamoblados','tipopisos','tipofinanciamientos','mispropiedades','propiedadesespera','fotos','fotos2'));
       // Recupera las propiedades que han sido aceptadas por un administrador
       //$propiedades = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"aceptada")->get();
       // Si hay un usuario activo, retorna sus publicaciones
