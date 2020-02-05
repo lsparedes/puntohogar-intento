@@ -34,10 +34,11 @@ class PropiedadesController extends Controller
       if(Auth::check()){
 
           $mispropiedades = DB::table('propiedades')->select('*')->where('usuario_id',Auth::user()->id)->get();
-          $fotos = DB::table('imagenes')->join('propiedades','propiedades.codigo','=','imagenes.codigo')->where('propiedades.usuario_id','=',Auth::user()->id)->get()->toArray();
+          $fotos = DB::table('imagenes')->join('propiedades','propiedades.codigo','=','imagenes.codigo')->where('propiedades.usuario_id','=',Auth::user()->id)->get();
 
       }else{
           $mispropiedades = null;
+          $fotos=null;
       }
       $apiUrl = 'https://mindicador.cl/api';
         if ( ini_get('allow_url_fopen') ) {
@@ -51,8 +52,10 @@ class PropiedadesController extends Controller
         }
         $dailyIndicators = json_decode($json);
         $UF = $dailyIndicators->uf->valor;
+
         $propiedadesespera = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"espera")->get();
-        return view('propiedades.index',compact('UF','regiones','comunas','tipopropiedades','tipoamoblados','tipopisos','tipofinanciamientos','mispropiedades','propiedadesespera','fotos'));
+        $fotos2 = DB::table('imagenes')->join('propiedades','propiedades.codigo','=','imagenes.codigo')->where('propiedades.estado_publicacion','=',"espera")->get();
+        return view('propiedades.index',compact('UF','regiones','comunas','tipopropiedades','tipoamoblados','tipopisos','tipofinanciamientos','mispropiedades','propiedadesespera','fotos','fotos2'));
       // Recupera las propiedades que han sido aceptadas por un administrador
       //$propiedades = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"aceptada")->get();
       // Si hay un usuario activo, retorna sus publicaciones
@@ -615,9 +618,9 @@ class PropiedadesController extends Controller
       ->update(['estado_publicacion' => 'espera']);
       // Envia el correo al usuario de que su publicacion se encuentra en espera
       $email_user = DB::table('users')->select('email')->where('id', $request->usuario_id)->get();
-      // Mail::send('emails.waitState', [$email_user], function ($message) use ($email_user) {
-      //     $message->to($email_user[0]->email)->subject('Notificación');
-      // });
+       Mail::send('emails.waitState', [$email_user], function ($message) use ($email_user) {
+         $message->to($email_user[0]->email)->subject('Notificación');
+       });
       // Datos para retornar a la vista del catalogo
 
       $propiedades = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"aceptada")->get();
@@ -664,9 +667,9 @@ class PropiedadesController extends Controller
       $user_id = DB::table('propiedades')->select('usuario_id')->where('id',$id)->get()[0]->usuario_id;
       $user_email = DB::table('users')->select('email')->where('id',$user_id)->get();
       // $user = DB::table('users')->select('')
-      // Mail::send('emails.updateState', [$user_email], function ($message) use($user_email){
-      //     $message->to($user_email['0']->email)->subject('Notificación');
-      // });
+      Mail::send('emails.updateState', [$user_email], function ($message) use($user_email){
+          $message->to($user_email['0']->email)->subject('Notificación');
+      });
       // Si hay un usuario activo, retorna sus publicaciones
       if(Auth::check()){
           $mispropiedades = DB::table('propiedades')->select('*')->where('usuario_id',Auth::user()->id)->get();
@@ -675,6 +678,7 @@ class PropiedadesController extends Controller
       }
       // Retorna las solicitudes que aun se ecuentran en espera (Solo se muestran en la vista si el usuario es un administrador)
       $propiedadesespera = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"espera")->get();
+
       $user = Auth::user(); //Informacion del admin para enviarla a la vista
       return view('propiedades.index',compact('UF','propiedades','user','mispropiedades','propiedadesespera','tipopropiedades','comunas','regiones','tipoamoblados','tipopisos','tipofinanciamientos'));
   }
@@ -689,9 +693,9 @@ class PropiedadesController extends Controller
       $user = Auth::user();
       $user_id = DB::table('propiedades')->select('usuario_id')->where('id',$id)->get()[0]->usuario_id;
       $user_email = DB::table('users')->select('email')->where('id',$user_id)->get();
-      // Mail::send('emails.downState', ['detalle' => $request->query("detalle")], function ($message) use($user_email) {
-      //     $message->to($user_email['0']->email)->subject('Notificación');
-      // });
+      Mail::send('emails.downState', ['detalle' => $request->query("detalle")], function ($message) use($user_email) {
+          $message->to($user_email['0']->email)->subject('Notificación');
+      });
       // Si hay un usuario activo, retorna sus publicaciones
       if(Auth::check()){
 
@@ -719,6 +723,7 @@ class PropiedadesController extends Controller
         $UF = $dailyIndicators->uf->valor;
       // Retorna las solicitudes que aun se ecuentran en espera (Solo se muestran en la vista si el usuario es un administrador)
       $propiedadesespera = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"espera")->get();
-      return view('propiedades.index',compact('propiedades','user','mispropiedades','propiedadesespera','tipopropiedades','comunas','regiones','tipoamoblados','tipopisos','tipofinanciamientos','UF'));
+        $fotos2 = DB::table('imagenes')->join('propiedades','propiedades.codigo','=','imagenes.codigo')->where('propiedades.estado_publicacion','=',"espera")->get();
+      return view('propiedades.index',compact('propiedades','user','mispropiedades','propiedadesespera','tipopropiedades','comunas','regiones','tipoamoblados','tipopisos','tipofinanciamientos','UF','fotos2'));
   }
 }
