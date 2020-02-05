@@ -261,12 +261,16 @@
                        <div class="list-item col-md-3">
                            <div class="card o-hidden mb-4 d-flex flex-column">
                                <div class="list-thumb d-flex">
-                                 @foreach($fotos as $foto)
-                                  @if($foto->codigo==$propiedad->codigo)
-                                 <img src="{{ asset('images/'.$foto->img) }}" alt="">
+                                 @if($fotos==null)
 
+                                   @else
+                                   @foreach($fotos as $foto)
+                                    @if($foto->codigo==$propiedad->codigo)
+                                   <img src="{{ asset('images/'.$foto->img) }}" alt="">
+
+                                     @endif
+                                     @endforeach
                                    @endif
-                                   @endforeach
                                </div>
                                <div class="flex-grow-1 d-block">
                                    <div class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center">
@@ -330,7 +334,16 @@
                        <div class="list-item col-md-3">
                            <div class="card o-hidden mb-4 d-flex flex-column">
                                <div class="list-thumb d-flex">
+                                 @if($fotos==null)
 
+                                   @else
+                                   @foreach($fotos as $foto)
+                                    @if($foto->codigo==$propiedad->codigo)
+                                   <img src="{{ asset('images/'.$foto->img) }}" alt="">
+
+                                     @endif
+                                     @endforeach
+                                   @endif
                                </div>
                                <div class="flex-grow-1 d-block">
                                    <div class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center">

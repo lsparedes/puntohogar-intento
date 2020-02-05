@@ -38,6 +38,7 @@ class PropiedadesController extends Controller
 
       }else{
           $mispropiedades = null;
+          $fotos= null;
       }
       $apiUrl = 'https://mindicador.cl/api';
         if ( ini_get('allow_url_fopen') ) {
