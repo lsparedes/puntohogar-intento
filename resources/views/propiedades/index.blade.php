@@ -261,19 +261,16 @@
                        <div class="list-item col-md-3">
                            <div class="card o-hidden mb-4 d-flex flex-column">
                                <div class="list-thumb d-flex">
-                                @if($fotos==null)
+                                 @if($fotos==null)
 
-                                @else
-                                @foreach($fotos as $foto)
-                                 @if($foto->codigo==$propiedad->codigo)
-                                <img src="{{ asset('images/'.$foto->img) }}" alt="">
+                                   @else
+                                   @foreach($fotos as $foto)
+                                    @if($foto->codigo==$propiedad->codigo)
+                                   <img src="{{ asset('images/'.$foto->img) }}" alt="">
 
-                                  @endif
-                                  @endforeach
-                                @endif
-
-
-
+                                     @endif
+                                     @endforeach
+                                   @endif
                                </div>
                                <div class="flex-grow-1 d-block">
                                    <div class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center">
@@ -333,19 +330,18 @@
                    <a href="{{ route('propiedadeshow',$propiedad->codigo) }}">
                        <div class="list-item col-md-3">
                            <div class="card o-hidden mb-4 d-flex flex-column">
-                             <div class="list-thumb d-flex">
-                               @if($fotos2==null)
+                               <div class="list-thumb d-flex">
+                                 @if($fotos2==null)
 
-                               @else
-                               @foreach($fotos2 as $fotos)
-                                @if($fotos->codigo==$propiedad->codigo)
-                               <img src="{{ asset('images/'.$fotos->img) }}" alt="">
+                                @else
+                                @foreach($fotos2 as $fotos)
+                                 @if($fotos->codigo==$propiedad->codigo)
+                                <img src="{{ asset('images/'.$fotos->img) }}" alt="">
 
-                                 @endif
-                                 @endforeach
-                               @endif
-
-                             </div>
+                                  @endif
+                                  @endforeach
+                                @endif
+                               </div>
                                <div class="flex-grow-1 d-block">
                                    <div class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center">
                                        <a class="w-40 w-sm-100">
