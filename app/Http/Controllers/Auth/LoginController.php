@@ -44,11 +44,12 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
 
-        return redirect()->back();
+
+         return view('landing');
     }
 
     public function loginModal(Request $request){
-      
+
 
 
       if($request->email){

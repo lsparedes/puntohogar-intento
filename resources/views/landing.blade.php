@@ -113,7 +113,7 @@
 
                           @else
                           <li class="nav-item d-none d-lg-block ">
-                            <a  class="btn btn-neutral btn-icon btn-sm" style="background-color:rgb(27, 140, 129);color:white;border-style:none" data-toggle="modal" data-target="#exampleModal">
+                            <a  class="btn btn-neutral btn-icon btn-sm" style="background-color:rgb(27, 140, 129);color:white;border-style:none" href="{{ route('login') }}">
                               <!-- <span class="btn-inner--icon">
                                 <i class="fa fa-cloud-download mr-2"></i>
                               </span> -->
