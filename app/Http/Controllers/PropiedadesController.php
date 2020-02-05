@@ -618,18 +618,21 @@ class PropiedadesController extends Controller
       //     $message->to($email_user[0]->email)->subject('Notificación');
       // });
       // Datos para retornar a la vista del catalogo
+
       $propiedades = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"aceptada")->get();
       $user = Auth::user();
       $propiedadesespera = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"espera")->get();
       // Aqui no hay verificacion del usuario, debido a que para  llegar esto ya el usuario debe haber estado logeado anteriormente
       $mispropiedades = DB::table('propiedades')->select('*')->where('usuario_id',Auth::user()->id)->get();
       $propiedad = DB::table('propiedades')->where('id', '=', $id)->first();
-      // dd($propiedad);
+
       $tipoamoblados = DB::table('tipo_amoblados')->select('*')->get();
       $inmueble = DB::table('tipo_propiedades')->find($propiedad->tipopropiedades_id);
+          $fotos = DB::table('imagenes')->where('codigo', '=', $propiedad->codigo)->get();
+             //dd($fotos);
       $amoblado = DB::table('tipo_amoblados')->find($propiedad->tipoamoblados_id);
       $piso = DB::table('tipo_pisos')->find($propiedad->tipopisos_id);
-      return view('propiedades.show',compact('propiedades','user','mispropiedades','propiedadesespera','piso','propiedad','inmueble','amoblado','tipoamoblados'));
+      return view('propiedades.show',compact('propiedades','user','mispropiedades','propiedadesespera','piso','propiedad','inmueble','amoblado','tipoamoblados','fotos'));
   }
 
   // Funcion encargada de aprobar una solicitud
