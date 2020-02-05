@@ -31,3 +31,5 @@ Route::get('propiedades/down/{id}', 'PropiedadesController@downState')->name('do
 Route::get('formEdit/{id}', 'PropiedadesController@callFormEdit')->name('editpropiedad'); //Formulario de edicion cuando la publicacion fue rechazada
 Route::post('propiedades/editAll/{id}', 'PropiedadesController@editAll')->name('editAll'); //Actualiza la propiedad
 Route::post('multiple-file-upload/upload', 'PropiedadesController@upload')->name('upload');
+
+Route::get('/putregister' , 'Auth\RegisterController@create' )->name('register.modal');
