@@ -261,7 +261,12 @@
                        <div class="list-item col-md-3">
                            <div class="card o-hidden mb-4 d-flex flex-column">
                                <div class="list-thumb d-flex">
-                                   <img alt="" src="{{ asset('storage/viviendas').'/'.$propiedad->id.'/0.png' }}" />
+                                 @foreach($fotos as $foto)
+                                  @if($foto->codigo==$propiedad->codigo)
+                                 <img src="{{ asset('images/'.$foto->img) }}" alt="">
+
+                                   @endif
+                                   @endforeach
                                </div>
                                <div class="flex-grow-1 d-block">
                                    <div class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center">
@@ -290,7 +295,10 @@
                                                        <th style="text-align:right">{{$propiedad->nro_estacionamientos}}</th>
 
                                                    </tr>
-
+                                                   <tr>
+                                                     <td scope="row">Codigo</td>
+                                                     <th style="text-align:right">{{$propiedad->codigo}}</th>
+                                                   </tr>
                                                </tbody>
                                            </table>
                                        </div>
@@ -322,12 +330,15 @@
                        <div class="list-item col-md-3">
                            <div class="card o-hidden mb-4 d-flex flex-column">
                                <div class="list-thumb d-flex">
-                                   <img alt="" src="{{ asset('storage/viviendas').'/'.$propiedad->id.'/0.png' }}" />
+
                                </div>
                                <div class="flex-grow-1 d-block">
                                    <div class="card-body align-self-center d-flex flex-column justify-content-between align-items-lg-center">
                                        <a class="w-40 w-sm-100">
                                            <div class="item-title">
+
+
+
                                                <h4> <b>{{$propiedad->titulo_propiedad}}</b> </h4>
                                                <h6>{{$propiedad->direccion}}-Comuna, Región</h6>
                                            </div>
@@ -351,7 +362,10 @@
                                                        <th style="text-align:right">{{$propiedad->nro_estacionamientos}}</th>
 
                                                    </tr>
-
+                                                   <tr>
+                                                     <td scope="row">Codigo</td>
+                                                     <th style="text-align:right">{{$propiedad->codigo}}</th>
+                                                   </tr>
                                                </tbody>
                                            </table>
                                        </div>

@@ -34,6 +34,7 @@ class PropiedadesController extends Controller
       if(Auth::check()){
 
           $mispropiedades = DB::table('propiedades')->select('*')->where('usuario_id',Auth::user()->id)->get();
+          $fotos = DB::table('imagenes')->join('propiedades','propiedades.codigo','=','imagenes.codigo')->where('propiedades.usuario_id','=',Auth::user()->id)->get()->toArray();
 
       }else{
           $mispropiedades = null;
@@ -51,7 +52,7 @@ class PropiedadesController extends Controller
         $dailyIndicators = json_decode($json);
         $UF = $dailyIndicators->uf->valor;
         $propiedadesespera = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"espera")->get();
-        return view('propiedades.index',compact('UF','regiones','comunas','tipopropiedades','tipoamoblados','tipopisos','tipofinanciamientos','mispropiedades','propiedadesespera'));
+        return view('propiedades.index',compact('UF','regiones','comunas','tipopropiedades','tipoamoblados','tipopisos','tipofinanciamientos','mispropiedades','propiedadesespera','fotos'));
       // Recupera las propiedades que han sido aceptadas por un administrador
       //$propiedades = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"aceptada")->get();
       // Si hay un usuario activo, retorna sus publicaciones
