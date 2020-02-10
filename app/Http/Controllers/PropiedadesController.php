@@ -668,7 +668,7 @@ class PropiedadesController extends Controller
       $user_email = DB::table('users')->select('email')->where('id',$user_id)->get();
       // $user = DB::table('users')->select('')
       Mail::send('emails.updateState', [$user_email], function ($message) use($user_email){
-          $message->to($user_email['0']->email)->subject('Notificación');
+          $message->to($user_email['0']->email)->subject('Notificación Punto Hogar');
       });
       // Si hay un usuario activo, retorna sus publicaciones
       if(Auth::check()){
