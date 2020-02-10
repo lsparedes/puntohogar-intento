@@ -44,6 +44,7 @@
 
        </ul>
        <div class="tab-content ul-tab__content" id="nav-tabContent">
+
            <div class="tab-pane fade show active" id="homeBasic" role="tabpanel" aria-labelledby="home-basic-tab">
 
                <br>
@@ -55,16 +56,19 @@
                                <input type="hidden" id="codigo" name="codigo" value="">
                                <label for="tipopropiedad">¿Qué tipo de propiedad tienes?</label>
                                <select class="form-control" id="tipopropiedad" name="tipopropiedad">
+                                   <option value="" selected>Selecciona un tipo</option>
                                    @foreach ($tipopropiedades as $tipopropiedad)
                                    <option value="{{$tipopropiedad->id}}">{{$tipopropiedad->propiedades}}</option>
                                    @endforeach
                                </select>
+
                            </div>
                        </div>
                        <div class="col-md-4 col-sm-12">
                            <div class="container form-group">
                                <label for="estadovivienda">¿En qué estado se encuentra su inmueble?</label>
                                <select class="form-control" id="estado" name="estado">
+                                   <option value="" selected>Selecciona un estado</option>
                                    <option value="nuevo">Nueva</option>
                                    <option value="usado">Usada</option>
                                    <option value="reacondicionado">Reacondicionada</option>
@@ -75,6 +79,7 @@
                            <div class="container form-group">
                                <label for="tipo_comercio">¿Qué desea hacer?</label>
                                <select class="form-control" id="tipo_comercio" name="tipo_comercio">
+                                   <option value="" selected>Selecciona una opción</option>
                                    <option value="vender">Vender</option>
                                    <option value="arrendar">Arrendar</option>
                                </select>
@@ -86,6 +91,7 @@
                            <div class="container form-group">
                                <label for="region">Región:</label>
                                <select class="form-control" name="region" id="region" onchange="changeRegion(this.value)">
+                                 <option value="" selected>Selecciona una región</option>
                                    @foreach($regiones as $region)
                                    <option value="{{$region->id}}">{{$region->order}}, {{$region->nombre}}</option>
                                    @endforeach
@@ -96,6 +102,7 @@
                            <div class="container form-group">
                                <label for="comunas">Comuna:</label>
                                <select class="form-control" id="comunas" name="comunas">
+                                   <option value="" selected>Selecciona una comuna</option>
                                    @foreach($comunas as $comuna)
                                    <option value="{{$comuna->id}}">{{$comuna->nombre}}</option>
                                    @endforeach
@@ -105,7 +112,7 @@
                        <div class="col-md-4 col-sm-12">
                            <div class="container form-group">
                                <label for="direccion">Dirección:</label>
-                               <input type="text" class="form-control" id="direccion" name="direccion" value="{{ old('direccion') }}" required autocomplete="direccion">
+                               <input type="text" class="form-control" id="direccion" name="direccion" value="{{ old('direccion') }}">
                            </div>
                        </div>
                    </div>
@@ -113,19 +120,19 @@
                        <div class="col-md-4 col-sm-12">
                            <div class="container form-group">
                                <label for="nro_habitaciones">Habitaciones</label>
-                               <input type="number" min="0" class="form-control" id="nro_habitaciones" name="nro_habitaciones" value="{{ old('nro_habitaciones') }}" required>
+                               <input type="number" min="0" class="form-control" id="nro_habitaciones" name="nro_habitaciones" value="{{ old('nro_habitaciones') }}">
                            </div>
                        </div>
                        <div class="col-md-4 col-sm-12">
                            <div class="container form-group">
                                <label for="nro_banos">Baños</label>
-                               <input type="number" class="form-control" name="nro_banos" id="nro_banos" min="0" value="{{ old('nro_banos') }}" required>
+                               <input type="number" class="form-control" name="nro_banos" id="nro_banos" min="0" value="{{ old('nro_banos') }}">
                            </div>
                        </div>
                        <div class="col-md-4 col-sm-12">
                            <div class="container form-group">
                                <label for="nro_estacionamientos">Estacionamientos</label>
-                               <input type="number" class="form-control" name="nro_estacionamientos" id="nro_estacionamientos" min="0" value="{{ old('nro_estacionamientos') }}" required>
+                               <input type="number" class="form-control" name="nro_estacionamientos" id="nro_estacionamientos" min="0" value="{{ old('nro_estacionamientos') }}">
                            </div>
                        </div>
                    </div>
@@ -133,14 +140,14 @@
                        <div class="col-6">
                            <div class="container form-group">
                                <label for="">Superficie del terreno (en m<sup>2</sup>):</label>
-                               <input type="number" class="form-control" maxlength="140" name="sup_terreno" id="sup_terreno" min="0" value="{{ old('sup_terreno') }}" required>
+                               <input type="number" class="form-control" maxlength="140" name="sup_terreno" id="sup_terreno" min="0" value="{{ old('sup_terreno') }}">
                            </div>
 
                        </div>
                        <div class="col-6">
                            <div class="container form-group">
                                <label for="">Superficie construida (en m<sup>2</sup>):</label>
-                               <input type="number" name="sup_construida" class="form-control" maxlength="140" id="sup_construida" min="0" value="{{ old('sup_construida') }}" required>
+                               <input type="number" name="sup_construida" class="form-control" maxlength="140" id="sup_construida" min="0" value="{{ old('sup_construida') }}">
                            </div>
                        </div>
                    </div>
@@ -149,6 +156,7 @@
                            <div class="container form-group">
                                <label for="tipopiso">Tipo de piso</label>
                                <select class="form-control" id="tipopiso" name="tipopisos">
+                                 <option value="" selected>Selecciona un tipo de piso</option>
                                    @foreach($tipopisos as $tipopiso)
                                    <option value="{{$tipopiso->id}}">{{$tipopiso->pisos}}</option>
                                    @endforeach
@@ -159,6 +167,7 @@
                            <div class="container form-group">
                                <label for="amoblado">Amoblada</label>
                                <select class="form-control" id="amoblado" name="amoblado">
+                                   <option value="" selected>Selecciona el espacio amoblado</option>
                                    @foreach($tipoamoblados as $tipoamoblado)
                                    <option value="{{$tipoamoblado->id}}">{{$tipoamoblado->amoblados}}</option>
                                    @endforeach
@@ -176,11 +185,11 @@
                            <div class="col-6">
                                <div class="container form-group col-12">
                                    <label for="titulo_propiedad">Titulo de publicación (Max. 40):</label>
-                                   <input type="text" name="titulo_propiedad" class="form-control" id="titulo_propiedad" maxlength="40" value="{{ old('titulo_propiedad') }}" required>
+                                   <input type="text" name="titulo_propiedad" class="form-control" id="titulo_propiedad" maxlength="40" value="{{ old('titulo_propiedad') }}">
                                </div>
                                <div class="container form-group col-12">
                                    <label for="descripcion_propiedad">Descripción (Max. 300):</label>
-                                   <input type="text" name="descripcion_propiedad" class="form-control" id="descripcion_propiedad" maxlength="300" value="{{ old('descripcion_propiedad') }}" required>
+                                   <input type="text" name="descripcion_propiedad" class="form-control" id="descripcion_propiedad" maxlength="300" value="{{ old('descripcion_propiedad') }}">
                                </div>
                            </div>
                            <div class="col-6">
@@ -225,17 +234,25 @@
                            <div class="col-6">
                                <div class="container form-group">
                                    <label for="sel1">Valor en CLP:</label>
-                                   <input name="valor_pesos" id="valor_pesos" type="number" class="form-control" min="0" value='0' oninput="clptoUF(this.value)" required>
+                                   <input name="valor_pesos" id="valor_pesos" type="number" class="form-control" min="0" value='' oninput="clptoUF(this.value)" placeholder="0">
                                </div>
                            </div>
                            <div class="col-6">
                                <div class="container form-group">
                                    <label for="sel1">Valor en UF:</label>
-                                   <input type="number" name="valor_uf" id="valor_uf" class="form-control" min="0" value='0' oninput="UFtoclp(this.value)" required>
+                                   <input type="number" name="valor_uf" id="valor_uf" class="form-control" min="0" value='' oninput="UFtoclp(this.value)" placeholder="0">
                                </div>
                            </div>
                        </div>
                        <div class="custom-separator"></div>
+                       {{-- INICIO ALERTAS --}}
+                       <div id="errorDiv"  class="alert alert-card alert-danger d-none" role="alert">
+                           <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                 <span aria-hidden="true">&times;</span>
+                             </button>
+                               <ul id="errorMsg"></ul>
+                       </div>
+                       {{-- FIN ALERTAS --}}
 
                        <input type="text" name="estado_publicacion" style="display:none" id="estado_publicacion" class="form-control" value="espera">
 
@@ -411,24 +428,15 @@
                </button>
            </div>
            <div class="modal-body">
-             {{-- INICIO ALERTAS --}}
-             <div id="errorDiv"  class="alert alert-card alert-danger d-none" role="alert">
-                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                       <span aria-hidden="true">&times;</span>
-                   </button>
-                     <ul id="errorMsg"></ul>
-             </div>
 
-
-
-
-             {{-- FIN ALERTAS --}}
                <div class="form-group row">
                    <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Email') }}</label>
                    <input type="hidden" id="pasandocodigo" name="" value="">
                    <div class="col-md-6">
-                       <input id="email_modal" type="email" class="form-control" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
+                       <input id="email_modal" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus> @error('email')
+                       <span class="invalid-feedback" role="alert">
+                             <strong>{{ $message }}</strong>
+                         </span> @enderror
                    </div>
                </div>
 
@@ -436,8 +444,10 @@
                    <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña') }}</label>
 
                    <div class="col-md-6">
-                       <input id="password_modal" type="password" class="form-control" name="password" minlength="8" required autocomplete="current-password">
-
+                       <input id="password_modal" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password"> @error('password')
+                       <span class="invalid-feedback" role="alert">
+                             <strong>{{ $message }}</strong>
+                         </span> @enderror
                    </div>
                </div>
 
@@ -475,52 +485,53 @@
                </button>
            </div>
            <div class="modal-body">
-             {{-- INICIO ALERTAS --}}
-             <div id="errorDiv2"  class="alert alert-card alert-danger d-none" role="alert">
-                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                       <span aria-hidden="true">&times;</span>
-                   </button>
-                     <ul id="errorMsg2"></ul>
-             </div>
 
-
-
-
-             {{-- FIN ALERTAS --}}
                <div class="form-group">
                    <input type="hidden" id="pasandocodigo2" name="" value="">
                    <label for="email">Primer Nombre</label>
-                   <input id="name_modal2" type="text" class="form-control form-control-rounded" name="name" value="{{ old('name') }}">
-
+                   <input id="name_modal2" type="text" class="form-control @error('name') is-invalid @enderror form-control-rounded" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus> @error('name')
+                   <span class="invalid-feedback" role="alert">
+                         <strong>{{ $message }}</strong>
+                     </span> @enderror
 
                </div>
                <div class="form-group">
                    <label for="email">Segundo Nombre</label>
-                   <input id="segundo_nombre_modal2" type="text" class="form-control form-control-rounded" name="segundo_nombre" value="{{ old('segundo_nombre') }}">
-
+                   <input id="segundo_nombre_modal2" type="text" class="form-control @error('name') is-invalid @enderror form-control-rounded" name="segundo_nombre" value="{{ old('segundo_nombre') }}" required autocomplete="segundo_nombre" autofocus> @error('segundo_nombre')
+                   <span class="invalid-feedback" role="alert">
+                             <strong>{{ $message }}</strong>
+                         </span> @enderror
 
                </div>
                <div class="form-group">
                    <label for="email">Primer apellido</label>
-                   <input id="apellido_paterno_modal2" type="text" class="form-control form-control-rounded" name="apellido_paterno" value="{{ old('apellido_paterno') }}">
-
+                   <input id="apellido_paterno_modal2" type="text" class="form-control @error('apellido_paterno') is-invalid @enderror form-control-rounded" name="apellido_paterno" value="{{ old('apellido_paterno') }}" required autocomplete="apellido_paterno" autofocus> @error('apellido_paterno')
+                   <span class="invalid-feedback" role="alert">
+                             <strong>{{ $message }}</strong>
+                         </span> @enderror
 
                </div>
                <div class="form-group">
                    <label for="email">Segundo apellido</label>
-                   <input id="apellido_materno_modal2" type="text" class="form-control form-control-rounded" name="apellido_materno" value="{{ old('apellido_materno') }}">
-
+                   <input id="apellido_materno_modal2" type="text" class="form-control @error('apellido_materno') is-invalid @enderror form-control-rounded" name="apellido_materno" value="{{ old('apellido_materno') }}" required autocomplete="apellido_materno" autofocus> @error('apellido_materno')
+                   <span class="invalid-feedback" role="alert">
+                             <strong>{{ $message }}</strong>
+                         </span> @enderror
 
                </div>
                <div class="form-group">
                    <label for="email">Email</label>
-                   <input id="email_modal2" type="email" class="form-control form-control-rounded" name="email" value="{{ old('email') }}">
-
+                   <input id="email_modal2" type="email" class="form-control @error('email') is-invalid @enderror form-control-rounded" name="email" value="{{ old('email') }}" required autocomplete="email"> @error('email')
+                   <span class="invalid-feedback" role="alert">
+                             <strong>{{ $message }}</strong>
+                         </span> @enderror
                </div>
                <div class="form-group">
                    <label for="password">Contraseña</label>
-                   <input id="password" type="password" class="form-control form-control-rounded" name="password">
-
+                   <input id="password_modal2" type="password" class="form-control @error('password') is-invalid @enderror form-control-rounded" name="password" required autocomplete="new-password"> @error('password')
+                   <span class="invalid-feedback" role="alert">
+                               <strong>{{ $message }}</strong>
+                           </span> @enderror
                </div>
                <div class="form-group">
                    <input id="roles_id" type="number" class="" name="roles_id" required autocomplete="1" value="2" style="display:none">
@@ -530,7 +541,7 @@
                <div class="form-group">
                    <label for="repassword">Confirmar contraseña</label>
 
-                   <input id="password-confirm" type="password" class="form-control form-control-rounded" name="password_confirmation" required autocomplete="new-password">
+                   <input id="password-confirm_modal2" type="password" class="form-control form-control-rounded" name="password_confirmation" required autocomplete="new-password">
 
                </div>
 
@@ -554,7 +565,6 @@
 
 <script type="text/javascript">
    function showModal() {
-
        $('#exampleModal2').modal("hide");
        $('#exampleModal').modal("show");
    }
@@ -598,24 +608,9 @@
            },
            success: function(response) {
 
-               if (response.success==true) {
+               if (response.success) {
                    window.location = response.url;
                }
-               else if(response.success=="mal"){
-                 $('#errorDiv').removeClass('d-none');
-                 $('#errorMsg').html(response.message);
-               }
-               else{
-
-                   $('#errorDiv').removeClass('d-none');
-                   $('#errorMsg').html('');
-
-                   $.each(response.errors, function(key, value) {
-
-                      $('#errorMsg').append('<li >' + value + '</li>');
-                   });
-               }
-
 
            },
            error: function() {
@@ -661,8 +656,8 @@
                'apellido_paterno': document.getElementById('apellido_paterno_modal2').value,
                'apellido_materno': document.getElementById('apellido_materno_modal2').value,
                'email': document.getElementById('email_modal2').value,
-               'password': document.getElementById('password').value,
-               'password_confirmation': document.getElementById('password-confirm').value,
+               'password': document.getElementById('password_modal2').value,
+               'password': document.getElementById('password-confirm_modal2').value,
                '_token': $("meta[name='csrf-token']").attr("content")
            },
            dataType: 'JSON',
@@ -671,20 +666,9 @@
            },
            success: function(response) {
 
-                if (response.success==true) {
+               if (response.success) {
 
-                  window.location = response.url;
-                }
-
-               else {
-
-                 $('#errorDiv2').removeClass('d-none');
-                 $('#errorMsg2').html('');
-
-                 $.each(response.errors, function(key, value) {
-
-                    $('#errorMsg2').append('<li >' + value + '</li>');
-                 });
+                   window.location = response.url;
                }
 
            },
@@ -713,8 +697,7 @@
        $('form').ajaxForm({
 
            success: function(data) {
-                console.log(data);
-               if (data.success == true)
+               if (data.success == true) {
                    {
                        if (data.modal == true) {
                            $('#exampleModal2').modal("show");
@@ -722,18 +705,18 @@
                            window.location = data.url;
                        }
                    }
-                   else{
+               }else{
+
+                  $('#errorDiv').removeClass('d-none');
+                   $('#errorMsg').html('');
 
 
-                       $('#errorDiv').removeClass('d-none');
-                       $('#errorMsg').html('');
 
-                       $.each(data.errors, function(key, value) {
+                  $.each(data.errors, function(key, value) {
 
-                          $('#errorMsg').append('<li >' + value + '</li>');
-                       });
-                   }
-
+                     $('#errorMsg').append('<li >' + value + '</li>');
+                  });
+               }
            }
        });
    });

@@ -9,6 +9,7 @@ use Mail;
 use Str;
 use DB;
 use Storage;
+use Validator;
 
 class PropiedadesController extends Controller
 {
@@ -111,8 +112,69 @@ class PropiedadesController extends Controller
      */
      function upload(Request $request)
     {
+      $rules = array(
+         'tipopropiedad'         => 'required|not_in:0',
+         'estado'                => 'required|not_in:0',
+         'tipo_comercio'         => 'required|not_in:0',
+         'region'                => 'required|not_in:0',
+         'comunas'               => 'required|not_in:0',
+         'direccion'             => 'required|string|max:70',
+         'nro_habitaciones'      => 'required|string|max:70',
+         'nro_banos'             => 'required|string|max:70',
+         'nro_estacionamientos'  => 'required|string|max:70',
+         'sup_terreno'           => 'required|string|max:70',
+         'sup_construida'        => 'required|string|max:70',
+         'tipopisos'             => 'required|not_in:0',
+         'amoblado'              => 'required|not_in:0',
+         'titulo_propiedad'      => 'required|string|max:70',
+         'descripcion_propiedad' => 'required|string|max:70',
+         'file[]'                => 'required|not_in:0',
+         // 'contado'               => 'required|string|max:70',
+         // 'subsidio'              => 'required|string|max:70',
+         // 'credito'               => 'required|string|max:70',
+         // 'leasing'               => 'required|string|max:70',
+         'valor_pesos'           => 'required|string|max:70',
+         'valor_uf'              => 'required|string|max:70'
+       );
+       $messages = array(
+
+         'tipopropiedad.required'         => 'El campo tipo de propiedad es obligatorio.',
+         'estado.required'                => 'El campo estado es obligatorio.',
+         'tipo_comercio.required'         => 'El campo opción es obligatorio.',
+         'region.required'                => 'El campo región es obligatorio.',
+         'comunas.required'               => 'El campo comuna es obligatorio.',
+         'direccion.required'             => 'El campo dirección es obligatorio.',
+         'nro_habitaciones.required'      => 'El campo número habitaciones es obligatorio.',
+         'nro_banos.required'             => 'El campo número baños es obligatorio.',
+         'nro_estacionamientos.required'  => 'El campo numero estacionamientos es obligatorio.',
+         'sup_terreno.required'           => 'El campo superficie de terreno es obligatorio.',
+         'sup_construida.required'        => 'El campo superficie construida es obligatorio.',
+         'tipopisos.required'             => 'El campo tipo pisos es obligatorio.',
+         'amoblado.required'              => 'El campo amoblados es obligatorio.',
+         'titulo_propiedad.required'      => 'El campo título propiedad es obligatorio.',
+         'descripcion_propiedad.required' => 'El campo descripción propiedad es obligatorio.',
+         'file[].required'                => 'El campo imagen es obligatorio.',
+         'valor_pesos.required'           => 'El campo valor en pesos es obligatorio.',
+         'valor_uf.required'              => 'El campo valor en UF es obligatorio.',
+
+         'direccion.max'                  =>  'El campo direccion debe tener como máximo 70 caracteres.',
+         'nro_habitaciones.max'           =>  'El campo número habitaciones debe tener como máximo 2 dígitos.',
+         'nro_banos.max'                  =>  'El campo número de baños debe tener como máximo 2 dígitos.',
+         'nro_estacionamientos.max'       =>  'El campo número de estacionamientos debe tener como máximo 2 dígitos.',
+         'sup_terreno.max'                =>  'El campo superficie de terreno debe tener como máximo 6 dígitos.',
+         'sup_construida.max'             =>  'El campo superficie construida debe tener como máximo 6 dígitos.'
+
+       );
+
+       $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()){
+          return response()->json(['success'=> false, 'errors' => $validator->errors()->all()]);
+        }
       //Aqui inserta la propiedad a la base de datos
         if(Auth::check()){
+
+
 
           //Aqui inserta la propiedad a la base de datos
           DB::table('propiedades')->insert([
@@ -175,7 +237,7 @@ class PropiedadesController extends Controller
 
         return response()->json(['success'=> true, 'message' => 'La propiedad se agregó correctamente a la tabla propiedades.','modal'=>false,'image'=>$image_code,'url'=>route('propiedadeshow',$request->codigo)]);
         }else{
-
+          //no logeado
           DB::table('propiedadestemporal')->insert([
                   'codigo' => $request->codigo,
                   'titulo_propiedad' => $request->titulo_propiedad,
@@ -238,8 +300,14 @@ class PropiedadesController extends Controller
 
                 return response()->json(['success'=> true, 'message' => 'La propiedad se agregó correctamente.','modal'=>true,'image'=>$image_code]);
 
-        }
+        }//fin else no logueado
+
+
     }
+
+
+
+
     public function store(Request $request)
     {
       //Aqui inserta la propiedad a la base de datos
