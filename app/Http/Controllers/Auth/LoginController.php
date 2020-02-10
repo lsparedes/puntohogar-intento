@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
 use DB;
+use Validator;
 
 class LoginController extends Controller
 {
@@ -50,11 +51,25 @@ class LoginController extends Controller
 
     public function loginModal(Request $request){
 
+      $rules = array(
 
+           'email'              => 'required|string',
+           'password'          =>'required|string',
 
-      if($request->email){
-          if (Auth::attempt(['email' => $request->email , 'password' => $request->password])) {
+   );
+   $messages = array(
+   'email.required'    => 'El campo email es obligatorio.',
+   'password.required'      => 'El campo contraseña es obligatorio.'
 
+);
+
+$validator = Validator::make($request->all(), $rules, $messages);
+
+if ($validator->fails()){
+  return response()->json(['success'=> false, 'errors' => $validator->errors()->all()]);
+}
+
+    if(Auth::attempt(['email' => $request->email , 'password' => $request->password])){
             $consulta= DB::table('propiedadestemporal')->where('codigo','=', $request->codigo)->first();
             $insercion= DB::table('propiedades')->insert([
                     'codigo'  => $request->codigo,
@@ -104,10 +119,10 @@ class LoginController extends Controller
                    );
                }
             return response()->json(['success'=>true,'url'=>route('propiedadeshow',$request->codigo)]);
-          }
-            return response()->json(['success'=>false,'message'=>'no se encuentra al usuario']);
-      }else{
-        return response()->json(['success'=>false,'message'=>'no hay mail']);
-      }
+}
+else{
+    return response()->json(['success'=>"mal",'message'=>"El usuario no existe, porfavor asegura que tus credenciales esten correctas."]);
+}
+
     }
 }

@@ -17,6 +17,7 @@ use Storage;
 use DB;
 use Auth;
 
+
 class RegisterController extends Controller
 {
     /*
@@ -75,96 +76,37 @@ class RegisterController extends Controller
      */
      protected function create(Request $request)
      {
-         // Verifica si el registro viene desde el formulario publica gratis
-         // if($data['usuario_id']==null){
-         //     // crea e usuario en la BD
-         //     $retorno = User::create([
-         //         'name' => $data['name'],
-         //         'segundo_nombre' => $data['segundo_nombre'],
-         //         'apellido_paterno' => $data['apellido_paterno'],
-         //         'apellido_materno' => $data['apellido_materno'],
-         //         'email' => $data['email'],
-         //         'password' => Hash::make($data['password']),
-         //         'roles_id' => 2,
-         //     ]);
-         //
-         //     $id_user = DB::table('users')->select('*')->where('email','=',$data['email'])->get();
-         //     $result = json_decode($id_user, true);
-         //     // Crea la propiedad en la BD
-         //     DB::table('propiedades')->insert(
-         //         ['titulo_propiedad' => $data['titulo_propiedad'],
-         //         'descripcion_propiedad' => $data['descripcion_propiedad'],
-         //         'valor_uf' => $data['valor_uf'],
-         //         'valor_pesos' => $data['valor_pesos'],
-         //         'nro_habitaciones' => $data['nro_habitaciones'],
-         //         'nro_banos' => $data['nro_banos'],
-         //         'estado' => $data['estado'],
-         //         'sup_construida' => $data['sup_construida'],
-         //         'sup_terreno' => $data['sup_terreno'],
-         //         'estado_publicacion' => $data['estado_publicacion'],
-         //         'tipopropiedades_id' => $data['tipopropiedades_id'],
-         //         'tipoamoblados_id' => $data['tipoamoblados_id'],
-         //         'tipopisos_id' => $data['tipopisos_id'],
-         //         'comunas_id' => $data['comunas_id'],
-         //         'usuario_id' => $result[0]['id'],
-         //         'tipo_comercio' => $data['tipo_comercio'],
-         //         'nro_estacionamientos' => $data['nro_estacionamientos'],
-         //         'direccion' => $data['direccion'],]
-         //     );
-         //     // Recupera informacion para enviar a la vista y hacer enlace con imagenes y financiamientos
-         //     $propiedades = DB::table('propiedades')->select('*')->get();
-         //     $id_propiedad = DB::table('propiedades')->where('usuario_id',$result[0]['id'])->orderBy('id', 'desc')->first()->id;
-         //     // Guarda las imagenes en el storage y en la BD
-         //     $image = $data['fotos'];
-         //     $extensiones = array("data:image/jpeg;base64","data:image/jpg;base64", "data:image/png;base64");
-         //     // dd($id_propiedad);
-         //     $directory = '/public/viviendas/'.$id_propiedad;
-         //     Storage::makeDirectory($directory);
-         //
-         //     for ($i=0; $i < count($image); $i++) {
-         //         $image[$i] = str_replace($extensiones,'',$image[$i]);
-         //         $image[$i] = str_replace(' ', '+', $image[$i]);
-         //         $imageName = $i.'.'.'png';
-         //         Storage::put($directory.'/'.$imageName, base64_decode($image[$i]));
-         //         DB::table('imagenes')->insert(
-         //             ['propiedades_id' => $id_propiedad, 'img' => $imageName]
-         //         );
-         //     }
-         //     // Agrega cada uno de los financiamientos a la propiedad
-         //     if(isset($data['contado']))
-         //     if ($data['contado'] == "1"){
-         //     DB::table('financiamientos')->insert(
-         //             ['propiedades_id' => $id_propiedad,'tipofinanciamientos_id' => 1]
-         //         );
-         //     }
-         //     if(isset($data['subsidio']))
-         //     if ($data['subsidio'] == "1"){
-         //         DB::table('financiamientos')->insert(
-         //             ['propiedades_id' => $id_propiedad,'tipofinanciamientos_id' => 2]
-         //         );
-         //     }
-         //     if(isset($data['leasing']))
-         //     if ($data['leasing'] == "1"){
-         //         DB::table('financiamientos')->insert(
-         //             ['propiedades_id' => $id_propiedad,'tipofinanciamientos_id' => 3]
-         //         );
-         //     }
-         //     if(isset($data['credito']))
-         //     if ($data['credito'] == "1"){
-         //         DB::table('financiamientos')->insert(
-         //             ['propiedades_id' => $id_propiedad,'tipofinanciamientos_id' => 4]
-         //         );
-         //     }
-         //     // Envia el email de que la publicacion se encuentra en estado de espera
-         //     Mail::send('emails.waitState', $data, function ($message) use ($data){
-         //         $message->to($data['email'])->subject('Notificación');
-         //
-         //     });
-         //         return $retorno; //Retorna el usuario creado
-         // }
-         // if($data['usuario_id']=='1'){
+
+         $rules = array(
+
+              'name'              => 'required|string',
+              'segundo_nombre'          =>'required|string',
+              'apellido_paterno'              => 'required|string',
+              'apellido_materno'          =>'required|string',
+              'email'              => 'required|string',
+              'password'          =>'required|string|min:8|confirmed'
+
+      );
+      $messages = array(
+      'name.required'    => 'El campo primer nombre es obligatorio.',
+      'segundo_nombre.required'      => 'El campo segundo nombre es obligatorio.',
+      'apellido_paterno.required'      => 'El campo primer apellido es obligatorio.',
+      'apellido_mateno.required'      => 'El campo segundo apellido es obligatorio.',
+      'email.required'      => 'El campo email es obligatorio.',
+      'password.required'  => 'El campo contraseña es obligatorio.',
+      'password.min'  => 'El campo contraseña debe contener al menos 8 caracteres.',
+      'password.confirmed'  => 'El campo confirmación de contraseña no coincide.'
+
+     );
+
+     $validator = Validator::make($request->all(), $rules, $messages);
+
+     if ($validator->fails()){
+     return response()->json(['success'=> false, 'errors' => $validator->errors()->all()]);
+     }
 
          if($request->usuario_id=='1'){
+
            $retorno = User::create([
                'name' => $request->name,
                'segundo_nombre' => $request->segundo_nombre,

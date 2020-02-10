@@ -411,15 +411,24 @@
                </button>
            </div>
            <div class="modal-body">
+             {{-- INICIO ALERTAS --}}
+             <div id="errorDiv"  class="alert alert-card alert-danger d-none" role="alert">
+                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                       <span aria-hidden="true">&times;</span>
+                   </button>
+                     <ul id="errorMsg"></ul>
+             </div>
 
+
+
+
+             {{-- FIN ALERTAS --}}
                <div class="form-group row">
                    <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Email') }}</label>
                    <input type="hidden" id="pasandocodigo" name="" value="">
                    <div class="col-md-6">
-                       <input id="email_modal" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus> @error('email')
-                       <span class="invalid-feedback" role="alert">
-                             <strong>{{ $message }}</strong>
-                         </span> @enderror
+                       <input id="email_modal" type="email" class="form-control" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+
                    </div>
                </div>
 
@@ -427,10 +436,8 @@
                    <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña') }}</label>
 
                    <div class="col-md-6">
-                       <input id="password_modal" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password"> @error('password')
-                       <span class="invalid-feedback" role="alert">
-                             <strong>{{ $message }}</strong>
-                         </span> @enderror
+                       <input id="password_modal" type="password" class="form-control" name="password" minlength="8" required autocomplete="current-password">
+
                    </div>
                </div>
 
@@ -468,53 +475,52 @@
                </button>
            </div>
            <div class="modal-body">
+             {{-- INICIO ALERTAS --}}
+             <div id="errorDiv2"  class="alert alert-card alert-danger d-none" role="alert">
+                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                       <span aria-hidden="true">&times;</span>
+                   </button>
+                     <ul id="errorMsg2"></ul>
+             </div>
 
+
+
+
+             {{-- FIN ALERTAS --}}
                <div class="form-group">
                    <input type="hidden" id="pasandocodigo2" name="" value="">
                    <label for="email">Primer Nombre</label>
-                   <input id="name_modal2" type="text" class="form-control @error('name') is-invalid @enderror form-control-rounded" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus> @error('name')
-                   <span class="invalid-feedback" role="alert">
-                         <strong>{{ $message }}</strong>
-                     </span> @enderror
+                   <input id="name_modal2" type="text" class="form-control form-control-rounded" name="name" value="{{ old('name') }}">
+
 
                </div>
                <div class="form-group">
                    <label for="email">Segundo Nombre</label>
-                   <input id="segundo_nombre_modal2" type="text" class="form-control @error('name') is-invalid @enderror form-control-rounded" name="segundo_nombre" value="{{ old('segundo_nombre') }}" required autocomplete="segundo_nombre" autofocus> @error('segundo_nombre')
-                   <span class="invalid-feedback" role="alert">
-                             <strong>{{ $message }}</strong>
-                         </span> @enderror
+                   <input id="segundo_nombre_modal2" type="text" class="form-control form-control-rounded" name="segundo_nombre" value="{{ old('segundo_nombre') }}">
+
 
                </div>
                <div class="form-group">
                    <label for="email">Primer apellido</label>
-                   <input id="apellido_paterno_modal2" type="text" class="form-control @error('apellido_paterno') is-invalid @enderror form-control-rounded" name="apellido_paterno" value="{{ old('apellido_paterno') }}" required autocomplete="apellido_paterno" autofocus> @error('apellido_paterno')
-                   <span class="invalid-feedback" role="alert">
-                             <strong>{{ $message }}</strong>
-                         </span> @enderror
+                   <input id="apellido_paterno_modal2" type="text" class="form-control form-control-rounded" name="apellido_paterno" value="{{ old('apellido_paterno') }}">
+
 
                </div>
                <div class="form-group">
                    <label for="email">Segundo apellido</label>
-                   <input id="apellido_materno_modal2" type="text" class="form-control @error('apellido_materno') is-invalid @enderror form-control-rounded" name="apellido_materno" value="{{ old('apellido_materno') }}" required autocomplete="apellido_materno" autofocus> @error('apellido_materno')
-                   <span class="invalid-feedback" role="alert">
-                             <strong>{{ $message }}</strong>
-                         </span> @enderror
+                   <input id="apellido_materno_modal2" type="text" class="form-control form-control-rounded" name="apellido_materno" value="{{ old('apellido_materno') }}">
+
 
                </div>
                <div class="form-group">
                    <label for="email">Email</label>
-                   <input id="email_modal2" type="email" class="form-control @error('email') is-invalid @enderror form-control-rounded" name="email" value="{{ old('email') }}" required autocomplete="email"> @error('email')
-                   <span class="invalid-feedback" role="alert">
-                             <strong>{{ $message }}</strong>
-                         </span> @enderror
+                   <input id="email_modal2" type="email" class="form-control form-control-rounded" name="email" value="{{ old('email') }}">
+
                </div>
                <div class="form-group">
                    <label for="password">Contraseña</label>
-                   <input id="password_modal2" type="password" class="form-control @error('password') is-invalid @enderror form-control-rounded" name="password" required autocomplete="new-password"> @error('password')
-                   <span class="invalid-feedback" role="alert">
-                               <strong>{{ $message }}</strong>
-                           </span> @enderror
+                   <input id="password" type="password" class="form-control form-control-rounded" name="password">
+
                </div>
                <div class="form-group">
                    <input id="roles_id" type="number" class="" name="roles_id" required autocomplete="1" value="2" style="display:none">
@@ -524,7 +530,7 @@
                <div class="form-group">
                    <label for="repassword">Confirmar contraseña</label>
 
-                   <input id="password-confirm_modal2" type="password" class="form-control form-control-rounded" name="password_confirmation" required autocomplete="new-password">
+                   <input id="password-confirm" type="password" class="form-control form-control-rounded" name="password_confirmation" required autocomplete="new-password">
 
                </div>
 
@@ -548,6 +554,7 @@
 
 <script type="text/javascript">
    function showModal() {
+
        $('#exampleModal2').modal("hide");
        $('#exampleModal').modal("show");
    }
@@ -591,9 +598,24 @@
            },
            success: function(response) {
 
-               if (response.success) {
+               if (response.success==true) {
                    window.location = response.url;
                }
+               else if(response.success=="mal"){
+                 $('#errorDiv').removeClass('d-none');
+                 $('#errorMsg').html(response.message);
+               }
+               else{
+
+                   $('#errorDiv').removeClass('d-none');
+                   $('#errorMsg').html('');
+
+                   $.each(response.errors, function(key, value) {
+
+                      $('#errorMsg').append('<li >' + value + '</li>');
+                   });
+               }
+
 
            },
            error: function() {
@@ -639,8 +661,8 @@
                'apellido_paterno': document.getElementById('apellido_paterno_modal2').value,
                'apellido_materno': document.getElementById('apellido_materno_modal2').value,
                'email': document.getElementById('email_modal2').value,
-               'password': document.getElementById('password_modal2').value,
-               'password': document.getElementById('password-confirm_modal2').value,
+               'password': document.getElementById('password').value,
+               'password_confirmation': document.getElementById('password-confirm').value,
                '_token': $("meta[name='csrf-token']").attr("content")
            },
            dataType: 'JSON',
@@ -649,9 +671,20 @@
            },
            success: function(response) {
 
-               if (response.success) {
+                if (response.success==true) {
 
-                   window.location = response.url;
+                  window.location = response.url;
+                }
+
+               else {
+
+                 $('#errorDiv2').removeClass('d-none');
+                 $('#errorMsg2').html('');
+
+                 $.each(response.errors, function(key, value) {
+
+                    $('#errorMsg2').append('<li >' + value + '</li>');
+                 });
                }
 
            },
@@ -680,7 +713,8 @@
        $('form').ajaxForm({
 
            success: function(data) {
-               if (data.success == true) {
+                console.log(data);
+               if (data.success == true)
                    {
                        if (data.modal == true) {
                            $('#exampleModal2').modal("show");
@@ -688,7 +722,18 @@
                            window.location = data.url;
                        }
                    }
-               }
+                   else{
+
+
+                       $('#errorDiv').removeClass('d-none');
+                       $('#errorMsg').html('');
+
+                       $.each(data.errors, function(key, value) {
+
+                          $('#errorMsg').append('<li >' + value + '</li>');
+                       });
+                   }
+
            }
        });
    });
