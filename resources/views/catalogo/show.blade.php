@@ -60,7 +60,7 @@
                         <div class="col-6">
                             <div class="ul-product-detail__brand-name ">
                                 <h6>Inmueble a {{$propiedad->tipo_comercio}}</h6>
-                                <h2 class="heading">{{$propiedad->titulo_propiedad}}</h2>
+                                <h1 class="heading">{{$propiedad->titulo_propiedad}}</h1>
                                 <h6>Comuna, Región</h6>
                                 <h6>Publicado el 12/12/12</h6>
                                 <!-- <p>{{$propiedad->estado_publicacion}}</p> -->
@@ -68,14 +68,14 @@
                             </div>
                             <hr>
 
-                            <table class="text-primary table-responsive" style="font-size:36px;">
+                            <table class=" table-responsive" style="font-size:36px;">
                                 <tr>
-                                    <th>UF</th>
-                                    <th>&nbsp; {{$propiedad->valor_uf}}</th>
+                                    <th> <h1 class="heading">UF</h1> </th>
+                                    <th> <h1 class="heading">&nbsp; {{$propiedad->valor_uf}}</h1></th>
                                 </tr>
                                 <tr style="font-size:26px;">
-                                    <td>CLP</td>
-                                    <td>&nbsp; ${{number_format($propiedad->valor_pesos, 0)}} </td>
+                                    <th> <h4>CLP</h4></td>
+                                    <th> <h4>&nbsp; ${{number_format($propiedad->valor_pesos, 0)}} </h4></td>
                                 </tr>
                             </table>
 
@@ -91,8 +91,8 @@
                                         <h5 class="m-0">Javier Leiva</h5>
                                         <p class="mt-0">Asesor Encargado</p>
 
-                                        <button class="btn btn-primary btn-rounded mb-2">Contactar por correo</button>
-                                        <button class="btn btn-primary btn-rounded">Contactar por WhatsApp</button>
+                                        <button class="btn btn-rounded mb-2" style="background-color:rgb(27, 140, 129);color:white;">Contactar por correo</button>
+                                        <button class="btn btn-rounded" style="background-color:rgb(27, 140, 129);color:white;">Contactar por WhatsApp</button>
 
                                     </div>
                                 </div>
@@ -100,29 +100,26 @@
                         </div>
                     </div>
 
-
+                    <hr>
                     <div class="row">
                         <div class="col-4 mt-4 text-center">
-                            <div class="card">
-                                <div class="card-body">
+
                                     <div class="ul-product-detail__border-box">
                                         <div class="ul-product-detail--icon mb-2">
-                                            <i class="material-icons text-danger" style="font-size:40px">local_hotel</i>
+                                            <i class="material-icons" style="font-size:40px;color:rgb(242, 121, 15);" >local_hotel</i>
                                         </div>
 
                                         <h6 class="text-muted">{{$propiedad->nro_habitaciones}}</h6>
                                         <h5 class="heading">Habitaciones</h5>
 
                                     </div>
-                                </div>
-                            </div>
+
                         </div>
                         <div class="col-4 mt-4 text-center">
-                            <div class="card">
-                                <div class="card-body">
+
                                     <div class="ul-product-detail__border-box">
                                         <div class="ul-product-detail--icon mb-2">
-                                            <i class="material-icons text-danger" style="font-size:40px">bathtub</i>
+                                            <i class="material-icons" style="font-size:40px;color:rgb(242, 121, 15);">bathtub</i>
                                         </div>
                                         <h6 class="text-muted">{{$propiedad->nro_banos}}</h6>
 
@@ -130,24 +127,21 @@
 
 
                                     </div>
-                                </div>
-                            </div>
+
                         </div>
 
                         <div class="col-4 mt-4 text-center">
-                            <div class="card">
-                                <div class="card-body">
+
                                     <div class="ul-product-detail__border-box">
                                         <div class="ul-product-detail--icon mb-2">
-                                            <i class="material-icons text-danger" style="font-size:40px">directions_car</i>
+                                            <i class="material-icons" style="font-size:40px;color:rgb(242, 121, 15);">directions_car</i>
                                         </div>
                                         <h6 class="text-muted">{{$propiedad->nro_estacionamientos}}</h6>
 
                                         <h5 class="heading">Estacionamientos</h5>
 
                                     </div>
-                                </div>
-                            </div>
+
                         </div>
 
 
@@ -167,56 +161,75 @@
 
                             <nav>
                                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                    <a class="nav-item nav-link active show" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true"> <b>Descripción</b> </a>
-                                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false"> <b>Características</b> </a>
-                                    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false"> <b>Métodos de pago</b> </a>
+
+
+
+                                    <a class="nav-item nav-link active show" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="true"> <b>Información</b> </a>
+                                    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false"> <b>Métodos de pago aceptados</b> </a>
 
                                 </div>
                             </nav>
                             <div class="tab-content ul-tab__content " id="nav-tabContent">
-                                <div class="tab-pane fade active show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
 
-
+                                <div class="tab-pane fade active show" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                    <div class="row">
+                                      <div class="col-6">
+                                        <div class="card">
+                                          <div class="card-body">
                                             <p>
                                                 {{$propiedad->descripcion_propiedad}}
                                             </p>
+                                          </div>
+                                        </div>
+                                      </div>
+                                        <div class="col-6">
+                                          <div class="card">
+                                            <div class="card-body">
+                                              <div class="row">
+                                                <div class="col-6">
+                                                  <table>
+                                                    <tr>
+                                                      <td>Tipo:</td>
+                                                      <th>&nbsp;{{$inmueble->propiedades}}</th>
+                                                    </tr>
+                                                    <tr>
+                                                      <td>Estado:</td>
+                                                      <th>&nbsp;{{$propiedad->estado}}</th>
+                                                    </tr>
 
-                                </div>
-                                <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                                    <div class="row">
-                                        <div class="col-12">
-                                          <table>
-                                            <tr>
-                                              <td>Tipo:</td>
-                                              <th>&nbsp;{{$inmueble->propiedades}}</th>
-                                            </tr>
-                                            <tr>
-                                              <td>Estado:</td>
-                                              <th>&nbsp;{{$propiedad->estado}}</th>
-                                            </tr>
+                                                    <tr>
+                                                      <td>Amoblado:</td>
+                                                      <th>&nbsp;{{$amoblado->amoblados}}</th>
+                                                    </tr>
+                                                  </table>
 
-                                            <tr>
-                                              <td>Amoblado:</td>
-                                              <th>&nbsp;{{$amoblado->amoblados}}</th>
-                                            </tr>
-                                            <tr>
-                                              <td>Terreno:</td>
-                                              <th>&nbsp;{{$propiedad->sup_terreno}} m<sup>2</sup></th>
-                                            </tr>
-                                            <tr>
-                                              <td>Construcción:</td>
-                                              <th>&nbsp;{{$propiedad->sup_construida}} m<sup>2</sup></th>
-                                            </tr>
-                                            <tr>
-                                              <td>Piso:</td>
-                                              <th>&nbsp;{{$piso->pisos}}</th>
-                                            </tr>
+                                                </div>
+                                                <div class="col-6">
+                                                  <table>
+                                                    <tr>
+                                                      <td>Superficie del Terreno:</td>
+                                                      <th>&nbsp;{{$propiedad->sup_terreno}} m<sup>2</sup></th>
+                                                    </tr>
+                                                    <tr>
+                                                      <td>Superficie Construida:</td>
+                                                      <th>&nbsp;{{$propiedad->sup_construida}} m<sup>2</sup></th>
+                                                    </tr>
+                                                    <tr>
+                                                      <td>Tipo de pisos:</td>
+                                                      <th>&nbsp;{{$piso->pisos}}</th>
+                                                    </tr>
 
-                                          </table>
+                                                  </table>
+                                                </div>
+
+                                              </div>
+                                            </div>
+                                          </div>
 
 
 
                                         </div>
+
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
