@@ -256,7 +256,7 @@
 
                        <input type="text" name="estado_publicacion" style="display:none" id="estado_publicacion" class="form-control" value="espera">
 
-                       <input type="submit" name="upload" value="Guardar Publicación" class="btn btn-success btn-block">
+                       <input type="submit" name="upload" value="Guardar Publicación" class="btn btn-block" style="background-color:rgb(242, 121, 15);color:white;border-style:none">
 
                    </div>
 
@@ -294,7 +294,7 @@
                                        <a class="w-40 w-sm-100">
                                            <div class="item-title">
                                                <h4> <b>{{$propiedad->titulo_propiedad}}</b> </h4>
-                                               <h6>{{$propiedad->direccion}}-Comuna, Región</h6>
+                                               <h6>Comuna, Región</h6>
                                            </div>
                                        </a>
                                        <div class="table-responsive">
@@ -321,7 +321,7 @@
                                            </table>
                                        </div>
                                        <p class="m-0   w-55 w-sm-100 d-none d-lg-block item-badges">
-                                           <span class="badge badge-info">{{$propiedad->valor_uf}}UF</span>
+                                           <span class="badge" style="background-color:rgb(242, 121, 15);color:white;">{{$propiedad->valor_uf}}UF</span>
                                        </p>
 
                                    </div>

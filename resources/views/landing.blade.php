@@ -51,7 +51,7 @@
               </a>
             </li>
             <li class="nav-item ">
-              <a href="#" class="nav-link"  role="button">
+              <a href="#catalogo" class="nav-link"  role="button">
                 <i class="ni ni-ui-04 d-lg-none"></i>
                 <span class="nav-link-inner--text">Catálogo</span>
               </a>
@@ -502,14 +502,14 @@
 
 <!-- Aqui pa abajo lo que tenia antes -->
 
-    <div class="position-relative">
+    <!-- <div class="position-relative">
 
       <video autoplay muted loop id="myVideo" width="100%" style="position:absolute;opacity:0.05">
         <source src="casas.mp4" type="video/mp4" >
         Your browser does not support HTML5 video.
       </video>
 
-    </div>
+    </div> -->
 
     <section class="section section-lg" id="nosotros">
       <div class="container">
@@ -566,6 +566,36 @@
             </div>
           </div>
         </div>
+      </div>
+    </section>
+
+
+    <section class="section bg-gradient-warning section-lg" id="catalogo">
+      <div class="container">
+        <div class="row align-items-center">
+
+
+          <div class="col-md-12">
+            <div class="d-flex px-3 mb-4">
+              <div>
+                <div class="icon icon-lg icon-shape  shadow rounded-circle " style="background-color:white;color:rgb(242, 121, 15)">
+                  <i class="ni ni-shop "></i>
+                </div>
+              </div>
+              <div class="pl-4" >
+                <h4 class="display-3" style="color:white">Catálogo</h4>
+                <p class="text-white">Aquí podrás encontrar un listado de los inmuebles que tenemos disponibles para tí.</p>
+                <a href="{{ route('catalogo')}}"  class="btn btn-neutral btn-icon btn-sm" style="background-color:rgb(242, 121, 15);color:white;border-style:none">
+                  <span class="nav-link-inner--text">Publica Gratis</span>
+                </a>
+                <!-- <p >Aquí va la descripción de todos los servicios que buscatucasa ofrece. </p> -->
+              </div>
+            </div>
+
+
+
+          </div>
+            </div>
       </div>
     </section>
 

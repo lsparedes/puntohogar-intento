@@ -56,9 +56,9 @@
                              <div class="col-lg-6">
                                  <div class="ul-product-detail__image">
 
-                                     <div class="card-body">
+                                   
                                          <!-- Carousel que muestra las fotografias de la publicacion -->
-                                         <h4 class="card-title mb-3" style = "text-align:center"> Fotografías del Inmueble</h4>
+
                                          <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                                          <div class="carousel-inner">
 
@@ -81,7 +81,7 @@
                                          </a>
                                        </div>
 
-                                     </div>
+
                                  </div>
                              </div>
                              <!-- CAracteristicas mas importantes de la vivienda -->

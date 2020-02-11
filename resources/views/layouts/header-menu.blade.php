@@ -1,6 +1,9 @@
     <div class="main-header">
             <div class="ml-4">
+              <a href="{{route('wea')}}">
                 <img src="{{asset('assets/images/logo.png')}}" alt="" width="100px">
+              </a>
+
             </div>
 
             <!-- <div class="menu-toggle">
