@@ -128,7 +128,7 @@ class PropiedadesController extends Controller
          'amoblado'              => 'required|not_in:0',
          'titulo_propiedad'      => 'required|string|max:70',
          'descripcion_propiedad' => 'required|string|max:70',
-         'file[]'                => 'required|not_in:0',
+         'file.*'                  => 'required',
          // 'contado'               => 'required|string|max:70',
          // 'subsidio'              => 'required|string|max:70',
          // 'credito'               => 'required|string|max:70',
@@ -153,7 +153,7 @@ class PropiedadesController extends Controller
          'amoblado.required'              => 'El campo amoblados es obligatorio.',
          'titulo_propiedad.required'      => 'El campo título propiedad es obligatorio.',
          'descripcion_propiedad.required' => 'El campo descripción propiedad es obligatorio.',
-         'file[].required'                => 'El campo imagen es obligatorio.',
+         'file.*.required'                  => 'El campo imagen es obligatorio.',
          'valor_pesos.required'           => 'El campo valor en pesos es obligatorio.',
          'valor_uf.required'              => 'El campo valor en UF es obligatorio.',
 
