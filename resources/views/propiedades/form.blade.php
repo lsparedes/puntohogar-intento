@@ -18,18 +18,23 @@
    .main-content-wrap {
        background: #F2E3D5;
    }
-   .gallery
-    {
-        display: inline-block;
-        margin-top: 20px;
-    }
-    .close-icon{
-    	  border-radius: 50%;
-        position: absolute;
-        right: 5px;
-        top: -10px;
 
-    }
+   .gallery
+   {
+       display: inline-block;
+       margin-top: 20px;
+   }
+   .close-icon{
+     border-radius: 50%;
+       position: absolute;
+       right: 5px;
+       top: -10px;
+
+   }
+   .form-image-upload{
+       background: #e8e8e8 none repeat scroll 0 0;
+       padding: 15px;
+   }
 
 </style>
 
@@ -361,7 +366,7 @@
                     <input type="hidden" name="codigo" class="form-control" placeholder="Title" value="{{ $propiedad->codigo }}">
 
 
-                 <div class="col-2">
+                 <div class="col-3 p-5">
                      <strong>Selecciona aquí las imágenes que desees subir</strong>
                      <br><br>
                       <input type="file" name="file[]" id="file" accept="image/*" multiple />
@@ -370,28 +375,35 @@
                  </div>
                </form>
 
-                 <div class="col-10">
+                 <div class="col-9 p-5">
                    <div class="row">
-                     <div class="d-flex flex-row">
-
-                        @if($fotos->count())
-                            @foreach($fotos as $image)
-                            <div class="p-2">
-                                <a class="thumbnail fancybox" rel="ligthbox" href="{{ asset('images/'.$image->img) }}">
-                                    <img class="img-responsive" alt="" src="{{ asset('images/'.$image->img) }}" />
-
-                                </a>
-                                <form action="{{ route('imgs',$image->id) }}" method="POST">
-                                <input type="hidden" name="_method" value="delete">
-                                {!! csrf_field() !!}
-                                <button type="submit" class="close-icon btn btn-danger">x</button>
-                                </form>
-                            </div>
-                            @endforeach
-                        @endif
 
 
-                    </div>
+                     <div class=' d-flex flex-nowrap'>
+
+
+                            @if($fotos->count())
+                                @foreach($fotos as $image)
+                                <div class='col-2'>
+                                    <a class="thumbnail fancybox" rel="ligthbox" href="{{ asset('images/'.$image->img) }}">
+                                        <img class="" alt="" src="{{ asset('images/'.$image->img) }}" />
+
+                                    </a>
+                                    <form action="{{ route('imgs',$image->id) }}" method="POST">
+                                    <input type="hidden" name="_method" value="delete">
+                                    {!! csrf_field() !!}
+                                    <button type="submit" class="close-icon btn btn-danger">x</i></button>
+                                    </form>
+                                </div> <!-- col-6 / end -->
+                                @endforeach
+                            @endif
+
+
+                        </div> <!-- list-group / end -->
+                    </div> <!-- row / end -->
+
+
+
 
                    </div>
                  </div>
