@@ -429,11 +429,11 @@
            </div>
            <div class="modal-body">
              {{-- INICIO ALERTAS --}}
-             <div id="errorDiv"  class="alert alert-card alert-danger d-none" role="alert">
+             <div id="errorDiv3"  class="alert alert-card alert-danger d-none" role="alert">
                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                        <span aria-hidden="true">&times;</span>
                    </button>
-                     <ul id="errorMsg"></ul>
+                     <ul id="errorMsg3"></ul>
              </div>
 
 
@@ -607,9 +607,22 @@
            },
            success: function(response) {
 
-               if (response.success) {
-                   window.location = response.url;
-               }
+             if (response.success==true) {
+
+               window.location = response.url;
+              window.location = response.url;
+            }
+
+           else {
+
+             $('#errorDiv3').removeClass('d-none');
+             $('#errorMsg3').html('');
+
+             $.each(response.errors, function(key, value) {
+
+                $('#errorMsg3').append('<li >' + value + '</li>');
+             });
+           }
 
            },
            error: function() {

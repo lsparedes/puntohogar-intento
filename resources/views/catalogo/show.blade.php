@@ -88,11 +88,12 @@
                                         <div class="avatar box-shadow-2 mb-3">
                                             <img src="{{asset('assets/images/faces/3.jpg')}}" alt="">
                                         </div>
-                                        <h5 class="m-0">Javier Leiva</h5>
+                                        <h5 class="m-0">{{$asesores->nombre}}</h5>
                                         <p class="mt-0">Asesor Encargado</p>
 
-                                        <button class="btn btn-rounded mb-2" style="background-color:rgb(27, 140, 129);color:white;">Contactar por correo</button>
-                                        <button class="btn btn-rounded" style="background-color:rgb(27, 140, 129);color:white;">Contactar por WhatsApp</button>
+                                        <button class="btn btn-rounded mb-2" style="background-color:rgb(27, 140, 129);color:white;">{{$asesores->correo}}</button>
+                                        <br>
+                                        <button class="btn btn-rounded" style="background-color:rgb(27, 140, 129);color:white;">{{$asesores->whatsapp}}</button>
 
                                     </div>
                                 </div>
