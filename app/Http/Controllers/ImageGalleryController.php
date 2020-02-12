@@ -93,18 +93,7 @@ class ImageGalleryController extends Controller
        }
 
 
-        $image_code = '';
-        $images = $request->file('file');
 
-        foreach($images as $image){
-          $new_name = rand() . '.' . $image->getClientOriginalExtension();
-          $image->move(public_path('images'), $new_name);
-          $image_code .= '<div class="col-md-3" style="margin-bottom:24px;"><img src="/images/'.$new_name.'" class="img-thumbnail" /></div>';
-
-          DB::table('imagenes')->insert(
-             ['codigo' => $request->codigo, 'img' => $new_name]
-          );
-        }
 
 
         $propiedad = DB::table('propiedades')->where('codigo', '=', $request->codigo)->first();
@@ -162,7 +151,20 @@ class ImageGalleryController extends Controller
           $fotos = DB::table('imagenes')->where('codigo', '=', $propiedad->codigo)->get();
         $active_tab="edicion_imagenes";
 
-        return  view('propiedades.form',compact('mispropiedades','UF','contado','leasing','credito','subsidio','propiedad','regiones','comunas','tipopropiedades','tipoamoblados','tipopisos','tipofinanciamientos','fotos','active_tab'));
+        $image_code = '';
+        $images = $request->file('file');
+
+        foreach($images as $image){
+          $new_name = rand() . '.' . $image->getClientOriginalExtension();
+          $image->move(public_path('images'), $new_name);
+          $image_code .= '<div class="col-md-3" style="margin-bottom:24px;"><img src="/images/'.$new_name.'" class="img-thumbnail" /></div>';
+
+          DB::table('imagenes')->insert(
+             ['codigo' => $request->codigo, 'img' => $new_name]
+          );
+        }
+
+        return response()->json(['success'=> true, 'message' => 'La propiedad se agregó correctamente.','image'=>$image_code]);
 
 
    }

@@ -258,12 +258,7 @@
                            <input type="text" name="descripcion_propiedad" class="form-control" id="descripcion_propiedad" value = "{{$propiedad->descripcion_propiedad}}" maxlength="300" required>
                          </div>
                        </div>
-                       <div class="col-6">
 
-                         <input type="file" name="file[]" id="file" accept="image/*" multiple />
-
-
-                       </div>
                      </div>
                      <div class="row">
                        <div class="col-12">
@@ -348,7 +343,7 @@
 
            <div class="tab-pane fade  @if($active_tab=="edicion_imagenes") in show active @endif" id="profileBasic" role="tabpanel" aria-labelledby="profile-basic-tab">
 
-           <form method="post" action="{{ route('imagenes') }}" enctype="multipart/form-data " >
+           <form method="post" id="formimg" action="{{ route('imagenes') }}" enctype="multipart/form-data " >
 
 
         {!! csrf_field() !!}
@@ -423,7 +418,7 @@
 
 @section('page-js')
 
-
+<script src="http://malsup.github.com/jquery.form.js"></script>
 <!-- Script para hacer funcional el Dropzone -->
 
 <script>
@@ -435,6 +430,27 @@
   function UFtoclp(val) {
     document.getElementById("valor_pesos").value = Math.trunc(val * {{$UF}});
   }
+
+  $(document).ready(function() {
+
+      $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          }
+      });
+      $('#formimg').ajaxForm({
+
+          success: function(data) {
+              if (data.success == true) {
+                  {
+                     window.location = response.url;
+                      console.log("llegue");
+                  }
+              }
+          }
+      });
+  });
+
 </script>
 
 

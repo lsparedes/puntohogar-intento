@@ -39,4 +39,4 @@ Route::get('/putregister' , 'Auth\RegisterController@create' )->name('register.m
 Route::get('catalogo/{id}', ['as'=> 'catalogoshow', 'uses' => 'CatalogoController@show']);
 
 Route::delete('imagenes/{id}', 'ImageGalleryController@destroy')->name('imgs');
-Route::post('imagenes', 'ImageGalleryController@subir')->name('imagenes');
+Route::post('img', 'ImageGalleryController@subir')->name('imagenes');
