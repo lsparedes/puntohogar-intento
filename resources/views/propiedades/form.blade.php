@@ -17,6 +17,22 @@
    .main-content-wrap {
        background: #F2E3D5;
    }
+   .gallery
+    {
+        display: inline-block;
+        margin-top: 20px;
+    }
+    .close-icon{
+    	border-radius: 50%;
+        position: absolute;
+        right: 5px;
+        top: -10px;
+        padding: 5px 8px;
+    }
+    .form-image-upload{
+        background: #e8e8e8 none repeat scroll 0 0;
+        padding: 15px;
+    }
 </style>
 
 <div class="card mt-2 mb-4">
@@ -24,10 +40,10 @@
        <div class="breadcrumb mt-3">
            <ul>
                <li>
-                   <a href="{{route('wea')}}"> <b>Home</b> </a>
+                   <a href="{{route('wea')}}"> Home </a>
                </li>
                <li>Mi Portal Inmobiliario</li>
-               <li>Formulario de Edición - {{ old('titulo_propiedad') }}</li>
+               <li> <b>Edición de {{ $propiedad->titulo_propiedad }}</b> </li>
            </ul>
        </div>
    </div>
@@ -35,13 +51,16 @@
        <ul class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
 
            <li class="nav-item">
-               <a class=" nav-link active" id="home-basic-tab" data-toggle="tab" href="#homeBasic" role="tab" aria-controls="homeBasic" aria-selected="true"> <b>Formulario de Edición</b> </a>
+               <a class=" nav-link @if($active_tab=="edicion_datos") active @endif" id="home-basic-tab" data-toggle="tab" href="#homeBasic" role="tab" aria-controls="homeBasic" aria-selected="true"> <b>Edición de datos</b></a>
+           </li>
+           <li class="nav-item">
+               <a class=" nav-link @if($active_tab=="edicion_imagenes") active @endif" id="profile-basic-tab" data-toggle="tab" href="#profileBasic" role="tab" aria-controls="profileBasic" aria-selected="false"> <b>Edición de Imágenes</b> </a>
            </li>
 
 
        </ul>
        <div class="tab-content ul-tab__content" id="nav-tabContent">
-           <div class="tab-pane fade show active" id="homeBasic" role="tabpanel" aria-labelledby="home-basic-tab">
+           <div class="tab-pane fade  @if($active_tab=="edicion_datos") in show active @endif" id="homeBasic" role="tabpanel" aria-labelledby="home-basic-tab">
 
                <br>
 
@@ -50,7 +69,7 @@
 
                  <div>
                    <div id="step-1" class="">
-                     <h3 class="border-bottom border-gray pb-2">Vivienda</h3>
+
                      <div class="row">
                        <div class="col-md-4 col-sm-12">
                          <div class="container form-group">
@@ -324,6 +343,67 @@
                  </div>
                </form>
 
+           </div>
+
+
+
+
+           <div class="tab-pane fade  @if($active_tab=="edicion_imagenes") in show active @endif" id="profileBasic" role="tabpanel" aria-labelledby="profile-basic-tab">
+
+           <form method="post" action="{{ route('imagenes') }}" enctype="multipart/form-data">
+
+
+        {!! csrf_field() !!}
+
+             @if ($message = Session::get('success'))
+              <div class="alert alert-success alert-block">
+                  <button type="button" class="close" data-dismiss="alert">×</button>
+                      <strong>{{ $message }}</strong>
+              </div>
+              @endif
+
+              <div class="row">
+                <div class="col-md-5">
+                    <strong>Title:</strong>
+                    <input type="text" name="codigo" class="form-control" placeholder="Title" value="{{ $propiedad->codigo }}">
+                </div>
+
+                 <div class="col-md-5">
+                     <strong>Image:</strong>
+                      <input type="file" name="file[]" id="file" accept="image/*" multiple />
+                 </div>
+                 <div class="col-md-2">
+                     <br/>
+                     <button type="submit" class="btn btn-success">Upload</button>
+                 </div>
+             </div>
+
+             </form>
+
+
+             <div class="row">
+                <div class='list-group gallery'>
+
+
+                        @if($fotos->count())
+                            @foreach($fotos as $image)
+                            <div class='col-sm-4 col-xs-6 col-md-3 col-lg-3'>
+                                <a class="thumbnail fancybox" rel="ligthbox" href="{{ asset('images/'.$image->img) }}">
+                                    <img class="img-responsive" alt="" src="{{ asset('images/'.$image->img) }}" />
+
+                                </a>
+                                <form action="{{ route('imgs',$image->id) }}" method="POST">
+                                <input type="hidden" name="_method" value="delete">
+                                {!! csrf_field() !!}
+                                <button type="submit" class="close-icon btn btn-danger"><i class="glyphicon glyphicon-remove"></i></button>
+                                </form>
+                            </div> <!-- col-6 / end -->
+                            @endforeach
+                        @endif
+
+
+                    </div> <!-- list-group / end -->
+                </div> <!-- row / end -->
            </div>
 
 

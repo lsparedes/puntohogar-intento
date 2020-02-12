@@ -20,9 +20,9 @@
        <div class="breadcrumb mt-3">
            <ul>
                <li>
-                   <a href="{{route('wea')}}"> <b>Home</b> </a>
+                   <a href="{{route('wea')}}"> Home </a>
                </li>
-               <li>Mi Portal Inmobiliario</li>
+               <li> <b>Mi Portal Inmobiliario</b> </li>
            </ul>
        </div>
    </div>

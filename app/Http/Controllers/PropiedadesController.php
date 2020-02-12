@@ -474,6 +474,8 @@ class PropiedadesController extends Controller
       $amoblado = DB::table('tipo_amoblados')->find($propiedad->tipoamoblados_id);
       $piso = DB::table('tipo_pisos')->find($propiedad->tipopisos_id);
 
+
+
       return view('propiedades.show',compact('piso','propiedad','inmueble','amoblado','tipoamoblados'));
     }
 
@@ -512,8 +514,30 @@ class PropiedadesController extends Controller
       $inmueble = DB::table('tipo_propiedades')->find($propiedad->tipopropiedades_id);
       $amoblado = DB::table('tipo_amoblados')->find($propiedad->tipoamoblados_id);
       $piso = DB::table('tipo_pisos')->find($propiedad->tipopisos_id);
+      $financiamientos = DB::table('tipo_financiamientos')->select('tipo_financiamientos.financiamientos as nombre')->join('financiamientos','tipo_financiamientos.id','=','financiamientos.tipofinanciamientos_id')->where('financiamientos.propiedades_id', '=', $propiedad->id)->get();
 
-      return view('propiedades.show',compact('piso','propiedad','inmueble','amoblado','tipoamoblados','fotos'));
+      $contado=0;
+  $leasing=0;
+  $credito=0;
+  $subsidio=0;
+  foreach ($financiamientos as $fin) {
+    if($fin->nombre=="Contado"){
+      $contado=1;
+    }
+    if($fin->nombre=="Leasing"){
+      $leasing=1;
+    }
+    if($fin->nombre=="Credito Hipotecario"){
+      $credito=1;
+    }
+    if($fin->nombre=="Subsidio"){
+      $subsidio=1;
+    }
+
+
+  }
+
+      return view('propiedades.show',compact('piso','propiedad','inmueble','amoblado','tipoamoblados','fotos','contado','leasing','credito','subsidio'));
     }
     /**
      * Show the form for editing the specified resource.
@@ -632,8 +656,12 @@ class PropiedadesController extends Controller
       }
       $dailyIndicators = json_decode($json);
       $UF = intval($dailyIndicators->uf->valor);
-      return view('propiedades.form',compact('mispropiedades','UF','contado','leasing','credito','subsidio','propiedad','regiones','comunas','tipopropiedades','tipoamoblados','tipopisos','tipofinanciamientos'));
+        $fotos = DB::table('imagenes')->where('codigo', '=', $propiedad->codigo)->get();
+        $active_tab="edicion_datos";
+      return view('propiedades.form',compact('mispropiedades','UF','contado','leasing','credito','subsidio','propiedad','regiones','comunas','tipopropiedades','tipoamoblados','tipopisos','tipofinanciamientos','fotos','active_tab'));
   }
+
+
 
   // Esta funcion es llamada al subir el form de edicion cuando una publicacion fue rechazada
   // Se encarga de actualiar los datos de la publicacion
