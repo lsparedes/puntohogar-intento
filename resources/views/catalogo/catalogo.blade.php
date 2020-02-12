@@ -47,10 +47,12 @@
 
 
               <div class="col-3">
-                <h4> <b>Filtros</b> </h4>
-                <p>Ajusta los siguientes parámetros para realizar tu búsqueda.</p>
+
                 <div class="card ">
                     <div class="card-body">
+                      <h4> <b>Filtros</b> </h4>
+                      <p>Ajusta los siguientes parámetros para realizar tu búsqueda.</p>
+                      <hr>
                         <form>
 
                             <fieldset class="form-group">
@@ -301,7 +303,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <br>
+                            <hr>
 
 
                             <div class="form-group row">
