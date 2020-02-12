@@ -4,6 +4,7 @@
 
 
 @section('main-content')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
 
 <style media="screen">
    .nav-tabs .nav-item .nav-link.active {
@@ -23,16 +24,13 @@
         margin-top: 20px;
     }
     .close-icon{
-    	border-radius: 50%;
+    	  border-radius: 50%;
         position: absolute;
         right: 5px;
         top: -10px;
         padding: 5px 8px;
     }
-    .form-image-upload{
-        background: #e8e8e8 none repeat scroll 0 0;
-        padding: 15px;
-    }
+
 </style>
 
 <div class="card mt-2 mb-4">
@@ -350,7 +348,7 @@
 
            <div class="tab-pane fade  @if($active_tab=="edicion_imagenes") in show active @endif" id="profileBasic" role="tabpanel" aria-labelledby="profile-basic-tab">
 
-           <form method="post" action="{{ route('imagenes') }}" enctype="multipart/form-data">
+           <form method="post" action="{{ route('imagenes') }}" enctype="multipart/form-data " >
 
 
         {!! csrf_field() !!}
@@ -363,47 +361,51 @@
               @endif
 
               <div class="row">
-                <div class="col-md-5">
-                    <strong>Title:</strong>
-                    <input type="text" name="codigo" class="form-control" placeholder="Title" value="{{ $propiedad->codigo }}">
-                </div>
 
-                 <div class="col-md-5">
-                     <strong>Image:</strong>
+
+                    <input type="hidden" name="codigo" class="form-control" placeholder="Title" value="{{ $propiedad->codigo }}">
+
+
+                 <div class="col-3">
+                     <strong>Selecciona aquí las imágenes que desees subir</strong>
+                     <br><br>
                       <input type="file" name="file[]" id="file" accept="image/*" multiple />
+                      <br><br>
+                       <button type="submit" class="btn btn-success btn-sm btn-block">Subir y Guardar</button>
                  </div>
-                 <div class="col-md-2">
-                     <br/>
-                     <button type="submit" class="btn btn-success">Upload</button>
+               </form>
+
+                 <div class="col-9">
+                   <div class="row">
+                     <div class='list-group gallery'>
+
+
+                             @if($fotos->count())
+                                 @foreach($fotos as $image)
+                                 <div class='col-sm-4 col-xs-6 col-md-3 col-lg-3'>
+                                     <a class="thumbnail fancybox" rel="ligthbox" href="{{ asset('images/'.$image->img) }}">
+                                         <img class="img-responsive" alt="" src="{{ asset('images/'.$image->img) }}" />
+
+                                     </a>
+                                     <form action="{{ route('imgs',$image->id) }}" method="POST">
+                                     <input type="hidden" name="_method" value="delete">
+                                     {!! csrf_field() !!}
+                                     <button type="submit" class="close-icon btn btn-danger"><i class="glyphicon glyphicon-remove"></i></button>
+                                     </form>
+                                 </div> <!-- col-6 / end -->
+                                 @endforeach
+                             @endif
+
+
+                         </div> <!-- list-group / end -->
+                   </div>
                  </div>
+
              </div>
 
-             </form>
 
 
-             <div class="row">
-                <div class='list-group gallery'>
 
-
-                        @if($fotos->count())
-                            @foreach($fotos as $image)
-                            <div class='col-sm-4 col-xs-6 col-md-3 col-lg-3'>
-                                <a class="thumbnail fancybox" rel="ligthbox" href="{{ asset('images/'.$image->img) }}">
-                                    <img class="img-responsive" alt="" src="{{ asset('images/'.$image->img) }}" />
-
-                                </a>
-                                <form action="{{ route('imgs',$image->id) }}" method="POST">
-                                <input type="hidden" name="_method" value="delete">
-                                {!! csrf_field() !!}
-                                <button type="submit" class="close-icon btn btn-danger"><i class="glyphicon glyphicon-remove"></i></button>
-                                </form>
-                            </div> <!-- col-6 / end -->
-                            @endforeach
-                        @endif
-
-
-                    </div> <!-- list-group / end -->
-                </div> <!-- row / end -->
            </div>
 
 

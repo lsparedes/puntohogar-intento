@@ -585,8 +585,8 @@
               <div class="pl-4" >
                 <h4 class="display-3" style="color:white">Catálogo</h4>
                 <p class="text-white">Aquí podrás encontrar un listado de los inmuebles que tenemos disponibles para tí.</p>
-                <a href="{{ route('catalogo')}}"  class="btn btn-neutral btn-icon btn-sm" style="background-color:rgb(242, 121, 15);color:white;border-style:none">
-                  <span class="nav-link-inner--text">Publica Gratis</span>
+                <a href="{{ route('catalogo')}}"  class="btn btn-icon btn-sm" style="background-color:rgb(27, 140, 129);color:white">
+                  <span class="nav-link-inner--text">Ir al Catálogo</span>
                 </a>
                 <!-- <p >Aquí va la descripción de todos los servicios que buscatucasa ofrece. </p> -->
               </div>
