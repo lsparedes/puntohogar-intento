@@ -512,8 +512,9 @@ class PropiedadesController extends Controller
       $inmueble = DB::table('tipo_propiedades')->find($propiedad->tipopropiedades_id);
       $amoblado = DB::table('tipo_amoblados')->find($propiedad->tipoamoblados_id);
       $piso = DB::table('tipo_pisos')->find($propiedad->tipopisos_id);
+      $asesores = DB::table('asesores')->get();
 
-      return view('propiedades.show',compact('piso','propiedad','inmueble','amoblado','tipoamoblados','fotos'));
+      return view('propiedades.show',compact('piso','propiedad','inmueble','amoblado','tipoamoblados','fotos','asesores'));
     }
     /**
      * Show the form for editing the specified resource.
@@ -710,10 +711,14 @@ class PropiedadesController extends Controller
   }
 
   // Funcion encargada de aprobar una solicitud
-  public function updateState($id){
+  public function updateState(Request $request, $id){
       DB::table('propiedades')
       ->where('id', $id)
       ->update(['estado_publicacion' => 'aceptada']);
+
+      DB::table('poseen')->insert(
+    ['propiedades_id' => $id, 'asesores_id' => $request->asesor]);
+
       $propiedades = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"aceptada")->get();
       $regiones = DB::table('regiones')->select('*')->where('id','=',11)->get();
       $comunas = DB::table('comunas')->select('*')->where('region_id','=',11)->get();
@@ -750,7 +755,8 @@ class PropiedadesController extends Controller
       $propiedadesespera = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"espera")->get();
 
       $user = Auth::user(); //Informacion del admin para enviarla a la vista
-      return view('propiedades.index',compact('UF','propiedades','user','mispropiedades','propiedadesespera','tipopropiedades','comunas','regiones','tipoamoblados','tipopisos','tipofinanciamientos'));
+        $fotos2 = DB::table('imagenes')->join('propiedades','propiedades.codigo','=','imagenes.codigo')->where('propiedades.estado_publicacion','=',"espera")->get();
+      return view('propiedades.index',compact('UF','propiedades','user','mispropiedades','propiedadesespera','tipopropiedades','comunas','regiones','tipoamoblados','tipopisos','tipofinanciamientos','fotos2'));
   }
 
   // Funcion encargada de rechazar una solicitud
