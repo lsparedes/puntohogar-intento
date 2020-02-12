@@ -136,6 +136,7 @@ class RegisterController extends Controller
            Auth::loginUsingId($retorno->id);
 
             $consulta= DB::table('propiedadestemporal')->where('codigo','=', $request->codigo)->first();
+          
             $insercion=DB::table('propiedades')->insert([
                    'codigo'  => $request->codigo,
                    'titulo_propiedad' => $consulta->titulo_propiedad,

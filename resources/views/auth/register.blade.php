@@ -92,10 +92,10 @@
                                                         </span> @enderror
                                             </div>
                                             <div class="form-group">
-                                                <input id="roles_id" type="number" class="" name="roles_id" required autocomplete="1" value="2" style="display:none">
-                                                <input id="usuario" type="number" class="" name="usuario_id" required autocomplete="1" value="1" style="display:none">
+
+                                                <input id="usuario" type="number" class="" name="usuario_id"  value="1" style="display:none">
                                             </div>
-                                              <input id="usuario_id" type="number" class="" name="usuario_id" value="1" style="display:none">
+
                                             <div class="form-group">
                                                 <label for="repassword">Confirmar contraseña</label>
 
@@ -135,15 +135,15 @@
             url: "{{ route('register.modal') }}",
             type: 'GET',
             data: {
-                'usuario_id': document.getElementById('usuario_id').value,
-                'name': document.getElementById('name_modal2').value,
-                'segundo_nombre': document.getElementById('segundo_nombre_modal2').value,
-                'apellido_paterno': document.getElementById('apellido_paterno_modal2').value,
-                'apellido_materno': document.getElementById('apellido_materno_modal2').value,
-                'email': document.getElementById('email_modal2').value,
-                'password': document.getElementById('password_modal2').value,
-                'password': document.getElementById('password-confirm_modal2').value,
-                '_token': $("meta[name='csrf-token']").attr("content")
+              'name':document.getElementById('name_modal2').value,
+              'segundo_nombre': document.getElementById('segundo_nombre_modal2').value,
+              'apellido_paterno': document.getElementById('apellido_paterno_modal2').value,
+               'apellido_materno': document.getElementById('apellido_materno_modal2').value,
+               'email': document.getElementById('email_modal2').value,
+               'usuario_id': document.getElementById('usuario').value,
+               'password': document.getElementById('password_modal2').value,
+               'password_confirmation': document.getElementById('password-confirm_modal2').value,
+               '_token': $("meta[name='csrf-token']").attr("content")
             },
             dataType: 'JSON',
             headers: {

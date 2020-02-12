@@ -90,7 +90,7 @@
                        <div class="col-md-4 col-sm-12">
                            <div class="container form-group">
                                <label for="region">Región:</label>
-                               <select class="form-control" name="region" id="region" onchange="changeRegion(this.value)">
+                               <select class="form-control" name="region" id="region">
                                  <option value="" selected>Selecciona una región</option>
                                    @foreach($regiones as $region)
                                    <option value="{{$region->id}}">{{$region->order}}, {{$region->nombre}}</option>
@@ -428,15 +428,23 @@
                </button>
            </div>
            <div class="modal-body">
+             {{-- INICIO ALERTAS --}}
+             <div id="errorDiv"  class="alert alert-card alert-danger d-none" role="alert">
+                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                       <span aria-hidden="true">&times;</span>
+                   </button>
+                     <ul id="errorMsg"></ul>
+             </div>
 
+
+
+
+             {{-- FIN ALERTAS --}}
                <div class="form-group row">
                    <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Email') }}</label>
                    <input type="hidden" id="pasandocodigo" name="" value="">
                    <div class="col-md-6">
-                       <input id="email_modal" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus> @error('email')
-                       <span class="invalid-feedback" role="alert">
-                             <strong>{{ $message }}</strong>
-                         </span> @enderror
+                       <input id="email_modal" type="email" class="form-control" name="email" value="{{ old('email') }}">
                    </div>
                </div>
 
@@ -444,10 +452,7 @@
                    <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Contraseña') }}</label>
 
                    <div class="col-md-6">
-                       <input id="password_modal" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password"> @error('password')
-                       <span class="invalid-feedback" role="alert">
-                             <strong>{{ $message }}</strong>
-                         </span> @enderror
+                       <input id="password_modal" type="password" class="form-control" name="password">
                    </div>
                </div>
 
@@ -485,57 +490,51 @@
                </button>
            </div>
            <div class="modal-body">
+             {{-- INICIO ALERTAS --}}
+        <div id="errorDiv2"  class="alert alert-card alert-danger d-none" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+                <ul id="errorMsg2"></ul>
+        </div>
+
+
+
+
+        {{-- FIN ALERTAS --}}
+
 
                <div class="form-group">
                    <input type="hidden" id="pasandocodigo2" name="" value="">
                    <label for="email">Primer Nombre</label>
-                   <input id="name_modal2" type="text" class="form-control @error('name') is-invalid @enderror form-control-rounded" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus> @error('name')
-                   <span class="invalid-feedback" role="alert">
-                         <strong>{{ $message }}</strong>
-                     </span> @enderror
+                   <input id="name_modal2" type="text" class="form-control form-control-rounded" name="name" value="{{ old('name') }}">
 
                </div>
                <div class="form-group">
                    <label for="email">Segundo Nombre</label>
-                   <input id="segundo_nombre_modal2" type="text" class="form-control @error('name') is-invalid @enderror form-control-rounded" name="segundo_nombre" value="{{ old('segundo_nombre') }}" required autocomplete="segundo_nombre" autofocus> @error('segundo_nombre')
-                   <span class="invalid-feedback" role="alert">
-                             <strong>{{ $message }}</strong>
-                         </span> @enderror
-
+                   <input id="segundo_nombre_modal2" type="text" class="form-control form-control-rounded" name="segundo_nombre" value="{{ old('segundo_nombre') }}">
                </div>
                <div class="form-group">
                    <label for="email">Primer apellido</label>
-                   <input id="apellido_paterno_modal2" type="text" class="form-control @error('apellido_paterno') is-invalid @enderror form-control-rounded" name="apellido_paterno" value="{{ old('apellido_paterno') }}" required autocomplete="apellido_paterno" autofocus> @error('apellido_paterno')
-                   <span class="invalid-feedback" role="alert">
-                             <strong>{{ $message }}</strong>
-                         </span> @enderror
+                   <input id="apellido_paterno_modal2" type="text" class="form-control form-control-rounded" name="apellido_paterno" value="{{ old('apellido_paterno') }}">
 
                </div>
                <div class="form-group">
                    <label for="email">Segundo apellido</label>
-                   <input id="apellido_materno_modal2" type="text" class="form-control @error('apellido_materno') is-invalid @enderror form-control-rounded" name="apellido_materno" value="{{ old('apellido_materno') }}" required autocomplete="apellido_materno" autofocus> @error('apellido_materno')
-                   <span class="invalid-feedback" role="alert">
-                             <strong>{{ $message }}</strong>
-                         </span> @enderror
+                   <input id="apellido_materno_modal2" type="text" class="form-control form-control-rounded" name="apellido_materno" value="{{ old('apellido_materno') }}">
 
                </div>
                <div class="form-group">
                    <label for="email">Email</label>
-                   <input id="email_modal2" type="email" class="form-control @error('email') is-invalid @enderror form-control-rounded" name="email" value="{{ old('email') }}" required autocomplete="email"> @error('email')
-                   <span class="invalid-feedback" role="alert">
-                             <strong>{{ $message }}</strong>
-                         </span> @enderror
+                   <input id="email_modal2" type="email" class="form-control form-control-rounded" name="email" value="{{ old('email') }}">
                </div>
                <div class="form-group">
                    <label for="password">Contraseña</label>
-                   <input id="password_modal2" type="password" class="form-control @error('password') is-invalid @enderror form-control-rounded" name="password" required autocomplete="new-password"> @error('password')
-                   <span class="invalid-feedback" role="alert">
-                               <strong>{{ $message }}</strong>
-                           </span> @enderror
+                   <input id="password_modal2" type="password" class="form-control form-control-rounded" name="password">
                </div>
                <div class="form-group">
-                   <input id="roles_id" type="number" class="" name="roles_id" required autocomplete="1" value="2" style="display:none">
-                   <input id="usuario" type="number" class="" name="usuario_id" required autocomplete="1" value="1" style="display:none">
+
+                   <input id="usuario" type="number" class="" name="usuario_id" value="2" style="display:none">
                </div>
 
                <div class="form-group">
@@ -547,7 +546,7 @@
 
                <div class="form-group row mb-0">
                    <div class="col-md-6 offset-md-4">
-                       <button type="submit" class="btn btn-primary" onclick="register()">
+                       <button type="button" class="btn btn-primary" onclick="register()">
                            {{ __('Registrarse') }}
                        </button>
                    </div>
@@ -623,7 +622,7 @@
    }
 
    function register() {
-
+     console.log("entre");
        var q = 0;
        var r = 0;
        var s = 0;
@@ -646,19 +645,20 @@
            url: "{{ route('register.modal') }}",
            type: 'POST',
            data: {
-               'contado': q,
-               'subsidio': r,
-               'credito': s,
-               'leasing': t,
-               'codigo': document.getElementById('pasandocodigo2').value,
-               'name': document.getElementById('name_modal2').value,
-               'segundo_nombre': document.getElementById('segundo_nombre_modal2').value,
-               'apellido_paterno': document.getElementById('apellido_paterno_modal2').value,
-               'apellido_materno': document.getElementById('apellido_materno_modal2').value,
-               'email': document.getElementById('email_modal2').value,
-               'password': document.getElementById('password_modal2').value,
-               'password': document.getElementById('password-confirm_modal2').value,
-               '_token': $("meta[name='csrf-token']").attr("content")
+             'contado': q,
+             'subsidio': r,
+             'credito': s,
+             'leasing': t,
+            'codigo': document.getElementById('pasandocodigo2').value,
+             'name':document.getElementById('name_modal2').value,
+             'segundo_nombre': document.getElementById('segundo_nombre_modal2').value,
+             'apellido_paterno': document.getElementById('apellido_paterno_modal2').value,
+              'apellido_materno': document.getElementById('apellido_materno_modal2').value,
+              'email': document.getElementById('email_modal2').value,
+              'usuario_id': document.getElementById('usuario').value,
+              'password': document.getElementById('password_modal2').value,
+              'password_confirmation': document.getElementById('password-confirm_modal2').value,
+              '_token': $("meta[name='csrf-token']").attr("content")
            },
            dataType: 'JSON',
            headers: {

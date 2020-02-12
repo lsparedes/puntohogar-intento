@@ -36,7 +36,7 @@ class PropiedadesController extends Controller
 
 
           $mispropiedades = DB::table('propiedades')->select('*')->where('usuario_id',Auth::user()->id)->get();
-        
+
           $fotos = DB::table('imagenes')->join('propiedades','propiedades.codigo','=','imagenes.codigo')->where('propiedades.usuario_id','=',Auth::user()->id)->get();
 
       }else{
