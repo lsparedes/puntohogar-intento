@@ -28,11 +28,17 @@
            @if(Auth::check())
                <!-- Si el usuario logeado es un admin, y la propiedad esta en espera, puede aceptarla o rechazarla -->
                @if(Auth::user()->roles_id == 1 and $propiedad->estado_publicacion == "espera")
-                   <a href="{{route('update',$propiedad->id)}}"  class="btn btn-success btn-icon " style="color:white;border-style:none;margin-left:10px">
+                   <!-- <a href="{{route('update',$propiedad->id)}}"  class="btn btn-success btn-icon " style="color:white;border-style:none;margin-left:10px">
+                       <span class="nav-link-inner--text">Aceptar</span>
+                   </a> -->
+                   <a href="" type="button" data-toggle="modal" data-target="#exampleModal2" class="btn btn-success btn-icon " style="color:white;border-style:none;margin-left:10px">
                        <span class="nav-link-inner--text">Aceptar</span>
                    </a>
                    <a href="" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-danger btn-icon " style="color:white;border-style:none;margin-left:10px">
                        <span class="nav-link-inner--text">Rechazar</span>
+                   </a>
+                   <a type="button" class="btn btn-warning btn-icon" onclick="onLoadBody();" style="color:white;border-style:none;margin-left:10px">
+                       <span class="nav-link-inner--text">Editar</span>
                    </a>
 
                @endif
@@ -413,6 +419,36 @@
         </div>
     </div>
 </div>
+<!-- Modal que se muestra al administrador cuando rechazara una publicacion -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Indica el asesor a cargo de esta propiedad</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+              <form method="GET" action="{{route('update',$propiedad->id)}}">
+                <select class="form-control" name="asesor" id="asesor">
+                  @foreach($asesores as $asesor)
+                  <option value="{{$asesor->id}}">{{$asesor->nombre}}</option>
+                  @endforeach
+                </select>
+
+                <div class="modal-footer">
+                    <input type="submit" value="Enviar" class="btn btn-primary">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">cancelar</button>
+
+                </div>
+              </form>
+            </div>
+
+
+        </div>
+    </div>
+</div>
 <!-- Modal que se muestra para editar algunos atributos de una publicacion una publicacion -->
 <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -435,6 +471,11 @@
 
 @section('page-js')
 <script src="{{asset('assets/js/carousel.script.js')}}"></script>
-
+<script type="text/javascript">
+function onLoadBody() {
+  console.log(document.getElementById('titulo').value);
+    document.getElementById('titulo').readOnly = false;
+  }
+</script>
 
 @endsection

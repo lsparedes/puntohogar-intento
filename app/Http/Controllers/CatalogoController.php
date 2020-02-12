@@ -83,9 +83,11 @@ class CatalogoController extends Controller
 
 
       }
+      $asesores=DB::table('asesores')->select('asesores.nombre','asesores.correo','asesores.whatsapp')->leftJoin('poseen','asesores.id','=','poseen.asesores_id')->leftJoin('propiedades','propiedades.id','=','poseen.propiedades_id')->where('propiedades.id','=',$id)->first();
 
+      //dd($asesores);
 
-      return view('catalogo.show',compact('piso','propiedad','inmueble','amoblado','tipoamoblados','fotos','contado','leasing','credito','subsidio'));
+      return view('catalogo.show',compact('piso','propiedad','inmueble','amoblado','tipoamoblados','fotos','contado','leasing','credito','subsidio','asesores'));
     }
 
     /**
