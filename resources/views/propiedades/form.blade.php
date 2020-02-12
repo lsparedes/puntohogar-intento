@@ -28,7 +28,7 @@
         position: absolute;
         right: 5px;
         top: -10px;
-        padding: 5px 8px;
+
     }
 
 </style>
@@ -361,7 +361,7 @@
                     <input type="hidden" name="codigo" class="form-control" placeholder="Title" value="{{ $propiedad->codigo }}">
 
 
-                 <div class="col-3">
+                 <div class="col-2">
                      <strong>Selecciona aquí las imágenes que desees subir</strong>
                      <br><br>
                       <input type="file" name="file[]" id="file" accept="image/*" multiple />
@@ -370,29 +370,29 @@
                  </div>
                </form>
 
-                 <div class="col-9">
+                 <div class="col-10">
                    <div class="row">
-                     <div class='list-group gallery'>
+                     <div class="d-flex flex-row">
+
+                        @if($fotos->count())
+                            @foreach($fotos as $image)
+                            <div class="p-2">
+                                <a class="thumbnail fancybox" rel="ligthbox" href="{{ asset('images/'.$image->img) }}">
+                                    <img class="img-responsive" alt="" src="{{ asset('images/'.$image->img) }}" />
+
+                                </a>
+                                <form action="{{ route('imgs',$image->id) }}" method="POST">
+                                <input type="hidden" name="_method" value="delete">
+                                {!! csrf_field() !!}
+                                <button type="submit" class="close-icon btn btn-danger">x</button>
+                                </form>
+                            </div>
+                            @endforeach
+                        @endif
 
 
-                             @if($fotos->count())
-                                 @foreach($fotos as $image)
-                                 <div class='col-sm-4 col-xs-6 col-md-3 col-lg-3'>
-                                     <a class="thumbnail fancybox" rel="ligthbox" href="{{ asset('images/'.$image->img) }}">
-                                         <img class="img-responsive" alt="" src="{{ asset('images/'.$image->img) }}" />
+                    </div>
 
-                                     </a>
-                                     <form action="{{ route('imgs',$image->id) }}" method="POST">
-                                     <input type="hidden" name="_method" value="delete">
-                                     {!! csrf_field() !!}
-                                     <button type="submit" class="close-icon btn btn-danger"><i class="glyphicon glyphicon-remove"></i></button>
-                                     </form>
-                                 </div> <!-- col-6 / end -->
-                                 @endforeach
-                             @endif
-
-
-                         </div> <!-- list-group / end -->
                    </div>
                  </div>
 
@@ -443,7 +443,7 @@
           success: function(data) {
               if (data.success == true) {
                   {
-                     window.location = response.url;
+                      window.location = data.url;
                       console.log("llegue");
                   }
               }

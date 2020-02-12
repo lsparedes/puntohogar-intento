@@ -164,7 +164,8 @@ class ImageGalleryController extends Controller
           );
         }
 
-        return response()->json(['success'=> true, 'message' => 'La propiedad se agregó correctamente.','image'=>$image_code]);
+
+        return response()->json(['success'=> true, 'message' => 'La propiedad se agregó correctamente.','image'=>$image_code,'url'=>route('editpropiedad',$propiedad->id)]);
 
 
    }
