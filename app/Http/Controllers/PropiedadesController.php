@@ -498,6 +498,7 @@ class PropiedadesController extends Controller
     //   return view('propiedades.show',compact('piso','propiedad','inmueble','amoblado','tipoamoblados'));
     // }
 
+
     public function vermas($codigo)
     {
       // Recupera las fotos que corresponden a dicha vivienda
@@ -536,8 +537,9 @@ class PropiedadesController extends Controller
 
 
   }
+      $asesores = DB::table('asesores')->get();
 
-      return view('propiedades.show',compact('piso','propiedad','inmueble','amoblado','tipoamoblados','fotos','contado','leasing','credito','subsidio'));
+      return view('propiedades.show',compact('piso','propiedad','inmueble','amoblado','tipoamoblados','fotos','contado','leasing','credito','subsidio','asesores'));
     }
     /**
      * Show the form for editing the specified resource.
