@@ -279,7 +279,7 @@ rel="stylesheet">
                                     <a href="#">
                                       <div class="our-team-main d-none d-md-block">
                                         <div class="team-front">
-                                          <img src="{{asset('assets/img/nuevos/Mudanza.png')}}" class="img-fluid" />
+                                          <img src="{{asset('assets/img/nuevos/MUDANZA.png')}}" class="img-fluid" />
                                           <div style="writing-mode: vertical-lr;transform: rotate(180deg);">
                                             <h2 style="color:white !important;text-align:left;visibility:hidden" class="mx-auto">Traslado y mudanza</h2>
                                             <h2 style="color:black !important;text-align:left;padding-top:15px !important" class="mx-auto">Traslado y mudanza</h2>
@@ -295,7 +295,7 @@ rel="stylesheet">
 
                                       <div class=" d-md-none">
                                         <div class="slide2-movil d-flex content-align-left ">
-                                          <img src="{{asset('assets/img/nuevos/mudanza.png')}}" class="" >
+                                          <img src="{{asset('assets/img/nuevos/MUDANZA.png')}}" class="" >
                                           <h5 class="my-auto ml-2">Traslado y mudanza</h5>
                                         </div>
                                       </div>
@@ -376,7 +376,7 @@ rel="stylesheet">
                                     <a href="#">
                                       <div class="our-team-main d-none d-md-block">
                                         <div class="team-front">
-                                          <img src="{{asset('assets/img/nuevos/REParaciones.png')}}" class="img-fluid" />
+                                          <img src="{{asset('assets/img/nuevos/REPARACIONES.png')}}" class="img-fluid" />
                                           <div style="writing-mode: vertical-lr;transform: rotate(180deg);">
                                             <h2 style="color:white !important;text-align:left;visibility:hidden" class="mx-auto">Traslado y mudanzaa</h2>
                                             <h2 style="color:black !important;text-align:left;padding-top:15px !important" class="mx-auto">Reparaciones</h2>
@@ -391,7 +391,7 @@ rel="stylesheet">
 
                                       <div class=" d-md-none">
                                         <div class="slide2-movil d-flex content-align-left ">
-                                          <img src="{{asset('assets/img/nuevos/Reparaciones.png')}}" class="" >
+                                          <img src="{{asset('assets/img/nuevos/REPARACIONES.png')}}" class="" >
                                           <h5 class="my-auto ml-2">Reparaciones</h5>
                                         </div>
                                       </div>
@@ -409,7 +409,7 @@ rel="stylesheet">
                                     <a href="#">
                                       <div class="our-team-main d-none d-md-block">
                                         <div class="team-front">
-                                          <img src="{{asset('assets/img/nuevos/elec.png')}}" class="img-fluid" />
+                                          <img src="{{asset('assets/img/nuevos/ELEC.png')}}" class="img-fluid" />
                                           <div style="writing-mode: vertical-lr;transform: rotate(180deg);">
                                             <h2 style="color:white !important;text-align:left;visibility:hidden" class="mx-auto">Traslado y mudanzaa</h2>
                                             <h2 style="color:black !important;text-align:left;padding-top:15px !important" class="mx-auto">Electricidad</h2>
@@ -424,7 +424,7 @@ rel="stylesheet">
 
                                       <div class=" d-md-none">
                                         <div class="slide2-movil d-flex content-align-left ">
-                                          <img src="{{asset('assets/img/nuevos/elec.png')}}" class="" >
+                                          <img src="{{asset('assets/img/nuevos/ELEC.png')}}" class="" >
                                           <h5 class="my-auto ml-2">Electricidad</h5>
                                         </div>
                                       </div>
@@ -438,7 +438,7 @@ rel="stylesheet">
                                     <a href="#">
                                       <div class="our-team-main d-none d-md-block">
                                         <div class="team-front">
-                                          <img src="{{asset('assets/img/nuevos/Gasfiteria.png')}}" class="img-fluid" />
+                                          <img src="{{asset('assets/img/nuevos/GASFITERIA.png')}}" class="img-fluid" />
                                           <div style="writing-mode: vertical-lr;transform: rotate(180deg);">
                                             <h2 style="color:white !important;text-align:left;visibility:hidden" class="mx-auto">Traslado y mudanzaa</h2>
                                             <h2 style="color:black !important;text-align:left;padding-top:15px !important" class="mx-auto">Gasfiteria</h2>
@@ -453,7 +453,7 @@ rel="stylesheet">
 
                                       <div class=" d-md-none">
                                         <div class="slide2-movil d-flex content-align-left ">
-                                          <img src="{{asset('assets/img/nuevos/Gasfiteria.png')}}" class="" >
+                                          <img src="{{asset('assets/img/nuevos/GASFITERIA.png')}}" class="" >
                                           <h5 class="my-auto ml-2">Gasfiteria</h5>
                                         </div>
                                       </div>
