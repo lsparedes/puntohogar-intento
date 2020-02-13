@@ -321,8 +321,24 @@
                                            </table>
                                        </div>
                                        <p class="m-0   w-55 w-sm-100 d-none d-lg-block item-badges">
+                                         @if($propiedad->estado_publicacion=="espera")
+                                           <span class="badge" style="background-color:orange;color:white;text-transform:uppercase;">{{$propiedad->estado_publicacion}}</span>
+
+                                         @endif
+                                         @if($propiedad->estado_publicacion=="aceptada")
+                                           <span class="badge" style="background-color:green;color:white;text-transform:uppercase;">{{$propiedad->estado_publicacion}}</span>
+
+                                         @endif
+                                         @if($propiedad->estado_publicacion=="rechazada")
+                                           <span class="badge" style="background-color:red;color:white;text-transform:uppercase;">{{$propiedad->estado_publicacion}}</span>
+
+                                         @endif
+
+
+                                          <br>
                                            <span class="badge" style="background-color:rgb(242, 121, 15);color:white;">{{$propiedad->valor_uf}}UF</span>
                                        </p>
+
 
                                    </div>
                                </div>

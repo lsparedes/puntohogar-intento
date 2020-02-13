@@ -738,7 +738,7 @@ class PropiedadesController extends Controller
 
   }
       $asesores = DB::table('asesores')->get();
-      $asesor_asignado=DB::table('asesores')->select('asesores.nombre','asesores.correo','asesores.whatsapp')->leftJoin('poseen','asesores.id','=','poseen.asesores_id')->leftJoin('propiedades','propiedades.id','=','poseen.propiedades_id')->where('propiedades.id','=',$propiedad->id)->first();
+    $asesor_asignado=DB::table('asesores')->select('asesores.nombre','asesores.correo','asesores.whatsapp')->leftJoin('poseen','asesores.id','=','poseen.asesores_id')->leftJoin('propiedades','propiedades.id','=','poseen.propiedades_id')->where('propiedades.id','=',$propiedad->id)->first();
 
       return view('propiedades.show',compact('piso','propiedad','inmueble','amoblado','tipoamoblados','fotos','contado','leasing','credito','subsidio','asesores','asesor_asignado'));
     }
