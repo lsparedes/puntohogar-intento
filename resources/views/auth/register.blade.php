@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Gull - Laravel + Bootstrap 4 admin template</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,800,900" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('assets/styles/css/themes/lite-purple.min.css')}}">
 </head>
@@ -86,7 +87,8 @@
                                                              </div>
                                                              <div class="form-group">
 
-                                                                 <input id="usuario" type="number" class="" name="usuario_id" value="2" style="display:none">
+                                                                 <input id="usuario" type="number" class="" name="usuario_id" value="1">
+
                                                              </div>
 
                                                              <div class="form-group">
@@ -123,12 +125,17 @@
     <script type="text/javascript">
     function register() {
 
-
+      $.ajaxSetup({
+  headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  }
+});
 
         $.ajax({
             url: "{{ route('register.modal') }}",
-            type: 'GET',
+            type: 'POST',
             data: {
+
               'name':document.getElementById('name_modal2').value,
               'segundo_nombre': document.getElementById('segundo_nombre_modal2').value,
               'apellido_paterno': document.getElementById('apellido_paterno_modal2').value,
@@ -140,9 +147,6 @@
                '_token': $("meta[name='csrf-token']").attr("content")
             },
             dataType: 'JSON',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
-            },
             success: function(response) {
 
               if (response.success==true) {

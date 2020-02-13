@@ -239,6 +239,7 @@ class RegisterController extends Controller
        return response()->json(['success'=>true,'url'=>route('wea')]);
 
      }
+
      else{
        $retorno = User::create([
            'name' => $request->name,
@@ -306,5 +307,8 @@ class RegisterController extends Controller
          //return $retorno;
      // }
  }
+
+
 }
+
 }
