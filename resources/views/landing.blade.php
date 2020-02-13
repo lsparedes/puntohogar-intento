@@ -1,6 +1,9 @@
 
 @extends('layouts.app')
 
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+rel="stylesheet">
+
 @section('content')
 
   <div style="width: 60px;height: 60px;position: fixed;z-index:998;right:15px;bottom:15px;border-radius:50%">
@@ -521,7 +524,9 @@
           <div class="col-md-6 order-md-1">
             <div class="pr-md-5">
               <div class="icon icon-lg icon-shape icon-shape-success shadow rounded-circle mb-5" style="background-color:rgb(242, 121, 15);color:white">
-                <i class="ni ni-trophy"></i>
+                <i class="material-icons">
+                people
+                </i>
               </div>
               <h3><b>Nosotros</b></h3>
               <p>Somos un equipo de profesionales que ha logrado unificar todas las especialidades necesarias para el hogar en un solo lugar.</p>
@@ -579,7 +584,9 @@
             <div class="d-flex px-3 mb-4">
               <div>
                 <div class="icon icon-lg icon-shape  shadow rounded-circle " style="background-color:white;color:rgb(242, 121, 15)">
-                  <i class="ni ni-shop "></i>
+                  <i class="material-icons">
+                  list_alt
+                  </i>
                 </div>
               </div>
               <div class="pl-4" >
@@ -624,24 +631,29 @@
 
         <div class="row row-grid align-items-center">
 
-          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 mb-lg-4 ">
-            <div class="hovereffect rounded shadow">
-              <img class="img-responsive" src="{{asset('assets/img/nuevos/a.jpg')}}" alt="" >
-              <div class="overlay">
-                <br>
-                <span style="color:white;font-size:17px"><b>PintaHogar</b></span>
-                <p>
-                  <!-- <a style="font-size:12px">Solicitud de búsqueda casa/depto/terreno</a>
+
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 mb-lg-4 ">
+              <a href="#contacto">
+              <div class="hovereffect rounded shadow">
+                <img class="img-responsive" src="{{asset('assets/img/nuevos/a.jpg')}}" alt="" >
+                <div class="overlay">
                   <br>
-                  <a style="font-size:12px">Solicitud de búsqueda proyecto blanco/verde</a>
-                  <br>
-                  <a style="font-size:12px">Solicitud de búsqueda inmueble</a> -->
-                </p>
+                  <span style="color:white;font-size:17px"><b>PintaHogar</b></span>
+                  <p>
+                    <!-- <a style="font-size:12px">Solicitud de búsqueda casa/depto/terreno</a>
+                    <br>
+                    <a style="font-size:12px">Solicitud de búsqueda proyecto blanco/verde</a>
+                    <br>
+                    <a style="font-size:12px">Solicitud de búsqueda inmueble</a> -->
+                  </p>
+                </div>
               </div>
+              </a>
             </div>
-          </div>
+
 
           <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 mb-lg-4 ">
+            <a href="#contacto">
             <div class="hovereffect rounded shadow">
               <img class="img-responsive" src="{{asset('assets/img/nuevos/b.jpg')}}" alt="" >
               <div class="overlay">
@@ -656,9 +668,11 @@
               </p>
               </div>
             </div>
+            </a>
           </div>
 
           <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 mb-lg-4 ">
+            <a href="#contacto">
             <div class="hovereffect rounded shadow">
               <img class="img-responsive" src="{{asset('assets/img/nuevos/c.jpg')}}" alt="" >
               <div class="overlay">
@@ -672,9 +686,11 @@
               </p>
               </div>
             </div>
+            </a>
           </div>
 
           <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 mb-lg-4 ">
+            <a href="#contacto">
             <div class="hovereffect rounded shadow">
               <img class="img-responsive" src="{{asset('assets/img/nuevos/d.jpg')}}" alt="" >
               <div class="overlay">
@@ -692,9 +708,11 @@
               </p>
               </div>
             </div>
+            </a>
           </div>
 
           <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 mb-lg-4 ">
+            <a href="#contacto">
             <div class="hovereffect rounded shadow">
               <img class="img-responsive" src="{{asset('assets/img/nuevos/e.jpg')}}" alt="" >
               <div class="overlay">
@@ -714,11 +732,13 @@
               </p>
               </div>
             </div>
+            </a>
           </div>
 
 
 
           <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 mb-lg-4 ">
+            <a href="#contacto">
             <div class="hovereffect rounded shadow">
               <img class="img-responsive" src="{{asset('assets/img/nuevos/f.jpg')}}" alt="" >
               <div class="overlay">
@@ -735,11 +755,13 @@
               </p>
               </div>
             </div>
+            </a>
           </div>
 
 
 
           <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 mb-lg-4 ">
+            <a href="#contacto">
             <div class="hovereffect rounded shadow">
               <img class="img-responsive" src="{{asset('assets/img/nuevos/g.jpg')}}" alt="" >
               <div class="overlay">
@@ -752,9 +774,11 @@
               </p>
               </div>
             </div>
+            </a>
           </div>
 
           <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 mb-lg-4 ">
+            <a href="#contacto">
             <div class="hovereffect rounded shadow">
               <img class="img-responsive" src="{{asset('assets/img/nuevos/h.jpg')}}" alt="" >
               <div class="overlay">
@@ -769,12 +793,14 @@
               </p>
               </div>
             </div>
+            </a>
           </div>
 
 
 
 
           <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 mb-lg-4 ">
+            <a href="#contacto">
             <div class="hovereffect rounded shadow">
               <img class="img-responsive" src="{{asset('assets/img/nuevos/i.jpg')}}" alt="" >
               <div class="overlay">
@@ -797,6 +823,7 @@
               </p>
               </div>
             </div>
+            </a>
           </div>
 
           </div>
@@ -811,6 +838,7 @@
 
 
           <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 mb-lg-4 ">
+            <a href="#contacto">
             <div class="hovereffect rounded shadow">
               <img class="img-responsive" src="{{asset('assets/img/nuevos/j.jpg')}}" alt="" >
               <div class="overlay">
@@ -824,11 +852,13 @@
               </p>
               </div>
             </div>
+            </a>
           </div>
 
 
 
           <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 mb-lg-4 ">
+            <a href="#contacto">
             <div class="hovereffect rounded shadow">
               <img class="img-responsive" src="{{asset('assets/img/nuevos/k.jpg')}}" alt="" >
               <div class="overlay">
@@ -839,10 +869,12 @@
               </p>
               </div>
             </div>
+            </a>
           </div>
 
 
           <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 mb-lg-4 ">
+            <a href="#contacto">
             <div class="hovereffect rounded shadow">
               <img class="img-responsive" src="{{asset('assets/img/nuevos/l.jpg')}}" alt="" >
               <div class="overlay">
@@ -853,6 +885,7 @@
               </p>
               </div>
             </div>
+            </a>
           </div>
 
 
@@ -965,27 +998,35 @@
         <div class="row justify-content-center mt--300">
           <div class="col-lg-6">
             <div class="card bg-gradient-secondary shadow">
+
               <div class="card-body p-lg-5">
 
-                <h4 class="mb-1">¿Qué necesitas?</h4>
-                <p class="mt-0 mb-4">Estamos aquí para ayudarte.</p>
+                <div class="row">
+                  <div class="col-9">
+                    <h4 class="mb-1">¿Qué necesitas?</h4>
+                    <p class="mt-0 mb-4">Estamos aquí para ayudarte.</p>
+                  </div>
+                  <div class="col-3">
+                    <img src="{{asset('assets/images/Recurso 1.png')}}" alt="" width="90%">
+                  </div>
+                </div>
 
                 <div class="form-group">
 
                  <select class="form-control shadow-sm" style="border:none">
                    <option>Selecciona un departamento...</option>
-                   <option>ArriendaTuCasa</option>
-                   <option>BuscaTuCasa</option>
-                   <option>FinanciaTuCasa</option>
-                   <option>Home Cleaning</option>
-                   <option>Inserción Habitacional</option>
-                   <option>Jardinería y Desmalezado</option>
-                   <option>PintaTuCasa</option>
-                   <option>Plan de Inversiones</option>
-                   <option>Proyecto Inmoviliario</option>
-                   <option>Segurity Home</option>
-                   <option>TrasladaTuCasa</option>
-                   <option>VendeTuCasa</option>
+                   <option>PintaHogar</option>
+                   <option>LimpiaHogar</option>
+                   <option>ReparacionesHogar</option>
+                   <option>MudanzaHogar</option>
+                   <option>SeguridadHogar</option>
+                   <option>JardineriaHogar</option>
+                   <option>ElectricidadHogar</option>
+                   <option>GasfiteriaHogar</option>
+                   <option>FinanciaHogar</option>
+                   <option>BuscaHogar</option>
+                   <option>ArriendaHogar</option>
+                   <option>VendeHogar</option>
                    <option></option>
                  </select>
                </div>
@@ -1041,13 +1082,13 @@
         </div>
         <div class="col-lg-6 text-lg-center btn-wrapper">
           <a target="_blank" href="https://twitter.com/puntohogar.cl" class="btn btn-neutral btn-icon-only btn-twitter btn-round btn-lg" data-toggle="tooltip" data-original-title="Síguenos" style="border-radius:50%">
-            <i class="fa fa-twitter"></i>
+            <i class="fa fa-twitter " style="margin-top:30%"></i>
           </a>
           <a target="_blank" href="https://www.facebook.com/puntohogar.cl" class="btn btn-neutral btn-icon-only btn-facebook btn-round btn-lg" data-toggle="tooltip" data-original-title="Síguenos" style="border-radius:50%">
-            <i class="fa fa-facebook-square"></i>
+            <i class="fa fa-facebook-square" style="margin-top:30%"></i>
           </a>
           <a target="_blank" href="https://www.instagram.com/puntohogar.cl/" class="btn btn-neutral btn-icon-only btn-dribbble btn-lg btn-round" data-toggle="tooltip" data-original-title="Síguenos" style="border-radius:50%">
-            <i class="fa fa-instagram"></i>
+            <i class="fa fa-instagram" style="margin-top:30%"></i>
           </a>
 
         </div>
