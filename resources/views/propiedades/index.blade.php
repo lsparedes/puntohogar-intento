@@ -607,24 +607,27 @@
            },
            success: function(response) {
 
-             if (response.success==true) {
 
-               window.location = response.url;
-              window.location = response.url;
+            if (response.success==true) {
+                window.location = response.url;
+            }
+            else if(response.success=="mal"){
+              $('#errorDiv3').removeClass('d-none');
+              $('#errorMsg3').html(response.message);
+
+            }
+            else{
+
+                $('#errorDiv3').removeClass('d-none');
+                $('#errorMsg3').html('');
+
+                $.each(response.errors, function(key, value) {
+
+                   $('#errorMsg3').append('<li >' + value + '</li>');
+                });
             }
 
-           else {
-
-             $('#errorDiv3').removeClass('d-none');
-             $('#errorMsg3').html('');
-
-             $.each(response.errors, function(key, value) {
-
-                $('#errorMsg3').append('<li >' + value + '</li>');
-             });
-           }
-
-           },
+},
            error: function() {
 
                $('#email').addClass('is-invalid');
@@ -679,10 +682,22 @@
            },
            success: function(response) {
 
-               if (response.success) {
+             if (response.success==true) {
 
-                   window.location = response.url;
-               }
+                 window.location = response.url;
+            
+              }
+
+             else {
+
+               $('#errorDiv2').removeClass('d-none');
+               $('#errorMsg2').html('');
+
+               $.each(response.errors, function(key, value) {
+
+                  $('#errorMsg2').append('<li >' + value + '</li>');
+               });
+             }
 
            },
            error: function() {
@@ -702,37 +717,40 @@
 
    $(document).ready(function() {
 
-       $.ajaxSetup({
-           headers: {
-               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+     $.ajaxSetup({
+         headers: {
+             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+         }
+     });
+     $('form').ajaxForm({
+
+         success: function(data) {
+           if (data.success==true) {
+               window.location = data.url;
            }
-       });
-       $('form').ajaxForm({
-
-           success: function(data) {
-               if (data.success == true) {
-                   {
-                       if (data.modal == true) {
-                           $('#exampleModal2').modal("show");
-                       } else {
-                           window.location = data.url;
-                       }
-                   }
-               }else{
-
-                  $('#errorDiv').removeClass('d-none');
-                   $('#errorMsg').html('');
-
-
-
-                  $.each(data.errors, function(key, value) {
-
-                     $('#errorMsg').append('<li >' + value + '</li>');
-                  });
-               }
+           else if(data.success=="agregado"){
+             console.log("llegue");
+             $('#exampleModal2').modal("show");
            }
-       });
-   });
+           else if(data.success=="mal"){
+             $('#errorDiv').removeClass('d-none');
+             $('#errorMsg').html(data.message);
+
+           }
+           else{
+
+               $('#errorDiv').removeClass('d-none');
+               $('#errorMsg').html('');
+
+               $.each(data.errors, function(key, value) {
+
+                  $('#errorMsg').append('<li >' + value + '</li>');
+               });
+           }
+         }
+     });
+ });
+
 
 
    // Funcion que cambia el value del input del valor_uf con respecto al valor ingresado en valor pesos

@@ -141,7 +141,7 @@
                                                     <div class="avatar box-shadow-2 mb-3">
                                                         <img src="{{asset('assets/images/faces/3.jpg')}}" alt="">
                                                     </div>
-                                                    <h5 class="m-0">Pronto conoceras al asesor encargado de ayudarte! Sigue los pasos para poder ayudarte.</h5>
+                                                    <h5 class="m-0">Pronto conoceras al asesor encargado! Sigue los pasos para poder ayudarte.</h5>
 
 
 

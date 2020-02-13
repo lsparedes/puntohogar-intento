@@ -19,6 +19,7 @@ class CatalogoController extends Controller
         $mispropiedades = DB::table('propiedades')->select('propiedades.id','propiedades.codigo','propiedades.titulo_propiedad','comunas.nombre as comuna','regiones.nombre as region','propiedades.nro_banos','propiedades.nro_habitaciones','propiedades.nro_estacionamientos','propiedades.valor_uf')
                             ->leftJoin('comunas','propiedades.comunas_id','=','comunas.id')
                             ->leftJoin('regiones','comunas.region_id','=','regiones.id')
+                            ->where('estado_publicacion','=','aceptada')
                             ->get();
 
         return view('catalogo.catalogo', compact('mispropiedades', 'fotos'));

@@ -112,202 +112,402 @@ class PropiedadesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-     function upload(Request $request)
+    //  function upload(Request $request)
+    // {
+    //   $rules = array(
+    //      'tipopropiedad'         => 'required|not_in:0',
+    //      'estado'                => 'required|not_in:0',
+    //      'tipo_comercio'         => 'required|not_in:0',
+    //      'region'                => 'required|not_in:0',
+    //      'comunas'               => 'required|not_in:0',
+    //      'direccion'             => 'required|string|max:70',
+    //      'nro_habitaciones'      => 'required|string|max:70',
+    //      'nro_banos'             => 'required|string|max:70',
+    //      'nro_estacionamientos'  => 'required|string|max:70',
+    //      'sup_terreno'           => 'required|string|max:70',
+    //      'sup_construida'        => 'required|string|max:70',
+    //      'tipopisos'             => 'required|not_in:0',
+    //      'amoblado'              => 'required|not_in:0',
+    //      'titulo_propiedad'      => 'required|string|max:70',
+    //      'descripcion_propiedad' => 'required|string|max:70',
+    //      'file.*'                  => 'required',
+    //      // 'contado'               => 'required|string|max:70',
+    //      // 'subsidio'              => 'required|string|max:70',
+    //      // 'credito'               => 'required|string|max:70',
+    //      // 'leasing'               => 'required|string|max:70',
+    //      'valor_pesos'           => 'required|string|max:70',
+    //      'valor_uf'              => 'required|string|max:70'
+    //    );
+    //    $messages = array(
+    //
+    //      'tipopropiedad.required'         => 'El campo tipo de propiedad es obligatorio.',
+    //      'estado.required'                => 'El campo estado es obligatorio.',
+    //      'tipo_comercio.required'         => 'El campo opción es obligatorio.',
+    //      'region.required'                => 'El campo región es obligatorio.',
+    //      'comunas.required'               => 'El campo comuna es obligatorio.',
+    //      'direccion.required'             => 'El campo dirección es obligatorio.',
+    //      'nro_habitaciones.required'      => 'El campo número habitaciones es obligatorio.',
+    //      'nro_banos.required'             => 'El campo número baños es obligatorio.',
+    //      'nro_estacionamientos.required'  => 'El campo numero estacionamientos es obligatorio.',
+    //      'sup_terreno.required'           => 'El campo superficie de terreno es obligatorio.',
+    //      'sup_construida.required'        => 'El campo superficie construida es obligatorio.',
+    //      'tipopisos.required'             => 'El campo tipo pisos es obligatorio.',
+    //      'amoblado.required'              => 'El campo amoblados es obligatorio.',
+    //      'titulo_propiedad.required'      => 'El campo título propiedad es obligatorio.',
+    //      'descripcion_propiedad.required' => 'El campo descripción propiedad es obligatorio.',
+    //      'file.*.required'                  => 'El campo imagen es obligatorio.',
+    //      'valor_pesos.required'           => 'El campo valor en pesos es obligatorio.',
+    //      'valor_uf.required'              => 'El campo valor en UF es obligatorio.',
+    //
+    //      'direccion.max'                  =>  'El campo direccion debe tener como máximo 70 caracteres.',
+    //      'nro_habitaciones.max'           =>  'El campo número habitaciones debe tener como máximo 2 dígitos.',
+    //      'nro_banos.max'                  =>  'El campo número de baños debe tener como máximo 2 dígitos.',
+    //      'nro_estacionamientos.max'       =>  'El campo número de estacionamientos debe tener como máximo 2 dígitos.',
+    //      'sup_terreno.max'                =>  'El campo superficie de terreno debe tener como máximo 6 dígitos.',
+    //      'sup_construida.max'             =>  'El campo superficie construida debe tener como máximo 6 dígitos.'
+    //
+    //    );
+    //
+    //    $validator = Validator::make($request->all(), $rules, $messages);
+    //
+    //     if ($validator->fails()){
+    //       return response()->json(['success'=> false, 'errors' => $validator->errors()->all()]);
+    //     }
+    //   //Aqui inserta la propiedad a la base de datos
+    //     if(Auth::check()){
+    //
+    //
+    //
+    //       //Aqui inserta la propiedad a la base de datos
+    //       DB::table('propiedades')->insert([
+    //               'codigo' => $request->codigo,
+    //               'titulo_propiedad' => $request->titulo_propiedad,
+    //               'descripcion_propiedad' => $request->descripcion_propiedad,
+    //               'valor_uf' => $request->valor_uf,
+    //               'valor_pesos' => $request->valor_pesos,
+    //               'nro_habitaciones' => $request->nro_habitaciones,
+    //               'nro_banos' => $request->nro_banos,
+    //               'estado' => $request->estado,
+    //               'sup_construida' => $request->sup_construida,
+    //               'sup_terreno' => $request->sup_terreno,
+    //               'estado_publicacion' => $request->estado_publicacion,
+    //               'tipopropiedades_id' => $request->tipopropiedad,
+    //               'tipoamoblados_id' => $request->amoblado,
+    //               'tipopisos_id' => $request->tipopisos,
+    //               'comunas_id' => $request->comunas,
+    //               'usuario_id' => Auth::user()->id,
+    //               'tipo_comercio' => $request->tipo_comercio,
+    //               'nro_estacionamientos' => $request->nro_estacionamientos,
+    //               'direccion' => $request->direccion,]
+    //           );
+    //           $propiedad = DB::table('propiedades')->where('codigo',$request->codigo)->first();
+    //
+    //           if ($request->contado==1){
+    //               DB::table('financiamientos')->insert(
+    //
+    //                  ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 1]
+    //               );
+    //           }
+    //           if ($request->subsidio==1){
+    //              DB::table('financiamientos')->insert(
+    //                  ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 2]
+    //              );
+    //           }
+    //
+    //            if ($request->leasing==1){
+    //              DB::table('financiamientos')->insert(
+    //                  ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 3]
+    //              );
+    //           }
+    //           if ($request->credito==1){
+    //              DB::table('financiamientos')->insert(
+    //                  ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 4]
+    //              );
+    //           }
+    //           $image_code = '';
+    //  $images = $request->file('file');
+    //  foreach($images as $image)
+    //  {
+    //   $new_name = rand() . '.' . $image->getClientOriginalExtension();
+    //   $image->move(public_path('images'), $new_name);
+    //   $image_code .= '<div class="col-md-3" style="margin-bottom:24px;"><img src="/images/'.$new_name.'" class="img-thumbnail" /></div>';
+    //   DB::table('imagenes')->insert(
+    //       ['codigo' => $request->codigo, 'img' => $new_name]
+    //   );
+    //  }
+    //
+    //
+    //     return response()->json(['success'=> true, 'message' => 'La propiedad se agregó correctamente a la tabla propiedades.','modal'=>false,'image'=>$image_code,'url'=>route('propiedadeshow',$request->codigo)]);
+    //     }else{
+    //       //no logeado
+    //       DB::table('propiedadestemporal')->insert([
+    //               'codigo' => $request->codigo,
+    //               'titulo_propiedad' => $request->titulo_propiedad,
+    //               'descripcion_propiedad' => $request->descripcion_propiedad,
+    //               'valor_uf' => $request->valor_uf,
+    //               'valor_pesos' => $request->valor_pesos,
+    //               'nro_habitaciones' => $request->nro_habitaciones,
+    //               'nro_banos' => $request->nro_banos,
+    //               'estado' => $request->estado,
+    //               'sup_construida' => $request->sup_construida,
+    //               'sup_terreno' => $request->sup_terreno,
+    //               'estado_publicacion' => $request->estado_publicacion,
+    //               'tipopropiedades_id' => $request->tipopropiedad,
+    //               'tipoamoblados_id' => $request->amoblado,
+    //               'tipopisos_id' => $request->tipopisos,
+    //               'comunas_id' => $request->comunas,
+    //               //'usuario_id' => $request->usuario_id,
+    //               'tipo_comercio' => $request->tipo_comercio,
+    //               'nro_estacionamientos' => $request->nro_estacionamientos,
+    //               'direccion' => $request->direccion,]
+    //           );
+    //           $propiedad = DB::table('propiedades')->where('codigo',$request->codigo)->first();
+    //
+    //           if ($request->contado==1){
+    //               DB::table('financiamientos')->insert(
+    //
+    //                  ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 1]
+    //               );
+    //           }
+    //           if ($request->subsidio==1){
+    //              DB::table('financiamientos')->insert(
+    //                  ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 2]
+    //              );
+    //           }
+    //
+    //            if ($request->leasing==1){
+    //              DB::table('financiamientos')->insert(
+    //                  ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 3]
+    //              );
+    //           }
+    //           if ($request->credito==1){
+    //              DB::table('financiamientos')->insert(
+    //                  ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 4]
+    //              );
+    //           }
+    //           $image_code = '';
+    //  $images = $request->file('file');
+    //  foreach($images as $image)
+    //  {
+    //   $new_name = rand() . '.' . $image->getClientOriginalExtension();
+    //   $image->move(public_path('images'), $new_name);
+    //   $image_code .= '<div class="col-md-3" style="margin-bottom:24px;"><img src="/images/'.$new_name.'" class="img-thumbnail" /></div>';
+    //   DB::table('imagenes')->insert(
+    //       ['codigo' => $request->codigo, 'img' => $new_name]
+    //   );
+    //  }
+    //
+    //
+    //
+    //
+    //             return response()->json(['success'=> true, 'message' => 'La propiedad se agregó correctamente.','modal'=>true,'image'=>$image_code]);
+    //
+    //     }//fin else no logueado
+    //
+    //
+    // }
+
+    function upload(Request $request)
+   {
+     $rules = array(
+        'tipopropiedad'         => 'required|not_in:0',
+        'estado'                => 'required|not_in:0',
+        'tipo_comercio'         => 'required|not_in:0',
+        'region'                => 'required|not_in:0',
+        'comunas'               => 'required|not_in:0',
+        'direccion'             => 'required|string|max:70',
+        'nro_habitaciones'      => 'required|string|max:70',
+        'nro_banos'             => 'required|string|max:70',
+        'nro_estacionamientos'  => 'required|string|max:70',
+        'sup_terreno'           => 'required|string|max:70',
+        'sup_construida'        => 'required|string|max:70',
+        'tipopisos'             => 'required|not_in:0',
+        'amoblado'              => 'required|not_in:0',
+        'titulo_propiedad'      => 'required|string|max:70',
+        'descripcion_propiedad' => 'required|string|max:70',
+        'file.*'                  => 'required',
+        // 'contado'               => 'required|string|max:70',
+        // 'subsidio'              => 'required|string|max:70',
+        // 'credito'               => 'required|string|max:70',
+        // 'leasing'               => 'required|string|max:70',
+        'valor_pesos'           => 'required|string|max:70',
+        'valor_uf'              => 'required|string|max:70'
+      );
+      $messages = array(
+
+        'tipopropiedad.required'         => 'El campo tipo de propiedad es obligatorio.',
+        'estado.required'                => 'El campo estado es obligatorio.',
+        'tipo_comercio.required'         => 'El campo opción es obligatorio.',
+        'region.required'                => 'El campo región es obligatorio.',
+        'comunas.required'               => 'El campo comuna es obligatorio.',
+        'direccion.required'             => 'El campo dirección es obligatorio.',
+        'nro_habitaciones.required'      => 'El campo número habitaciones es obligatorio.',
+        'nro_banos.required'             => 'El campo número baños es obligatorio.',
+        'nro_estacionamientos.required'  => 'El campo numero estacionamientos es obligatorio.',
+        'sup_terreno.required'           => 'El campo superficie de terreno es obligatorio.',
+        'sup_construida.required'        => 'El campo superficie construida es obligatorio.',
+        'tipopisos.required'             => 'El campo tipo pisos es obligatorio.',
+        'amoblado.required'              => 'El campo amoblados es obligatorio.',
+        'titulo_propiedad.required'      => 'El campo título propiedad es obligatorio.',
+        'descripcion_propiedad.required' => 'El campo descripción propiedad es obligatorio.',
+        'file.*.required'                  => 'El campo imagen es obligatorio.',
+        'valor_pesos.required'           => 'El campo valor en pesos es obligatorio.',
+        'valor_uf.required'              => 'El campo valor en UF es obligatorio.',
+
+        'direccion.max'                  =>  'El campo direccion debe tener como máximo 70 caracteres.',
+        'nro_habitaciones.max'           =>  'El campo número habitaciones debe tener como máximo 2 dígitos.',
+        'nro_banos.max'                  =>  'El campo número de baños debe tener como máximo 2 dígitos.',
+        'nro_estacionamientos.max'       =>  'El campo número de estacionamientos debe tener como máximo 2 dígitos.',
+        'sup_terreno.max'                =>  'El campo superficie de terreno debe tener como máximo 6 dígitos.',
+        'sup_construida.max'             =>  'El campo superficie construida debe tener como máximo 6 dígitos.'
+
+      );
+
+      $validator = Validator::make($request->all(), $rules, $messages);
+
+       if ($validator->fails()){
+         return response()->json(['success'=> false, 'errors' => $validator->errors()->all()]);
+       }
+     //Aqui inserta la propiedad a la base de datos
+       if(Auth::check()){
+
+
+         $cantidad = DB::table('propiedades')->where('usuario_id','=',Auth::user()->id)->where('estado_publicacion','=','aceptada')->get();
+
+         if($cantidad->count()<5){
+         //Aqui inserta la propiedad a la base de datos
+         DB::table('propiedades')->insert([
+                 'codigo' => $request->codigo,
+                 'titulo_propiedad' => $request->titulo_propiedad,
+                 'descripcion_propiedad' => $request->descripcion_propiedad,
+                 'valor_uf' => $request->valor_uf,
+                 'valor_pesos' => $request->valor_pesos,
+                 'nro_habitaciones' => $request->nro_habitaciones,
+                 'nro_banos' => $request->nro_banos,
+                 'estado' => $request->estado,
+                 'sup_construida' => $request->sup_construida,
+                 'sup_terreno' => $request->sup_terreno,
+                 'estado_publicacion' => $request->estado_publicacion,
+                 'tipopropiedades_id' => $request->tipopropiedad,
+                 'tipoamoblados_id' => $request->amoblado,
+                 'tipopisos_id' => $request->tipopisos,
+                 'comunas_id' => $request->comunas,
+                 'usuario_id' => Auth::user()->id,
+                 'tipo_comercio' => $request->tipo_comercio,
+                 'nro_estacionamientos' => $request->nro_estacionamientos,
+                 'direccion' => $request->direccion,]
+             );
+             $propiedad = DB::table('propiedades')->where('codigo',$request->codigo)->first();
+
+             if ($request->contado==1){
+                 DB::table('financiamientos')->insert(
+
+                    ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 1]
+                 );
+             }
+             if ($request->subsidio==1){
+                DB::table('financiamientos')->insert(
+                    ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 2]
+                );
+             }
+
+              if ($request->leasing==1){
+                DB::table('financiamientos')->insert(
+                    ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 3]
+                );
+             }
+             if ($request->credito==1){
+                DB::table('financiamientos')->insert(
+                    ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 4]
+                );
+             }
+             $image_code = '';
+    $images = $request->file('file');
+    foreach($images as $image)
     {
-      $rules = array(
-         'tipopropiedad'         => 'required|not_in:0',
-         'estado'                => 'required|not_in:0',
-         'tipo_comercio'         => 'required|not_in:0',
-         'region'                => 'required|not_in:0',
-         'comunas'               => 'required|not_in:0',
-         'direccion'             => 'required|string|max:70',
-         'nro_habitaciones'      => 'required|string|max:70',
-         'nro_banos'             => 'required|string|max:70',
-         'nro_estacionamientos'  => 'required|string|max:70',
-         'sup_terreno'           => 'required|string|max:70',
-         'sup_construida'        => 'required|string|max:70',
-         'tipopisos'             => 'required|not_in:0',
-         'amoblado'              => 'required|not_in:0',
-         'titulo_propiedad'      => 'required|string|max:70',
-         'descripcion_propiedad' => 'required|string|max:70',
-         'file.*'                  => 'required',
-         // 'contado'               => 'required|string|max:70',
-         // 'subsidio'              => 'required|string|max:70',
-         // 'credito'               => 'required|string|max:70',
-         // 'leasing'               => 'required|string|max:70',
-         'valor_pesos'           => 'required|string|max:70',
-         'valor_uf'              => 'required|string|max:70'
-       );
-       $messages = array(
-
-         'tipopropiedad.required'         => 'El campo tipo de propiedad es obligatorio.',
-         'estado.required'                => 'El campo estado es obligatorio.',
-         'tipo_comercio.required'         => 'El campo opción es obligatorio.',
-         'region.required'                => 'El campo región es obligatorio.',
-         'comunas.required'               => 'El campo comuna es obligatorio.',
-         'direccion.required'             => 'El campo dirección es obligatorio.',
-         'nro_habitaciones.required'      => 'El campo número habitaciones es obligatorio.',
-         'nro_banos.required'             => 'El campo número baños es obligatorio.',
-         'nro_estacionamientos.required'  => 'El campo numero estacionamientos es obligatorio.',
-         'sup_terreno.required'           => 'El campo superficie de terreno es obligatorio.',
-         'sup_construida.required'        => 'El campo superficie construida es obligatorio.',
-         'tipopisos.required'             => 'El campo tipo pisos es obligatorio.',
-         'amoblado.required'              => 'El campo amoblados es obligatorio.',
-         'titulo_propiedad.required'      => 'El campo título propiedad es obligatorio.',
-         'descripcion_propiedad.required' => 'El campo descripción propiedad es obligatorio.',
-         'file.*.required'                  => 'El campo imagen es obligatorio.',
-         'valor_pesos.required'           => 'El campo valor en pesos es obligatorio.',
-         'valor_uf.required'              => 'El campo valor en UF es obligatorio.',
-
-         'direccion.max'                  =>  'El campo direccion debe tener como máximo 70 caracteres.',
-         'nro_habitaciones.max'           =>  'El campo número habitaciones debe tener como máximo 2 dígitos.',
-         'nro_banos.max'                  =>  'El campo número de baños debe tener como máximo 2 dígitos.',
-         'nro_estacionamientos.max'       =>  'El campo número de estacionamientos debe tener como máximo 2 dígitos.',
-         'sup_terreno.max'                =>  'El campo superficie de terreno debe tener como máximo 6 dígitos.',
-         'sup_construida.max'             =>  'El campo superficie construida debe tener como máximo 6 dígitos.'
-
-       );
-
-       $validator = Validator::make($request->all(), $rules, $messages);
-
-        if ($validator->fails()){
-          return response()->json(['success'=> false, 'errors' => $validator->errors()->all()]);
-        }
-      //Aqui inserta la propiedad a la base de datos
-        if(Auth::check()){
-
-
-
-          //Aqui inserta la propiedad a la base de datos
-          DB::table('propiedades')->insert([
-                  'codigo' => $request->codigo,
-                  'titulo_propiedad' => $request->titulo_propiedad,
-                  'descripcion_propiedad' => $request->descripcion_propiedad,
-                  'valor_uf' => $request->valor_uf,
-                  'valor_pesos' => $request->valor_pesos,
-                  'nro_habitaciones' => $request->nro_habitaciones,
-                  'nro_banos' => $request->nro_banos,
-                  'estado' => $request->estado,
-                  'sup_construida' => $request->sup_construida,
-                  'sup_terreno' => $request->sup_terreno,
-                  'estado_publicacion' => $request->estado_publicacion,
-                  'tipopropiedades_id' => $request->tipopropiedad,
-                  'tipoamoblados_id' => $request->amoblado,
-                  'tipopisos_id' => $request->tipopisos,
-                  'comunas_id' => $request->comunas,
-                  'usuario_id' => Auth::user()->id,
-                  'tipo_comercio' => $request->tipo_comercio,
-                  'nro_estacionamientos' => $request->nro_estacionamientos,
-                  'direccion' => $request->direccion,]
-              );
-              $propiedad = DB::table('propiedades')->where('codigo',$request->codigo)->first();
-
-              if ($request->contado==1){
-                  DB::table('financiamientos')->insert(
-
-                     ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 1]
-                  );
-              }
-              if ($request->subsidio==1){
-                 DB::table('financiamientos')->insert(
-                     ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 2]
-                 );
-              }
-
-               if ($request->leasing==1){
-                 DB::table('financiamientos')->insert(
-                     ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 3]
-                 );
-              }
-              if ($request->credito==1){
-                 DB::table('financiamientos')->insert(
-                     ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 4]
-                 );
-              }
-              $image_code = '';
-     $images = $request->file('file');
-     foreach($images as $image)
-     {
-      $new_name = rand() . '.' . $image->getClientOriginalExtension();
-      $image->move(public_path('images'), $new_name);
-      $image_code .= '<div class="col-md-3" style="margin-bottom:24px;"><img src="/images/'.$new_name.'" class="img-thumbnail" /></div>';
-      DB::table('imagenes')->insert(
-          ['codigo' => $request->codigo, 'img' => $new_name]
-      );
-     }
-
-
-        return response()->json(['success'=> true, 'message' => 'La propiedad se agregó correctamente a la tabla propiedades.','modal'=>false,'image'=>$image_code,'url'=>route('propiedadeshow',$request->codigo)]);
-        }else{
-          //no logeado
-          DB::table('propiedadestemporal')->insert([
-                  'codigo' => $request->codigo,
-                  'titulo_propiedad' => $request->titulo_propiedad,
-                  'descripcion_propiedad' => $request->descripcion_propiedad,
-                  'valor_uf' => $request->valor_uf,
-                  'valor_pesos' => $request->valor_pesos,
-                  'nro_habitaciones' => $request->nro_habitaciones,
-                  'nro_banos' => $request->nro_banos,
-                  'estado' => $request->estado,
-                  'sup_construida' => $request->sup_construida,
-                  'sup_terreno' => $request->sup_terreno,
-                  'estado_publicacion' => $request->estado_publicacion,
-                  'tipopropiedades_id' => $request->tipopropiedad,
-                  'tipoamoblados_id' => $request->amoblado,
-                  'tipopisos_id' => $request->tipopisos,
-                  'comunas_id' => $request->comunas,
-                  //'usuario_id' => $request->usuario_id,
-                  'tipo_comercio' => $request->tipo_comercio,
-                  'nro_estacionamientos' => $request->nro_estacionamientos,
-                  'direccion' => $request->direccion,]
-              );
-              $propiedad = DB::table('propiedades')->where('codigo',$request->codigo)->first();
-
-              if ($request->contado==1){
-                  DB::table('financiamientos')->insert(
-
-                     ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 1]
-                  );
-              }
-              if ($request->subsidio==1){
-                 DB::table('financiamientos')->insert(
-                     ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 2]
-                 );
-              }
-
-               if ($request->leasing==1){
-                 DB::table('financiamientos')->insert(
-                     ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 3]
-                 );
-              }
-              if ($request->credito==1){
-                 DB::table('financiamientos')->insert(
-                     ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 4]
-                 );
-              }
-              $image_code = '';
-     $images = $request->file('file');
-     foreach($images as $image)
-     {
-      $new_name = rand() . '.' . $image->getClientOriginalExtension();
-      $image->move(public_path('images'), $new_name);
-      $image_code .= '<div class="col-md-3" style="margin-bottom:24px;"><img src="/images/'.$new_name.'" class="img-thumbnail" /></div>';
-      DB::table('imagenes')->insert(
-          ['codigo' => $request->codigo, 'img' => $new_name]
-      );
-     }
-
-
-
-
-                return response()->json(['success'=> true, 'message' => 'La propiedad se agregó correctamente.','modal'=>true,'image'=>$image_code]);
-
-        }//fin else no logueado
-
-
+     $new_name = rand() . '.' . $image->getClientOriginalExtension();
+     $image->move(public_path('images'), $new_name);
+     $image_code .= '<div class="col-md-3" style="margin-bottom:24px;"><img src="/images/'.$new_name.'" class="img-thumbnail" /></div>';
+     DB::table('imagenes')->insert(
+         ['codigo' => $request->codigo, 'img' => $new_name]
+     );
     }
 
 
+       return response()->json(['success'=> true, 'message' => 'La propiedad se agregó correctamente a la tabla propiedades.','modal'=>false,'image'=>$image_code,'url'=>route('propiedadeshow',$request->codigo)]);
+     }
+     else{
+       return response()->json(['success'=>"mal",'message'=>"No podemos aceptar su solicitud, ya posee 5 publicaciones activas."]);
+     }
+   }
+     else{
+         //no logeado
+         DB::table('propiedadestemporal')->insert([
+                 'codigo' => $request->codigo,
+                 'titulo_propiedad' => $request->titulo_propiedad,
+                 'descripcion_propiedad' => $request->descripcion_propiedad,
+                 'valor_uf' => $request->valor_uf,
+                 'valor_pesos' => $request->valor_pesos,
+                 'nro_habitaciones' => $request->nro_habitaciones,
+                 'nro_banos' => $request->nro_banos,
+                 'estado' => $request->estado,
+                 'sup_construida' => $request->sup_construida,
+                 'sup_terreno' => $request->sup_terreno,
+                 'estado_publicacion' => $request->estado_publicacion,
+                 'tipopropiedades_id' => $request->tipopropiedad,
+                 'tipoamoblados_id' => $request->amoblado,
+                 'tipopisos_id' => $request->tipopisos,
+                 'comunas_id' => $request->comunas,
+                 //'usuario_id' => $request->usuario_id,
+                 'tipo_comercio' => $request->tipo_comercio,
+                 'nro_estacionamientos' => $request->nro_estacionamientos,
+                 'direccion' => $request->direccion,]
+             );
+             $propiedad = DB::table('propiedades')->where('codigo',$request->codigo)->first();
+
+             if ($request->contado==1){
+                 DB::table('financiamientos')->insert(
+
+                    ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 1]
+                 );
+             }
+             if ($request->subsidio==1){
+                DB::table('financiamientos')->insert(
+                    ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 2]
+                );
+             }
+
+              if ($request->leasing==1){
+                DB::table('financiamientos')->insert(
+                    ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 3]
+                );
+             }
+             if ($request->credito==1){
+                DB::table('financiamientos')->insert(
+                    ['propiedades_id' => $propiedad->id,'tipofinanciamientos_id' => 4]
+                );
+             }
+             $image_code = '';
+    $images = $request->file('file');
+    foreach($images as $image)
+    {
+     $new_name = rand() . '.' . $image->getClientOriginalExtension();
+     $image->move(public_path('images'), $new_name);
+     $image_code .= '<div class="col-md-3" style="margin-bottom:24px;"><img src="/images/'.$new_name.'" class="img-thumbnail" /></div>';
+     DB::table('imagenes')->insert(
+         ['codigo' => $request->codigo, 'img' => $new_name]
+     );
+    }
+
+
+
+
+               return response()->json(['success'=> "agregado", 'message' => 'La propiedad se agregó correctamente.','modal'=>true,'image'=>$image_code]);
+
+       }//fin else no logueado
+
+
+   }
 
 
     public function store(Request $request)
@@ -385,7 +585,7 @@ class PropiedadesController extends Controller
                   'nro_estacionamientos' => $request->nro_estacionamientos,
                   'direccion' => $request->direccion,]
               );
-                return response()->json(['success'=> true, 'message' => 'La propiedad se agregó correctamente.','modal'=>true]);
+                return response()->json(['success'=> "agregado", 'message' => 'La propiedad se agregó correctamente.','modal'=>true]);
 
         }
 
