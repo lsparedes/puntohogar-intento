@@ -21,9 +21,9 @@
                    <a href="{{route('wea')}}"> Home </a>
                </li>
                <li>
-                  <a href="{{route('propiedades.index')}}"> <b>Mi Portal Inmobiliario</b> </a>
+                  <a href="{{route('propiedades.index')}}"> Mi Portal Inmobiliario </a>
                 </li>
-               <li>Mis Publicaciones - {{$propiedad->titulo_propiedad}}</li>
+               <li><b>Mis Publicaciones - {{$propiedad->titulo_propiedad}}</b></li>
            </ul>
            @if(Auth::check())
                <!-- Si el usuario logeado es un admin, y la propiedad esta en espera, puede aceptarla o rechazarla -->

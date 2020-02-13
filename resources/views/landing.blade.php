@@ -629,13 +629,13 @@
               <img class="img-responsive" src="{{asset('assets/img/nuevos/a.jpg')}}" alt="" >
               <div class="overlay">
                 <br>
-                <span style="color:white;font-size:17px"><b>BuscaTuCasa</b></span>
+                <span style="color:white;font-size:17px"><b>PintaHogar</b></span>
                 <p>
-                  <a style="font-size:12px">Solicitud de búsqueda casa/depto/terreno</a>
+                  <!-- <a style="font-size:12px">Solicitud de búsqueda casa/depto/terreno</a>
                   <br>
                   <a style="font-size:12px">Solicitud de búsqueda proyecto blanco/verde</a>
                   <br>
-                  <a style="font-size:12px">Solicitud de búsqueda inmueble</a>
+                  <a style="font-size:12px">Solicitud de búsqueda inmueble</a> -->
                 </p>
               </div>
             </div>
@@ -646,13 +646,13 @@
               <img class="img-responsive" src="{{asset('assets/img/nuevos/b.jpg')}}" alt="" >
               <div class="overlay">
                 <br>
-                <span style="color:white;font-size:17px"><b>ArriendaTuCasa</b></span>
+                <span style="color:white;font-size:17px"><b>LimpiaHogar</b></span>
               <p>
-               <a style="font-size:12px">Arrendar mi casa o departamento</a>
+               <!-- <a style="font-size:12px">Arrendar mi casa o departamento</a>
                <br>
                <a style="font-size:12px">Arrendar una casa o departamento</a>
                <br>
-               <a style="font-size:12px">Limpieza, reparación, seguridad o traslado</a>
+               <a style="font-size:12px">Limpieza, reparación, seguridad o traslado</a> -->
               </p>
               </div>
             </div>
@@ -663,11 +663,11 @@
               <img class="img-responsive" src="{{asset('assets/img/nuevos/c.jpg')}}" alt="" >
               <div class="overlay">
                 <br>
-                <span style="color:white;font-size:17px"><b>Plan de Inversiones</b></span>
+                <span style="color:white;font-size:17px"><b>ReparacionesHogar</b></span>
               <p>
-               <a style="font-size:12px">Rentabilizar mi dinero</a>
+               <!-- <a style="font-size:12px">Rentabilizar mi dinero</a>
                <br>
-               <a style="font-size:12px">Invertir en un inmueble</a>
+               <a style="font-size:12px">Invertir en un inmueble</a> -->
 
               </p>
               </div>
@@ -679,15 +679,15 @@
               <img class="img-responsive" src="{{asset('assets/img/nuevos/d.jpg')}}" alt="" >
               <div class="overlay">
                 <br>
-                <span style="color:white;font-size:17px"><b>Proyecto Inmoviliario</b></span>
+                <span style="color:white;font-size:17px"><b>MudanzaHogar</b></span>
               <p>
-               <a style="font-size:12px">Viabilidad de un terreno</a>
+               <!-- <a style="font-size:12px">Viabilidad de un terreno</a>
                <br>
                <a style="font-size:12px">Solicitud y tramitación de documentos</a>
                <br>
                <a style="font-size:12px">Estudio de un proyecto</a>
                <br>
-               <a style="font-size:12px">Desarrollo de ante-proyecto</a>
+               <a style="font-size:12px">Desarrollo de ante-proyecto</a> -->
 
               </p>
               </div>
@@ -699,9 +699,9 @@
               <img class="img-responsive" src="{{asset('assets/img/nuevos/e.jpg')}}" alt="" >
               <div class="overlay">
                 <br>
-                <span style="color:white;font-size:17px"><b>Home Cleaning</b></span>
+                <span style="color:white;font-size:17px"><b>SeguridadHogar</b></span>
               <p>
-               <a style="font-size:12px">Lavado y abrillantado de pisos</a>
+               <!-- <a style="font-size:12px">Lavado y abrillantado de pisos</a>
                <br>
                <a style="font-size:12px">Tratamiento de pisos flotantes</a>
                <br>
@@ -709,7 +709,7 @@
                <br>
                <a style="font-size:12px">Aseos generales</a>
                <br>
-               <a style="font-size:12px">Solicitar cotización</a>
+               <a style="font-size:12px">Solicitar cotización</a> -->
 
               </p>
               </div>
@@ -723,13 +723,13 @@
               <img class="img-responsive" src="{{asset('assets/img/nuevos/f.jpg')}}" alt="" >
               <div class="overlay">
                 <br>
-                <span style="color:white;font-size:17px"><b>PintaTuCasa</b></span>
+                <span style="color:white;font-size:17px"><b>JardineríaHogar</b></span>
               <p>
-               <a style="font-size:12px">Preparación de superficies y desmanchado</a>
+               <!-- <a style="font-size:12px">Preparación de superficies y desmanchado</a>
                <br>
                <a style="font-size:12px">Pintura interior de paredes y cielo raso</a>
                <br>
-               <a style="font-size:12px">Limpieza, reparación, seguridad o traslado</a>
+               <a style="font-size:12px">Limpieza, reparación, seguridad o traslado</a> -->
 
 
               </p>
@@ -744,9 +744,9 @@
               <img class="img-responsive" src="{{asset('assets/img/nuevos/g.jpg')}}" alt="" >
               <div class="overlay">
                 <br>
-                <span style="color:white;font-size:17px"><b>TrasladaTuCasa</b></span>
+                <span style="color:white;font-size:17px"><b>ElectricidadHogar</b></span>
               <p>
-               <a style="font-size:12px">Solicitar una cotización</a>
+               <!-- <a style="font-size:12px">Solicitar una cotización</a> -->
 
 
               </p>
@@ -759,11 +759,11 @@
               <img class="img-responsive" src="{{asset('assets/img/nuevos/h.jpg')}}" alt="" >
               <div class="overlay">
                 <br>
-                <span style="color:white;font-size:17px"><b>Inserción Habitacional de Extranjeros</b></span>
+                <span style="color:white;font-size:17px"><b>GasfiteríaHogar</b></span>
               <p>
-               <a style="font-size:12px">Asesoría legal y financiera</a>
+               <!-- <a style="font-size:12px">Asesoría legal y financiera</a>
                <br>
-               <a style="font-size:12px">Gestión financiera para créditos hipotecarios</a>
+               <a style="font-size:12px">Gestión financiera para créditos hipotecarios</a> -->
 
 
               </p>
@@ -779,9 +779,9 @@
               <img class="img-responsive" src="{{asset('assets/img/nuevos/i.jpg')}}" alt="" >
               <div class="overlay">
                 <br>
-                <span style="color:white;font-size:17px"><b>FinanciaTuCasa</b></span>
+                <span style="color:white;font-size:17px"><b>FinanciaHogar</b></span>
               <p>
-               <a style="font-size:12px">Pre evaluación financiera</a>
+               <!-- <a style="font-size:12px">Pre evaluación financiera</a>
                <br>
                <a style="font-size:12px">Asesoría financiera</a>
                <br>
@@ -791,7 +791,7 @@
                <br>
                <a style="font-size:12px">Leasing</a>
                <br>
-               <a style="font-size:12px">Lease - Back</a>
+               <a style="font-size:12px">Lease - Back</a> -->
 
 
               </p>
@@ -799,15 +799,25 @@
             </div>
           </div>
 
+          </div>
+          <br>
+          <hr>
+          <br>
+          <br>
+          <div class="row row-grid align-items-center">
+
+
+
+
 
           <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 mb-lg-4 ">
             <div class="hovereffect rounded shadow">
               <img class="img-responsive" src="{{asset('assets/img/nuevos/j.jpg')}}" alt="" >
               <div class="overlay">
                 <br>
-                <span style="color:white;font-size:17px"><b>VendeTuCasa</b></span>
+                <span style="color:white;font-size:17px"><b>BuscaHogar</b></span>
               <p>
-               <a style="font-size:12px">Vender mi casa o departamento</a>
+               <!-- <a style="font-size:12px">Vender mi casa o departamento</a> -->
 
 
 
@@ -823,9 +833,9 @@
               <img class="img-responsive" src="{{asset('assets/img/nuevos/k.jpg')}}" alt="" >
               <div class="overlay">
                 <br>
-                <span style="color:white;font-size:17px"><b>Segurity Home</b></span>
+                <span style="color:white;font-size:17px"><b>ArriendaHogar</b></span>
               <p>
-               <a style="font-size:12px">Solicitar una cotización</a>
+               <!-- <a style="font-size:12px">Solicitar una cotización</a> -->
               </p>
               </div>
             </div>
@@ -837,13 +847,15 @@
               <img class="img-responsive" src="{{asset('assets/img/nuevos/l.jpg')}}" alt="" >
               <div class="overlay">
                 <br>
-                <span style="color:white;font-size:17px"><b>Jardinería y Desmalezado</b></span>
+                <span style="color:white;font-size:17px"><b>VendeHogar</b></span>
               <p>
-               <a style="font-size:12px">Solicitar una cotización</a>
+               <!-- <a style="font-size:12px">Solicitar una cotización</a> -->
               </p>
               </div>
             </div>
           </div>
+
+
 
         </div>
       </div>
@@ -1025,16 +1037,16 @@
         <div class="col-lg-6">
           <img src="{{asset('assets/img/nuevos/logonnuevo.png')}}" alt="" width="80%">
           <br><br>
-          <h4 class="mb-0 font-weight-light">Todo para tu hogar en un mismo lugar.</h4>
+          <h4 class="mb-0 font-weight-light">Todo para tí y tu hogar en un mismo lugar.</h4>
         </div>
         <div class="col-lg-6 text-lg-center btn-wrapper">
-          <a target="_blank" href="https://twitter.com/creativetim" class="btn btn-neutral btn-icon-only btn-twitter btn-round btn-lg" data-toggle="tooltip" data-original-title="Follow us" style="border-radius:50%">
+          <a target="_blank" href="https://twitter.com/puntohogar.cl" class="btn btn-neutral btn-icon-only btn-twitter btn-round btn-lg" data-toggle="tooltip" data-original-title="Síguenos" style="border-radius:50%">
             <i class="fa fa-twitter"></i>
           </a>
-          <a target="_blank" href="https://www.facebook.com/PuntoHogar.cl" class="btn btn-neutral btn-icon-only btn-facebook btn-round btn-lg" data-toggle="tooltip" data-original-title="Like us" style="border-radius:50%">
+          <a target="_blank" href="https://www.facebook.com/puntohogar.cl" class="btn btn-neutral btn-icon-only btn-facebook btn-round btn-lg" data-toggle="tooltip" data-original-title="Síguenos" style="border-radius:50%">
             <i class="fa fa-facebook-square"></i>
           </a>
-          <a target="_blank" href="https://www.instagram.com/puntohogar.cl/" class="btn btn-neutral btn-icon-only btn-dribbble btn-lg btn-round" data-toggle="tooltip" data-original-title="Follow us" style="border-radius:50%">
+          <a target="_blank" href="https://www.instagram.com/puntohogar.cl/" class="btn btn-neutral btn-icon-only btn-dribbble btn-lg btn-round" data-toggle="tooltip" data-original-title="Síguenos" style="border-radius:50%">
             <i class="fa fa-instagram"></i>
           </a>
 
