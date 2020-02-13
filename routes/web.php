@@ -42,3 +42,8 @@ Route::delete('imagenes/{id}', 'ImageGalleryController@destroy')->name('imgs');
 Route::post('img', 'ImageGalleryController@subir')->name('imagenes');
 
 Route::get('editarpublicacion/{id}', 'PropiedadesController@editarpublicacion')->name('editarpublicacion');
+
+Route::get('/adminclearcache', function() {
+    Artisan::call('cache:clear');
+    return "Cache is cleared";
+});
