@@ -87,7 +87,7 @@
                                                              </div>
                                                              <div class="form-group">
 
-                                                                 <input id="usuario" type="number" class="" name="usuario_id" value="1">
+                                                                 <input id="usuario" type="number" class="" name="usuario_id" value="1" style="display:none">
 
                                                              </div>
 
