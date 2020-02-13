@@ -559,7 +559,7 @@
 </div>
 
 @endsection @section('page-js')
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/node-uuid/1.4.7/uuid.min.js"></script>
 <script src="http://malsup.github.com/jquery.form.js"></script>
 
 <script type="text/javascript">
@@ -685,7 +685,7 @@
              if (response.success==true) {
 
                  window.location = response.url;
-            
+
               }
 
              else {
@@ -708,7 +708,8 @@
 
    $(document).ready(function(min, max) {
 
-       var num = Math.floor((Math.random() * 99) + 1);
+       //var num = Math.floor((Math.random() * 99) + 1);
+       var num = uuid.v1();
        $('#codigo').val(num);
        $('#pasandocodigo').val(num);
        $('#pasandocodigo2').val(num);
