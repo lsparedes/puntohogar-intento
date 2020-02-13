@@ -538,8 +538,9 @@ class PropiedadesController extends Controller
 
   }
       $asesores = DB::table('asesores')->get();
+      $asesor_asignado=DB::table('asesores')->select('asesores.nombre','asesores.correo','asesores.whatsapp')->leftJoin('poseen','asesores.id','=','poseen.asesores_id')->leftJoin('propiedades','propiedades.id','=','poseen.propiedades_id')->where('propiedades.id','=',$propiedad->id)->first();
 
-      return view('propiedades.show',compact('piso','propiedad','inmueble','amoblado','tipoamoblados','fotos','contado','leasing','credito','subsidio','asesores'));
+      return view('propiedades.show',compact('piso','propiedad','inmueble','amoblado','tipoamoblados','fotos','contado','leasing','credito','subsidio','asesores','asesor_asignado'));
     }
     /**
      * Show the form for editing the specified resource.
@@ -830,5 +831,49 @@ class PropiedadesController extends Controller
       $propiedadesespera = DB::table('propiedades')->select('*')->where('estado_publicacion','=',"espera")->get();
         $fotos2 = DB::table('imagenes')->join('propiedades','propiedades.codigo','=','imagenes.codigo')->where('propiedades.estado_publicacion','=',"espera")->get();
       return view('propiedades.index',compact('propiedades','user','mispropiedades','propiedadesespera','tipopropiedades','comunas','regiones','tipoamoblados','tipopisos','tipofinanciamientos','UF','fotos2'));
+  }
+
+  public function editarpublicacion(Request $request, $id){
+
+    $titulo = $request->titulo;
+    $descripcion = $request->descripcion;
+    DB::table('propiedades')
+             ->where('id', $id)
+             ->update(['titulo_propiedad' => $titulo,'descripcion_propiedad'=> $descripcion]);
+
+             $propiedad = DB::table('propiedades')->where('id', '=', $id)->first();
+               $fotos = DB::table('imagenes')->where('codigo', '=', $propiedad->codigo)->get();
+             // dd($propiedad);
+             $tipoamoblados = DB::table('tipo_amoblados')->select('*')->get();
+             $inmueble = DB::table('tipo_propiedades')->find($propiedad->tipopropiedades_id);
+             $amoblado = DB::table('tipo_amoblados')->find($propiedad->tipoamoblados_id);
+             $piso = DB::table('tipo_pisos')->find($propiedad->tipopisos_id);
+             $financiamientos = DB::table('tipo_financiamientos')->select('tipo_financiamientos.financiamientos as nombre')->join('financiamientos','tipo_financiamientos.id','=','financiamientos.tipofinanciamientos_id')->where('financiamientos.propiedades_id', '=', $propiedad->id)->get();
+
+             $contado=0;
+         $leasing=0;
+         $credito=0;
+         $subsidio=0;
+         foreach ($financiamientos as $fin) {
+           if($fin->nombre=="Contado"){
+             $contado=1;
+           }
+           if($fin->nombre=="Leasing"){
+             $leasing=1;
+           }
+           if($fin->nombre=="Credito Hipotecario"){
+             $credito=1;
+           }
+           if($fin->nombre=="Subsidio"){
+             $subsidio=1;
+           }
+
+
+         }
+             $asesores = DB::table('asesores')->get();
+
+     return view('propiedades.show', compact('piso','propiedad','inmueble','amoblado','tipoamoblados','fotos','contado','leasing','credito','subsidio','asesores'));
+
+
   }
 }

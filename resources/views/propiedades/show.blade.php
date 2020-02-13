@@ -28,16 +28,14 @@
            @if(Auth::check())
                <!-- Si el usuario logeado es un admin, y la propiedad esta en espera, puede aceptarla o rechazarla -->
                @if(Auth::user()->roles_id == 1 and $propiedad->estado_publicacion == "espera")
-                   <!-- <a href="{{route('update',$propiedad->id)}}"  class="btn btn-success btn-icon " style="color:white;border-style:none;margin-left:10px">
-                       <span class="nav-link-inner--text">Aceptar</span>
-                   </a> -->
+
                    <a href="" type="button" data-toggle="modal" data-target="#exampleModal2" class="btn btn-success btn-icon " style="color:white;border-style:none;margin-left:10px">
                        <span class="nav-link-inner--text">Aceptar</span>
                    </a>
                    <a href="" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-danger btn-icon " style="color:white;border-style:none;margin-left:10px">
                        <span class="nav-link-inner--text">Rechazar</span>
                    </a>
-                   <a type="button" class="btn btn-warning btn-icon" onclick="onLoadBody();" style="color:white;border-style:none;margin-left:10px">
+                   <a type="button" class="btn btn-warning btn-icon" data-toggle="modal" data-target="#editar" style="color:white;border-style:none;margin-left:10px">
                        <span class="nav-link-inner--text">Editar</span>
                    </a>
 
@@ -117,6 +115,7 @@
 
 
                                     </div>
+                                     @if(Auth::user()->roles_id == 2 and $propiedad->estado_publicacion == "aceptada")
                                     <div class="col-6">
                                         <div class="ul-product-detail__features">
                                             <div class="card card-profile-1">
@@ -124,16 +123,34 @@
                                                     <div class="avatar box-shadow-2 mb-3">
                                                         <img src="{{asset('assets/images/faces/3.jpg')}}" alt="">
                                                     </div>
-                                                    <h5 class="m-0">Javier Leiva</h5>
+                                                    <h5 class="m-0">{{$asesor_asignado->nombre}}</h5>
                                                     <p class="mt-0">Asesor Encargado</p>
 
-                                                    <button class="btn btn-rounded mb-2" style="background-color:rgb(27, 140, 129);color:white;">Contactar por correo</button>
-                                                    <button class="btn btn-rounded" style="background-color:rgb(27, 140, 129);color:white;">Contactar por WhatsApp</button>
+                                                    <button class="btn btn-rounded mb-2" style="background-color:rgb(27, 140, 129);color:white;">{{$asesor_asignado->correo}}</button>
+                                                    <button class="btn btn-rounded" style="background-color:rgb(27, 140, 129);color:white;">{{$asesor_asignado->whatsapp}}</button>
 
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    @else
+                                    <div class="col-6">
+                                        <div class="ul-product-detail__features">
+                                            <div class="card card-profile-1">
+                                                <div class="card-body text-center">
+                                                    <div class="avatar box-shadow-2 mb-3">
+                                                        <img src="{{asset('assets/images/faces/3.jpg')}}" alt="">
+                                                    </div>
+                                                    <h5 class="m-0">Pronto conoceras al asesor encargado de ayudarte! Sigue los pasos para poder ayudarte.</h5>
+
+
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endif
                                 </div>
 
                                 <hr>
@@ -450,7 +467,7 @@
     </div>
 </div>
 <!-- Modal que se muestra para editar algunos atributos de una publicacion una publicacion -->
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="editar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -459,7 +476,23 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <div class="modal-body">
+              <p>*Solo podras editar el titulo y la descripción de cada publicación</p>
+              <form class="" action="{{route('editarpublicacion',$propiedad->id)}}" method="get">
+                <label for="">Titulo</label>
+                <input class="form-control" type="text" name="titulo" value="{{$propiedad->titulo_propiedad}}">
+                <br>
+                <label for="">Descripción</label>
+                <textarea class="form-control" name="descripcion" rows="8">{{$propiedad->descripcion_propiedad}}</textarea>
 
+
+                 <div class="modal-footer">
+                    <input type="submit" value="Enviar" class="btn btn-primary">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">cancelar</button>
+
+                </div>
+</form>
+            </div>
         </div>
     </div>
 </div>
@@ -471,11 +504,6 @@
 
 @section('page-js')
 <script src="{{asset('assets/js/carousel.script.js')}}"></script>
-<script type="text/javascript">
-function onLoadBody() {
-  console.log(document.getElementById('titulo').value);
-    document.getElementById('titulo').readOnly = false;
-  }
-</script>
+
 
 @endsection
